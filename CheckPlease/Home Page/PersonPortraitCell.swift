@@ -13,12 +13,17 @@ class PersonPortraitCell: UICollectionViewCell {
     
     let personImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 24
         imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = AppColors.darkGray.cgColor
         return imageView
     }()
+    
+    func setUpImageView() {
+        personImageView.frame = self.bounds
+        personImageView.layer.cornerRadius = personImageView.frame.width / 2
+    }
     
     func addSubviews() {
         [personImageView].forEach { (view) in
@@ -27,16 +32,13 @@ class PersonPortraitCell: UICollectionViewCell {
     }
     
     func setConstraints() {
-        personImageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
-        }
+        
     }
     
     
     func setUp(image: UIImage) {
+        addSubviews()
+        setUpImageView()
         personImageView.image = image
     }
 }

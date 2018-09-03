@@ -15,9 +15,10 @@ class FullReceiptCell: UITableViewCell {
     let personPortraitCellId = "personPortraitCellId"
     
     let collectionView: UICollectionView = {
-        let layout = UICollectionViewLayout()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 8
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.backgroundColor = .red
         collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: "personPortraitCellId")
         return collectionView
     }()
@@ -30,25 +31,27 @@ class FullReceiptCell: UITableViewCell {
     
     func setConstraints() {
         collectionView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-8)
+            make.left.equalToSuperview().offset(8)
+            make.top.equalToSuperview().offset(8)
+            make.right.equalToSuperview().offset(-8)
         }
     }
     
     func setUp() {
         addSubviews()
-        setConstraints()
         setUpCollectionView()
+        setConstraints()
     }
 }
 
 extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func setUpCollectionView() {
+        collectionView.frame = self.bounds
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,7 +65,7 @@ extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 48, height: 48)
+        return CGSize(width: self.frame.height, height: self.frame.height)
     }
     
     
