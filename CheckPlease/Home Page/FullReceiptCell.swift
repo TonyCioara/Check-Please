@@ -22,6 +22,7 @@ class FullReceiptCell: UITableViewCell {
         let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: "personPortraitCellId")
         collectionView.backgroundColor = .white
+        collectionView.allowsSelection = false
         return collectionView
     }()
     
