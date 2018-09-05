@@ -49,13 +49,13 @@ class PreviousReceiptCell: UITableViewCell {
         return label
     }()
     
-    let verticalGrayView: UIView = {
+    let sideLine: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
     }()
     
-    let horizontalGrayView: UIView = {
+    let bottomLine: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
@@ -63,7 +63,7 @@ class PreviousReceiptCell: UITableViewCell {
     
     func addSubviews() {
         
-        [profileImageView, nameLabel, usernameLabel, priceLabel, itemsLabel, verticalGrayView, horizontalGrayView].forEach { (view) in
+        [profileImageView, nameLabel, usernameLabel, priceLabel, itemsLabel, sideLine, bottomLine].forEach { (view) in
             self.addSubview(view)
         }
     }
@@ -86,24 +86,24 @@ class PreviousReceiptCell: UITableViewCell {
             make.left.equalTo(nameLabel.snp.left)
         }
         
-        verticalGrayView.snp.makeConstraints { (make) in
+        sideLine.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(16)
             make.bottom.equalToSuperview().offset(-16)
             make.width.equalTo(1)
             make.left.equalTo(nameLabel.snp.right).offset(8)
         }
         
-        horizontalGrayView.snp.makeConstraints { (make) in
+        bottomLine.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.height.equalTo(1)
-            make.left.equalTo(16)
-            make.right.equalTo(-16)
+            make.left.equalToSuperview().offset(16)
+            make.right.equalToSuperview().offset(-16)
         }
         
         itemsLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(verticalGrayView.snp.right).offset(8)
-            make.top.equalTo(verticalGrayView.snp.top)
-            make.bottom.lessThanOrEqualTo(verticalGrayView.snp.bottom)
+            make.left.equalTo(sideLine.snp.right).offset(8)
+            make.top.equalTo(sideLine.snp.top)
+            make.bottom.lessThanOrEqualTo(sideLine.snp.bottom)
         }
         
         priceLabel.snp.makeConstraints { (make) in

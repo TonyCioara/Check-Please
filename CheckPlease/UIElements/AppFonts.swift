@@ -12,6 +12,7 @@ import UIKit
 struct AppFonts {
     
     static let light12 = UIFont(name: ".SFUIText-Light", size: 12)
+    static let light14 = UIFont(name: ".SFUIText-Light", size: 14)
     
     static let regular12 = UIFont(name: ".SFUIText", size: 12)
     static let regular14 = UIFont(name: ".SFUIText", size: 14)
@@ -22,6 +23,7 @@ struct AppFonts {
     
     static let semibold14 = UIFont(name: ".SFUIText-Semibold", size: 18)
     
+    static let bold14 = UIFont(name: ".SFUIText-Bold", size: 14)
     static let bold18 = UIFont(name: ".SFUIText-Bold", size: 18)
     static let bold48 = UIFont(name: ".SFUIText-Bold", size: 48)
     
