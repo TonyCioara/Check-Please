@@ -94,3 +94,5 @@ class SelectItemTableViewCell: UITableViewCell {
         portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
     }
 }
+
+

@@ -32,7 +32,7 @@ class SelectItemsViewController: UIViewController {
     
     let actionViewButtonOne: UIButton = {
         let button = UIButton()
-        button.setTitle("Take Photo", for: .normal)
+        button.setTitle("Pay", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
         button.addTarget(self, action: #selector(actionViewButtonOneTapped(sender: )), for: UIControlEvents.touchDown)
@@ -41,7 +41,7 @@ class SelectItemsViewController: UIViewController {
     
     let actionViewButtonTwo: UIButton = {
         let button = UIButton()
-        button.setTitle("Confirm", for: .normal)
+        button.setTitle("Request", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
         button.addTarget(self, action: #selector(actionViewButtonTwoTapped(sender: )), for: UIControlEvents.touchDown)
@@ -49,7 +49,7 @@ class SelectItemsViewController: UIViewController {
     }()
     
     func addSubviews() {
-        [tableView, topCollectionView, actionView].forEach { (view) in
+        [tableView, actionView].forEach { (view) in
             self.view.addSubview(view)
         }
         
@@ -59,17 +59,17 @@ class SelectItemsViewController: UIViewController {
     }
     
     func setConstraints() {
-        topCollectionView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.height.equalTo(50)
-        }
+//        topCollectionView.snp.makeConstraints { (make) in
+//            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).priority(500)
+//            make.right.equalToSuperview()
+//            make.left.equalToSuperview()
+//            make.height.equalTo(50)
+//        }
         
         tableView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.right.equalToSuperview()
-            make.top.equalTo(topCollectionView.snp.bottom)
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).priority(500)
             make.bottom.equalTo(actionView.snp.top)
         }
         
@@ -130,7 +130,7 @@ extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewD
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
-        topCollectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
+        topCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50), collectionViewLayout: layout)
         topCollectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
         topCollectionView.backgroundColor = .white
         topCollectionView.allowsSelection = false
@@ -181,6 +181,11 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return topCollectionView
+    }
     
-    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
 }
