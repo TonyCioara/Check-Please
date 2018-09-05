@@ -12,19 +12,12 @@ import SnapKit
 
 class FullReceiptCell: UITableViewCell {
     
+    //    TODO: Allow cell to be selected even when clicking on collectionView
+    
     let personPortraitCellId = "personPortraitCellId"
     let collectionViewLineSpacing: CGFloat = 10
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: "personPortraitCellId")
-        collectionView.backgroundColor = .white
-        collectionView.allowsSelection = false
-        return collectionView
-    }()
+    var collectionView: UICollectionView!
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -102,9 +95,8 @@ class FullReceiptCell: UITableViewCell {
         priceLabel.text = "$126"
         timeLabel.text = "11m"
         
-        
-        addSubviews()
         setUpCollectionView()
+        addSubviews()
         setConstraints()
     }
 }
@@ -112,6 +104,14 @@ class FullReceiptCell: UITableViewCell {
 extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func setUpCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 10
+        collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
+        collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
+        collectionView.backgroundColor = .white
+        collectionView.allowsSelection = false
+        
         // collectionView.frame = CGRect(x: 8, y: 8, width: self.bounds.width - 16, height: self.bounds.height - 16)
         collectionView.delegate = self
         collectionView.dataSource = self

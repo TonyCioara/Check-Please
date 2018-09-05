@@ -14,12 +14,7 @@ class HomeViewController: UIViewController {
     
     let fullReceiptCellId = "fullReceiptCellId"
     
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(FullReceiptCell.self, forCellReuseIdentifier: "fullReceiptCellId")
-        tableView.separatorStyle = .none
-        return tableView
-    }()
+    let tableView = UITableView()
     
     func addSubviews() {
         [tableView].forEach { (view) in
@@ -52,6 +47,8 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func setUpTableView() {
+        tableView.register(FullReceiptCell.self, forCellReuseIdentifier: fullReceiptCellId)
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
     }
