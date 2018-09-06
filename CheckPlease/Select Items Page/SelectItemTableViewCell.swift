@@ -82,13 +82,33 @@ class SelectItemTableViewCell: UITableViewCell {
         }
     }
     
+    func addTapGestureToContainer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        tap.delegate = self
+        containerView.addGestureRecognizer(tap)
+    }
+    
+    var timer = Timer()
+    
+    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+        // handling code
+        print("I'm funny")
+        containerView.backgroundColor = AppColors.lightGray
+        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (_) in
+            self.containerView.backgroundColor = AppColors.white
+        })
+    }
+    
     func setUp() {
+        
+        self.selectionStyle = .none
         
         titleLabel.text = "Chicken Katsu"
         priceLabel.text = "$5"
         
         addSubviews()
         setConstraints()
+        addTapGestureToContainer()
         
         containerView.layer.cornerRadius = (self.frame.height - 16) / 2
         portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
