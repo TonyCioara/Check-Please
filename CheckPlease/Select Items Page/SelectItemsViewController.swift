@@ -49,7 +49,7 @@ class SelectItemsViewController: UIViewController {
     }()
     
     func addSubviews() {
-        [tableView, actionView].forEach { (view) in
+        [actionView, tableView].forEach { (view) in
             self.view.addSubview(view)
         }
         
@@ -136,13 +136,14 @@ extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewD
         topCollectionView.allowsSelection = false
         topCollectionView.contentInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         topCollectionView.backgroundColor = AppColors.darkBlue
+        topCollectionView.showsHorizontalScrollIndicator = false
         
         topCollectionView.delegate = self
         topCollectionView.dataSource = self
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 12
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -168,7 +169,7 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 12
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

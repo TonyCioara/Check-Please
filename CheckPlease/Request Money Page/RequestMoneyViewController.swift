@@ -1,8 +1,8 @@
 //
-//  HomePageViewController.swift
+//  RequestMoneyViewController.swift
 //  CheckPlease
 //
-//  Created by Tony Cioara on 8/29/18.
+//  Created by Tony Cioara on 9/5/18.
 //  Copyright © 2018 Tony Cioara. All rights reserved.
 //
 
@@ -10,12 +10,11 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ReceiptDetailsViewController: UIViewController {
+class RequestMoneyViewController: UIViewController {
     
-    //    MARK: UI
-    let personReceiptCellId = "personReceiptCellId"
-    
+    let searchController = UISearchController(searchResultsController: nil)
     let tableView = UITableView()
+    let requestTableViewCellId = "requestTableViewCellId"
     
     func addSubviews() {
         [tableView].forEach { (view) in
@@ -25,15 +24,18 @@ class ReceiptDetailsViewController: UIViewController {
     
     func setConstraints() {
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview()
             make.left.equalToSuperview()
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            make.right.equalToSuperview()
             make.bottom.equalToSuperview()
         }
     }
     
     func setUpViews() {
-        self.title = "Receipt Details"
+        self.title = "Request"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+        
         addSubviews()
         setConstraints()
         setUpTableView()
@@ -41,14 +43,16 @@ class ReceiptDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUpViews()
+        
     }
 }
 
-extension ReceiptDetailsViewController: UITableViewDelegate, UITableViewDataSource {
+extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource {
     
     func setUpTableView() {
-        tableView.register(PreviousReceiptCell.self, forCellReuseIdentifier: personReceiptCellId)
+        tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: requestTableViewCellId)
         tableView.separatorStyle = .none
         
         tableView.delegate = self
@@ -58,12 +62,14 @@ extension ReceiptDetailsViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: personReceiptCellId, for: indexPath) as! PreviousReceiptCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: requestTableViewCellId, for: indexPath) as! RequestTableViewCell
         cell.setUp()
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 70
     }
 }

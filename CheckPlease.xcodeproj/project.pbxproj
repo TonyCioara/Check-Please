@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
+		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
+		48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */; };
 		48C377382137261F0029E490 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C377372137261F0029E490 /* AppDelegate.swift */; };
 		48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C377392137261F0029E490 /* LoginViewController.swift */; };
 		48C3773F213726210029E490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48C3773E213726210029E490 /* Assets.xcassets */; };
@@ -27,6 +29,8 @@
 		339629119946F64974C33B85 /* Pods_CheckPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
+		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
+		48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		48C377342137261F0029E490 /* CheckPlease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckPlease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		48C377372137261F0029E490 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48C377392137261F0029E490 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -74,11 +78,13 @@
 			path = "Select Items Page";
 			sourceTree = "<group>";
 		};
-		48B9B2EA2140BF3B00215E73 /* Request Page */ = {
+		48B9B2EA2140BF3B00215E73 /* Request Money Page */ = {
 			isa = PBXGroup;
 			children = (
+				48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */,
+				48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */,
 			);
-			path = "Request Page";
+			path = "Request Money Page";
 			sourceTree = "<group>";
 		};
 		48C3772B2137261F0029E490 = {
@@ -103,9 +109,9 @@
 			isa = PBXGroup;
 			children = (
 				48C377372137261F0029E490 /* AppDelegate.swift */,
-				48B9B2EA2140BF3B00215E73 /* Request Page */,
 				48C3774A213727810029E490 /* UIElements */,
 				48C3775121374A090029E490 /* Receipt Details Page */,
+				48B9B2EA2140BF3B00215E73 /* Request Money Page */,
 				48B9B2E52140650500215E73 /* Select Items Page */,
 				48C37758213786700029E490 /* Home Page */,
 				48C37749213726720029E490 /* Login */,
@@ -272,6 +278,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
+				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,
 				48C3775521374B200029E490 /* PersonReceiptCell.swift in Sources */,
 				48C377382137261F0029E490 /* AppDelegate.swift in Sources */,
