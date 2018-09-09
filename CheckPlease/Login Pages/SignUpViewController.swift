@@ -236,6 +236,8 @@ class SignUpViewController: UIViewController {
             let phoneNumber = phoneNumberTextField.text
             else {return}
         if password != retypePassword {
+            let alert = UIAlertController(title: "The password was not retyped correctly", message: "Error", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             return
         }
         
