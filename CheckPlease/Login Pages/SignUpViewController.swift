@@ -95,7 +95,7 @@ class SignUpViewController: UIViewController {
         button.backgroundColor =  AppColors.darkBlue
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
-        button.setTitle("Login", for: UIControlState.normal)
+        button.setTitle("Sign Up", for: UIControlState.normal)
         button.layer.cornerRadius = 5
         button.addTarget(self, action: #selector(signUpButtonTapped(sender:)), for: UIControlEvents.touchDown)
         
@@ -241,8 +241,8 @@ class SignUpViewController: UIViewController {
             return
         }
         
-        Networking.fetch(route: Route.signUp(email: email, password: password, username: username, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)) { (data) in
-            
+        Networking.fetch(route: Route.signUp(email: email, password: password, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)) { (data) in
+            print(data)
         }
         
     }
