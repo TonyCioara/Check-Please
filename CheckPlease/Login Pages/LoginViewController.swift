@@ -129,6 +129,7 @@ class LoginViewController: UIViewController {
     
     func setUpViews() {
         navigationController?.isNavigationBarHidden = true
+        
         addSubviews()
         setConstraints()
         

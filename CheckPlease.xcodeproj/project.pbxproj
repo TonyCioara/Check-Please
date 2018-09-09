@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4883F3BC2145AF20002D13F7 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BB2145AF20002D13F7 /* Networking.swift */; };
+		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
+		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
 		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
@@ -29,6 +31,8 @@
 /* Begin PBXFileReference section */
 		339629119946F64974C33B85 /* Pods_CheckPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4883F3BB2145AF20002D13F7 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
@@ -71,12 +75,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		4883F3BA2145AF00002D13F7 /* Networking */ = {
+		4883F3BA2145AF00002D13F7 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
 				4883F3BB2145AF20002D13F7 /* Networking.swift */,
 			);
-			path = Networking;
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		4883F3BF2145BAA4002D13F7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4883F3C02145BAB3002D13F7 /* User.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		48B9B2E52140650500215E73 /* Select Items Page */ = {
@@ -119,7 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				48C377372137261F0029E490 /* AppDelegate.swift */,
-				4883F3BA2145AF00002D13F7 /* Networking */,
+				4883F3BF2145BAA4002D13F7 /* Models */,
+				4883F3BA2145AF00002D13F7 /* Helpers */,
 				48C3774A213727810029E490 /* UIElements */,
 				48C3775121374A090029E490 /* Receipt Details Page */,
 				48B9B2EA2140BF3B00215E73 /* Request Money Page */,
@@ -146,6 +159,7 @@
 			children = (
 				48C3774B2137279A0029E490 /* AppFonts.swift */,
 				48C37756213786420029E490 /* AppColors.swift */,
+				4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -270,10 +284,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-CheckPlease/Pods-CheckPlease-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -294,8 +310,10 @@
 				48C377382137261F0029E490 /* AppDelegate.swift in Sources */,
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3BC2145AF20002D13F7 /* Networking.swift in Sources */,
+				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
+				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
 				48C3774E21373EE10029E490 /* SignUpViewController.swift in Sources */,
 				48C37757213786420029E490 /* AppColors.swift in Sources */,

@@ -10,8 +10,8 @@ import Foundation
 
 enum Route {
     
-    case signUp
-    case login
+    case signUp(email: String, password: String, username: String, firstName: String, lastName: String, phoneNumber: String)
+    case login(email: String, password: String)
     
     func method() -> String {
         switch self {

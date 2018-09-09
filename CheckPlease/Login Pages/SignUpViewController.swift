@@ -70,6 +70,15 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
+    let phoneNumberTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = .white
+        textField.font = AppFonts.regular14
+        textField.placeholder = "Phone Number"
+        textField.layer.cornerRadius = 5
+        return textField
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = AppColors.darkBlue
@@ -113,7 +122,7 @@ class SignUpViewController: UIViewController {
     func addSubviews() {
         addGradient()
         self.view.addSubview(scrollView)
-        [emailTextField, usernameTextField, firstNameTextField, lastNameTextField, passwordTextField, retypePasswordTextField, titleLabel, signUpButton, oldUserButton].forEach { (view) in
+        [emailTextField, usernameTextField, firstNameTextField, lastNameTextField, passwordTextField, retypePasswordTextField, phoneNumberTextField, titleLabel, signUpButton, oldUserButton].forEach { (view) in
             scrollView.addSubview(view)
         }
     }
@@ -162,8 +171,15 @@ class SignUpViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        passwordTextField.snp.makeConstraints { (make) in
+        phoneNumberTextField.snp.makeConstraints { (make) in
             make.top.equalTo(lastNameTextField.snp.bottom).offset(20)
+            make.left.equalToSuperview().offset(32)
+            make.right.equalToSuperview().offset(-32)
+            make.height.equalTo(50)
+        }
+        
+        passwordTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(phoneNumberTextField.snp.bottom).offset(20)
             make.left.equalToSuperview().offset(32)
             make.right.equalToSuperview().offset(-32)
             make.height.equalTo(50)
@@ -192,6 +208,12 @@ class SignUpViewController: UIViewController {
     }
     
     func setUpViews() {
+        navigationController?.isNavigationBarHidden = true
+        
+        [emailTextField, usernameTextField, firstNameTextField, lastNameTextField, passwordTextField, phoneNumberTextField, retypePasswordTextField].forEach { (textField) in
+            textField.setLeftPaddingPoints(16)
+            textField.setRightPaddingPoints(16)
+        }
         addSubviews()
         setConstraints()
         
@@ -205,6 +227,21 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func signUpButtonTapped(sender: UIButton) {
+        guard let email = emailTextField.text,
+            let username = usernameTextField.text,
+            let firstName = firstNameTextField.text,
+            let lastName = lastNameTextField.text,
+            let password = passwordTextField.text,
+            let retypePassword = retypePasswordTextField.text,
+            let phoneNumber = phoneNumberTextField.text
+            else {return}
+        if password != retypePassword {
+            return
+        }
+        
+        Networking.fetch(route: Route.signUp(email: email, password: password, username: username, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)) { (data) in
+            
+        }
         
     }
     
