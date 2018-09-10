@@ -240,11 +240,6 @@ class SignUpViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
             return
         }
-        
-        Networking.fetch(route: Route.signUp(email: email, password: password, username: username, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)) { (data) in
-            
-        }
-        
     }
     
     @objc func oldUserButtonTapped(sender: UIButton) {
