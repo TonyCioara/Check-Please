@@ -66,9 +66,7 @@ class RequestTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         portraitImageView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(16)
-            make.top.equalToSuperview().offset(16)
-            make.bottom.equalToSuperview().offset(-16)
+            make.left.top.bottom.equalToSuperview().inset(16)
             make.height.equalTo(portraitImageView.snp.width)
         }
         
@@ -85,8 +83,7 @@ class RequestTableViewCell: UITableViewCell {
         bottomView.snp.makeConstraints { (make) in
             make.height.equalTo(1)
             make.bottom.equalToSuperview()
-            make.right.equalToSuperview().offset(-32)
-            make.left.equalToSuperview().offset(32)
+            make.right.left.equalToSuperview().inset(32)
         }
     }
 }

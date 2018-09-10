@@ -18,6 +18,7 @@ class ReceiptDetailsViewController: UIViewController {
     }
     
     //    MARK: - Private
+    
     private let personReceiptCellId = "personReceiptCellId"
     
     private let tableView = UITableView()

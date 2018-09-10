@@ -35,8 +35,7 @@ class RequestMoneyViewController: UIViewController {
         tableView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.right.bottom.equalToSuperview()
         }
     }
     

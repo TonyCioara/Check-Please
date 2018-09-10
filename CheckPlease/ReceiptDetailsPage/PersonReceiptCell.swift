@@ -12,7 +12,20 @@ import SnapKit
 
 class PreviousReceiptCell: UITableViewCell {
     
-    let profileImageView: UIImageView = {
+    func setUp() {
+        addSubviews()
+        setConstraints()
+        
+        priceLabel.text = "$11"
+        itemsLabel.text = "Rice Bowl, Dinner Set, Beer"
+        nameLabel.text = "Tony Cioara"
+        usernameLabel.text = "@Tony-Cioara"
+        profileImageView.image = #imageLiteral(resourceName: "IMG_0932")
+    }
+    
+    //    MARK: - Private
+    
+    private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 24
         imageView.contentMode = .scaleAspectFill
@@ -22,19 +35,19 @@ class PreviousReceiptCell: UITableViewCell {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.semibold14
         return label
     }()
     
-    let usernameLabel: UILabel = {
+    private let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
         return label
     }()
     
-    let priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.medium14
         label.textColor = AppColors.mediumBlue
@@ -42,33 +55,33 @@ class PreviousReceiptCell: UITableViewCell {
         return label
     }()
     
-    let itemsLabel: UILabel = {
+    private let itemsLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.regular12
         label.numberOfLines = 0
         return label
     }()
     
-    let sideLine: UIView = {
+    private let sideLine: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
     }()
     
-    let bottomLine: UIView = {
+    private let bottomLine: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
     }()
     
-    func addSubviews() {
+    private func addSubviews() {
         
         [profileImageView, nameLabel, usernameLabel, priceLabel, itemsLabel, sideLine, bottomLine].forEach { (view) in
             self.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         profileImageView.snp.makeConstraints { (make) in
             make.top.bottom.left.equalToSuperview().inset(16)
             make.width.equalTo(profileImageView.snp.height)
@@ -106,16 +119,5 @@ class PreviousReceiptCell: UITableViewCell {
             make.right.top.equalToSuperview().inset(16)
             make.left.equalTo(itemsLabel.snp.right).offset(16)
         }
-    }
-    
-    func setUp() {
-        addSubviews()
-        setConstraints()
-        
-        priceLabel.text = "$11"
-        itemsLabel.text = "Rice Bowl, Dinner Set, Beer"
-        nameLabel.text = "Tony Cioara"
-        usernameLabel.text = "@Tony-Cioara"
-        profileImageView.image = #imageLiteral(resourceName: "IMG_0932")
     }
 }
