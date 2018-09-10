@@ -109,13 +109,9 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func nextButtonTapped(sender: UIButton) {
-        
         guard let text = inputTextField.text else {return}
         resultsDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
-            Networking.fetch(route: .signUp(userDict: self.resultsDict)) { (data) in
-                print(JSON(data))
-            }
         } else {
             inputTextField.text = ""
             step += 1
