@@ -35,7 +35,7 @@ class SelectItemsViewController: UIViewController {
         button.setTitle("Pay", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
-        button.addTarget(self, action: #selector(actionViewButtonOneTapped(sender: )), for: UIControlEvents.touchDown)
+        button.addTarget(self, action: #selector(payButtonTapped(sender: )), for: UIControlEvents.touchDown)
         return button
     }()
     
@@ -44,7 +44,7 @@ class SelectItemsViewController: UIViewController {
         button.setTitle("Request", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
-        button.addTarget(self, action: #selector(actionViewButtonTwoTapped(sender: )), for: UIControlEvents.touchDown)
+        button.addTarget(self, action: #selector(requestButtonTapped(sender: )), for: UIControlEvents.touchDown)
         return button
     }()
     
@@ -115,12 +115,12 @@ class SelectItemsViewController: UIViewController {
         setUpViews()
     }
     
-    @objc func actionViewButtonOneTapped(sender: UIButton) {
+    @objc func payButtonTapped(sender: UIButton) {
         
     }
     
-    @objc func actionViewButtonTwoTapped(sender: UIButton) {
-        
+    @objc func requestButtonTapped(sender: UIButton) {
+        navigationController?.pushViewController(RequestMoneyViewController(), animated: true)
     }
 }
 
@@ -187,6 +187,6 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return 54
     }
 }

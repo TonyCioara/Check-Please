@@ -34,7 +34,7 @@ class RequestMoneyViewController: UIViewController {
     func setUpViews() {
         self.title = "Request"
         navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+//        navigationItem.hidesSearchBarWhenScrolling = false
         
         addSubviews()
         setConstraints()
