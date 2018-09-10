@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 enum Route {
     
-    case signUp(email: String, password: String, username: String, firstName: String, lastName: String, phoneNumber: String)
+    case signUp(userDict: [String: String])
     case login(email: String, password: String)
     
     func method() -> String {
@@ -31,11 +32,46 @@ enum Route {
             return "/login"
         }
     }
+    
+    func body() -> Data? {
+        switch self {
+        case let .signUp(userDict):
+            let json = JSON(userDict)
+            do {
+                let result = try json.rawData()
+                return result
+            }
+            catch {
+                print("Json object did not convert to data")
+                return nil
+            }
+            
+        case let .login(email, password):
+            let userDict = ["email": email, "password": password]
+            let json = JSON(userDict)
+            do {
+                let result = try json.rawData()
+                return result
+            }
+            catch {
+                print("Json object did not convert to data")
+                return nil
+            }
+            
+        default:
+            return nil
+        }
+    }
+    
+    func headers() -> [String: String] {
+        return  ["Content-Type": "application/json"]
+//        "Accept": "application/json",
+    }
 }
 
 struct Networking {
     
-    static let baseURL = ""
+    static let baseURL = "https://7230c991.ngrok.io"
     static let session = URLSession.shared
     
     static func fetch(route: Route, completion: @escaping (Data) -> Void) {
@@ -44,6 +80,9 @@ struct Networking {
         
         var request = URLRequest(url: pathURL)
         request.httpMethod = route.method()
+        // request.allHTTPHeaderFields = route.headers(authorization: token)
+        request.httpBody = route.body()
+        request.allHTTPHeaderFields = route.headers()
         
         session.dataTask(with: request) { (data, response, error) in
             if let error = error {
