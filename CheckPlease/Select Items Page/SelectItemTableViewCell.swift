@@ -12,7 +12,22 @@ import SnapKit
 
 class SelectItemTableViewCell: UITableViewCell {
     
-    let containerView: UIView = {
+    func setUp() {
+        
+        titleLabel.text = "Chicken Katsu"
+        priceLabel.text = "$5"
+        
+        addSubviews()
+        setConstraints()
+        setUpTapGesture()
+        
+        containerView.layer.cornerRadius = (self.frame.height - 16) / 2
+        portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
+    }
+    
+    //    MARK: - Private
+    
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.white
         view.layer.borderWidth = 1
@@ -26,19 +41,19 @@ class SelectItemTableViewCell: UITableViewCell {
         return view
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.regular18
         return label
     }()
     
-    let priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.regular18
         return label
     }()
     
-    let portraitImageView: UIImageView = {
+    private let portraitImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = AppColors.mediumBlue
         imageView.layer.borderWidth = 1
@@ -46,7 +61,7 @@ class SelectItemTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    func setConstraints() {
+    private func setConstraints() {
         containerView.snp.makeConstraints { (make) in
             make.top.equalToSuperview().offset(8)
             make.bottom.equalToSuperview().offset(-8)
@@ -74,7 +89,7 @@ class SelectItemTableViewCell: UITableViewCell {
         
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         self.addSubview(containerView)
         
         [titleLabel, priceLabel, portraitImageView].forEach { (view) in
@@ -82,7 +97,7 @@ class SelectItemTableViewCell: UITableViewCell {
         }
     }
     
-    func setUpTapGesture() {
+    private func setUpTapGesture() {
         self.selectionStyle = .none
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
@@ -90,27 +105,14 @@ class SelectItemTableViewCell: UITableViewCell {
         containerView.addGestureRecognizer(tap)
     }
     
-    var timer = Timer()
+    private var timer = Timer()
     
-    @objc func handleTap(sender: UITapGestureRecognizer? = nil) {
+    @objc private func handleTap(sender: UITapGestureRecognizer? = nil) {
         // handling code
         containerView.backgroundColor = AppColors.lightGray
         timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (_) in
             self.containerView.backgroundColor = AppColors.white
         })
-    }
-    
-    func setUp() {
-        
-        titleLabel.text = "Chicken Katsu"
-        priceLabel.text = "$5"
-        
-        addSubviews()
-        setConstraints()
-        setUpTapGesture()
-        
-        containerView.layer.cornerRadius = (self.frame.height - 16) / 2
-        portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
     }
 }
 

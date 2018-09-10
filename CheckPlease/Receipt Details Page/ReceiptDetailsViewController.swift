@@ -12,48 +12,46 @@ import SnapKit
 
 class ReceiptDetailsViewController: UIViewController {
     
-    //    MARK: UI
-    let personReceiptCellId = "personReceiptCellId"
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpViews()
+    }
     
-    let tableView = UITableView()
+    //    MARK: - Private
+    private let personReceiptCellId = "personReceiptCellId"
     
-    func addSubviews() {
+    private let tableView = UITableView()
+    
+    private func addSubviews() {
         [tableView].forEach { (view) in
             self.view.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.right.left.bottom.equalToSuperview()
         }
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         self.title = "Receipt Details"
         addSubviews()
         setConstraints()
         setUpTableView()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUpViews()
-    }
-}
-
-extension ReceiptDetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func setUpTableView() {
+    private func setUpTableView() {
         tableView.register(PreviousReceiptCell.self, forCellReuseIdentifier: personReceiptCellId)
         tableView.separatorStyle = .none
         
         tableView.delegate = self
         tableView.dataSource = self
     }
+}
+
+extension ReceiptDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5

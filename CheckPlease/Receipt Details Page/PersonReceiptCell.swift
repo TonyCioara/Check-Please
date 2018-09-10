@@ -70,9 +70,7 @@ class PreviousReceiptCell: UITableViewCell {
     
     func setConstraints() {
         profileImageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.bottom.equalToSuperview().offset(-16)
-            make.left.equalToSuperview().offset(16)
+            make.top.bottom.left.equalToSuperview().inset(16)
             make.width.equalTo(profileImageView.snp.height)
         }
         
@@ -87,8 +85,7 @@ class PreviousReceiptCell: UITableViewCell {
         }
         
         sideLine.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.bottom.equalToSuperview().offset(-16)
+            make.top.bottom.equalToSuperview().inset(16)
             make.width.equalTo(1)
             make.left.equalTo(nameLabel.snp.right).offset(8)
         }
@@ -96,8 +93,7 @@ class PreviousReceiptCell: UITableViewCell {
         bottomLine.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
             make.height.equalTo(1)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.right.equalToSuperview().inset(16)
         }
         
         itemsLabel.snp.makeConstraints { (make) in
@@ -107,8 +103,7 @@ class PreviousReceiptCell: UITableViewCell {
         }
         
         priceLabel.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-16)
-            make.top.equalToSuperview().offset(16)
+            make.right.top.equalToSuperview().inset(16)
             make.left.equalTo(itemsLabel.snp.right).offset(16)
         }
     }

@@ -12,44 +12,46 @@ import SnapKit
 
 class HomeViewController: UIViewController {
     
-    let fullReceiptCellId = "fullReceiptCellId"
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpViews()
+    }
     
-    let tableView = UITableView()
+    //    MARK: - Private
     
-    func addSubviews() {
+    private let fullReceiptCellId = "fullReceiptCellId"
+    
+    private let tableView = UITableView()
+    
+    private func addSubviews() {
         [tableView].forEach { (view) in
             self.view.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.bottom.right.equalToSuperview()
         }
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         self.title = "Past Receipts"
         addSubviews()
         setConstraints()
         setUpTableView()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUpViews()
-    }
-}
-
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func setUpTableView() {
+    private func setUpTableView() {
         tableView.register(FullReceiptCell.self, forCellReuseIdentifier: fullReceiptCellId)
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
     }
+}
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5

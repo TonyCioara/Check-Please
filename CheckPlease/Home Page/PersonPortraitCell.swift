@@ -11,7 +11,15 @@ import UIKit
 
 class PersonPortraitCell: UICollectionViewCell {
     
-    let personImageView: UIImageView = {
+    func setUp(image: UIImage) {
+        addSubviews()
+        setUpImageView()
+        personImageView.image = image
+    }
+    
+    //    MARK: - Private
+    
+    private let personImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
@@ -20,25 +28,14 @@ class PersonPortraitCell: UICollectionViewCell {
         return imageView
     }()
     
-    func setUpImageView() {
+    private func setUpImageView() {
         personImageView.frame = self.bounds
         personImageView.layer.cornerRadius = personImageView.frame.width / 2
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         [personImageView].forEach { (view) in
             self.addSubview(view)
         }
-    }
-    
-    func setConstraints() {
-        
-    }
-    
-    
-    func setUp(image: UIImage) {
-        addSubviews()
-        setUpImageView()
-        personImageView.image = image
     }
 }

@@ -12,17 +12,26 @@ import SnapKit
 
 class RequestMoneyViewController: UIViewController {
     
-    let searchController = UISearchController(searchResultsController: nil)
-    let tableView = UITableView()
-    let requestTableViewCellId = "requestTableViewCellId"
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setUpViews()
+        
+    }
     
-    func addSubviews() {
+    //    MARK: - Private
+    
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let tableView = UITableView()
+    private let requestTableViewCellId = "requestTableViewCellId"
+    
+    private func addSubviews() {
         [tableView].forEach { (view) in
             self.view.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         tableView.snp.makeConstraints { (make) in
             make.left.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -31,7 +40,7 @@ class RequestMoneyViewController: UIViewController {
         }
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         self.title = "Request"
         navigationItem.searchController = searchController
 //        navigationItem.hidesSearchBarWhenScrolling = false
@@ -41,23 +50,17 @@ class RequestMoneyViewController: UIViewController {
         setUpTableView()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setUpViews()
-        
-    }
-}
-
-extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func setUpTableView() {
+    private func setUpTableView() {
         tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: requestTableViewCellId)
         tableView.separatorStyle = .none
         
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
+}
+
+extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5

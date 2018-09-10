@@ -12,49 +12,60 @@ import SnapKit
 
 class FullReceiptCell: UITableViewCell {
     
-    //    TODO: Allow cell to be selected even when clicking on collectionView
+    func setUp() {
+        
+        // Add data to views
+        titleLabel.text = "Grandma's Deli"
+        priceLabel.text = "$126"
+        timeLabel.text = "11m"
+        
+        setUpCollectionView()
+        addSubviews()
+        setConstraints()
+    }
     
-    let personPortraitCellId = "personPortraitCellId"
-    let collectionViewLineSpacing: CGFloat = 10
+    //    MARK: - Private
     
-    var collectionView: UICollectionView!
+    private let personPortraitCellId = "personPortraitCellId"
+    private let collectionViewLineSpacing: CGFloat = 10
     
-    let titleLabel: UILabel = {
+    private var collectionView: UICollectionView!
+    
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.semibold14
         return label
     }()
     
-    let priceLabel: UILabel = {
+    private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.medium14
         label.textColor = AppColors.darkBlue
         return label
     }()
     
-    let timeLabel: UILabel = {
+    private let timeLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light14
         return label
     }()
     
-    let bottomLine: UIView = {
+    private let bottomLine: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
     }()
     
-    func addSubviews() {
+    private func addSubviews() {
         [collectionView, titleLabel, timeLabel, priceLabel, bottomLine].forEach { (view) in
             self.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.left.equalToSuperview().offset(16)
+            make.top.left.equalToSuperview().inset(16)
             make.right.equalTo(collectionView.snp.right)
         }
         
@@ -68,9 +79,8 @@ class FullReceiptCell: UITableViewCell {
         }
         
         priceLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
+            make.top.right.equalToSuperview().inset(16)
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(8)
-            make.right.equalToSuperview().offset(-16)
         }
         
         timeLabel.snp.makeConstraints { (make) in
@@ -82,41 +92,27 @@ class FullReceiptCell: UITableViewCell {
         
         bottomLine.snp.makeConstraints { (make) in
             make.bottom.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.left.right.equalToSuperview().inset(16)
             make.height.equalTo(1)
         }
     }
     
-    func setUp() {
-        
-        // Add data to views
-        titleLabel.text = "Grandma's Deli"
-        priceLabel.text = "$126"
-        timeLabel.text = "11m"
-        
-        setUpCollectionView()
-        addSubviews()
-        setConstraints()
-    }
-}
-
-extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func setUpCollectionView() {
+    private func setUpCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
         collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
         collectionView.backgroundColor = .white
-        collectionView.allowsSelection = false
+        collectionView.isUserInteractionEnabled = false
         
-        // collectionView.frame = CGRect(x: 8, y: 8, width: self.bounds.width - 16, height: self.bounds.height - 16)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.reloadData()
     }
+}
+
+extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 5
@@ -131,6 +127,4 @@ extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
     }
-    
-    
 }

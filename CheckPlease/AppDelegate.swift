@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        let navController = UINavigationController(rootViewController: LoginViewController())
+        let navController = UINavigationController(rootViewController: HomeViewController())
         navController.navigationBar.prefersLargeTitles = true
         navController.navigationBar.barTintColor = AppColors.white
         window = UIWindow()

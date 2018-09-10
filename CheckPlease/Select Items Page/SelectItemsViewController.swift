@@ -12,25 +12,32 @@ import SnapKit
 
 class SelectItemsViewController: UIViewController {
     
-    var topCollectionView: UICollectionView!
-    let personPortraitCellId = "personPortraitCellId"
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpViews()
+    }
     
-    var tableView = UITableView()
-    let selectItemTableViewCellId = "selectItemTableViewCellId"
+    //    MARK: - Private
     
-    let actionView: UIView = {
+    private var topCollectionView: UICollectionView!
+    private let personPortraitCellId = "personPortraitCellId"
+    
+    private var tableView = UITableView()
+    private let selectItemTableViewCellId = "selectItemTableViewCellId"
+    
+    private let actionView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.darkBlue
         return view
     }()
     
-    let actionViewSeparator: UIView = {
+    private let actionViewSeparator: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.white
         return view
     }()
     
-    let actionViewButtonOne: UIButton = {
+    private let actionViewButtonOne: UIButton = {
         let button = UIButton()
         button.setTitle("Pay", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
@@ -39,7 +46,7 @@ class SelectItemsViewController: UIViewController {
         return button
     }()
     
-    let actionViewButtonTwo: UIButton = {
+    private let actionViewButtonTwo: UIButton = {
         let button = UIButton()
         button.setTitle("Request", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
@@ -48,7 +55,7 @@ class SelectItemsViewController: UIViewController {
         return button
     }()
     
-    func addSubviews() {
+    private func addSubviews() {
         [actionView, tableView].forEach { (view) in
             self.view.addSubview(view)
         }
@@ -58,26 +65,17 @@ class SelectItemsViewController: UIViewController {
         }
     }
     
-    func setConstraints() {
-//        topCollectionView.snp.makeConstraints { (make) in
-//            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).priority(500)
-//            make.right.equalToSuperview()
-//            make.left.equalToSuperview()
-//            make.height.equalTo(50)
-//        }
+    private func setConstraints() {
         
         tableView.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).priority(500)
             make.bottom.equalTo(actionView.snp.top)
         }
         
         actionView.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
+            make.bottom.left.right.equalToSuperview()
             make.height.equalTo(50)
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
         }
         
         actionViewSeparator.snp.makeConstraints { (make) in
@@ -88,21 +86,17 @@ class SelectItemsViewController: UIViewController {
         }
         
         actionViewButtonOne.snp.makeConstraints { (make) in
-            make.left.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.left.top.bottom.equalToSuperview()
             make.right.equalTo(actionViewSeparator.snp.left)
         }
         
         actionViewButtonTwo.snp.makeConstraints { (make) in
-            make.right.equalToSuperview()
-            make.top.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.right.top.bottom.equalToSuperview()
             make.left.equalTo(actionViewSeparator.snp.right)
         }
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         self.title = "Select Items"
         setUpCollectionView()
         setUpTableView()
@@ -110,23 +104,23 @@ class SelectItemsViewController: UIViewController {
         setConstraints()
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUpViews()
-    }
-    
-    @objc func payButtonTapped(sender: UIButton) {
+    @objc private func payButtonTapped(sender: UIButton) {
         
     }
     
-    @objc func requestButtonTapped(sender: UIButton) {
+    @objc private func requestButtonTapped(sender: UIButton) {
         navigationController?.pushViewController(RequestMoneyViewController(), animated: true)
     }
-}
-
-extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    func setUpCollectionView() {
+    private func setUpTableView() {
+        tableView.register(SelectItemTableViewCell.self, forCellReuseIdentifier: selectItemTableViewCellId)
+        tableView.separatorStyle = .none
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    private func setUpCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 10
@@ -141,6 +135,9 @@ extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewD
         topCollectionView.delegate = self
         topCollectionView.dataSource = self
     }
+}
+
+extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 12
@@ -159,14 +156,6 @@ extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewD
 }
 
 extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func setUpTableView() {
-        tableView.register(SelectItemTableViewCell.self, forCellReuseIdentifier: selectItemTableViewCellId)
-        tableView.separatorStyle = .none
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 12

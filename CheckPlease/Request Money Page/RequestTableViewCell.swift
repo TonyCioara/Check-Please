@@ -12,7 +12,20 @@ import SnapKit
 
 class RequestTableViewCell: UITableViewCell {
     
-    let portraitImageView: UIImageView = {
+    func setUp() {
+        addSubviews()
+        setConstraints()
+        
+        portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
+        
+        portraitImageView.image = #imageLiteral(resourceName: "IMG_0932")
+        fullNameLabel.text = "Tony Cioara"
+        usernameLabel.text = "@Tony-Cioara"
+        
+    }
+    
+    //    MARK: - Private
+    private let portraitImageView: UIImageView = {
         let imageView = UIImageView()
         
         imageView.layer.borderColor = AppColors.darkGray.cgColor
@@ -22,36 +35,36 @@ class RequestTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    let fullNameLabel: UILabel = {
+    private let fullNameLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.semibold14
         return label
     }()
     
-    let usernameLabel: UILabel = {
+    private let usernameLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
         return label
     }()
     
-    let infoButton: UIButton = {
+    private let infoButton: UIButton = {
         let button = UIButton()
         return button
     }()
     
-    let bottomView: UIView = {
+    private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.lightGray
         return view
     }()
     
-    func addSubviews() {
+    private func addSubviews() {
         [portraitImageView, fullNameLabel, usernameLabel, bottomView].forEach { (view) in
             self.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         portraitImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(16)
             make.top.equalToSuperview().offset(16)
@@ -75,17 +88,5 @@ class RequestTableViewCell: UITableViewCell {
             make.right.equalToSuperview().offset(-32)
             make.left.equalToSuperview().offset(32)
         }
-    }
-    
-    func setUp() {
-        addSubviews()
-        setConstraints()
-        
-        portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
-        
-        portraitImageView.image = #imageLiteral(resourceName: "IMG_0932")
-        fullNameLabel.text = "Tony Cioara"
-        usernameLabel.text = "@Tony-Cioara"
-        
     }
 }
