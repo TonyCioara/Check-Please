@@ -46,6 +46,18 @@ enum Route {
                 return nil
             }
             
+        case let .login(email, password):
+            let userDict = ["email": email, "password": password]
+            let json = JSON(userDict)
+            do {
+                let result = try json.rawData()
+                return result
+            }
+            catch {
+                print("Json object did not convert to data")
+                return nil
+            }
+            
         default:
             return nil
         }
@@ -59,7 +71,7 @@ enum Route {
 
 struct Networking {
     
-    static let baseURL = "https://9de255f4.ngrok.io"
+    static let baseURL = "https://7230c991.ngrok.io"
     static let session = URLSession.shared
     
     static func fetch(route: Route, completion: @escaping (Data) -> Void) {
