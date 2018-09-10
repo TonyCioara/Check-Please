@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
         textField.font = AppFonts.regular14
         textField.placeholder = "Email"
         textField.layer.cornerRadius = 5
+        textField.setLeftPaddingPoints(16)
+        textField.setRightPaddingPoints(16)
         return textField
     }()
     
@@ -29,6 +31,8 @@ class LoginViewController: UIViewController {
         textField.font = AppFonts.regular14
         textField.placeholder = "Password"
         textField.layer.cornerRadius = 5
+        textField.setLeftPaddingPoints(16)
+        textField.setRightPaddingPoints(16)
         return textField
     }()
     
@@ -85,37 +89,30 @@ class LoginViewController: UIViewController {
         
         scrollView.snp.makeConstraints { (make) in
             make.top.equalTo((view.safeAreaLayoutGuide.snp.top))
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.width.equalToSuperview().offset(-64)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(200)
         }
         
         emailTextField.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         passwordTextField.snp.makeConstraints { (make) in
             make.top.equalTo(emailTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         loginButton.snp.makeConstraints { (make) in
             make.top.equalTo(passwordTextField.snp.bottom).offset(100)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         

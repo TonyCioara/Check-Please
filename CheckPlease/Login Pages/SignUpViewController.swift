@@ -16,7 +16,7 @@ class SignUpViewController: UIViewController {
     let labelTextArray = ["Email", "First Name", "Last Name", "Password", "Phone number"]
     let dictKeyArray = ["email", "first_name", "last_name", "password", "phone_number"]
     
-    var resultsDict: [String: String] = [:]
+    var resultsDict: [String: String] = ["payment_method": "Card"]
     
     var step: Int = 0 {
         didSet {
@@ -109,13 +109,14 @@ class SignUpViewController: UIViewController {
     }
     
     @objc func nextButtonTapped(sender: UIButton) {
+        
+        guard let text = inputTextField.text else {return}
+        resultsDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
             Networking.fetch(route: .signUp(userDict: self.resultsDict)) { (data) in
                 print(JSON(data))
             }
         } else {
-            guard let text = inputTextField.text else {return}
-            resultsDict[dictKeyArray[step]] = text
             inputTextField.text = ""
             step += 1
         }

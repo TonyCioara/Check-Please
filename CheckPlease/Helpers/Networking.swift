@@ -27,7 +27,7 @@ enum Route {
     func path() -> String {
         switch self {
         case .signUp:
-            return "/create"
+            return "/signup"
         case .login:
             return "/login"
         }
@@ -51,15 +51,15 @@ enum Route {
         }
     }
     
-    func headers(authorization: String) -> [String: String] {
-        return ["Accept": "application/json",
-                "Content-Type": "application/json"]
+    func headers() -> [String: String] {
+        return  ["Content-Type": "application/json"]
+//        "Accept": "application/json",
     }
 }
 
 struct Networking {
     
-    static let baseURL = "https://71b6952c.ngrok.io"
+    static let baseURL = "https://9de255f4.ngrok.io"
     static let session = URLSession.shared
     
     static func fetch(route: Route, completion: @escaping (Data) -> Void) {
@@ -70,7 +70,7 @@ struct Networking {
         request.httpMethod = route.method()
         // request.allHTTPHeaderFields = route.headers(authorization: token)
         request.httpBody = route.body()
-        request.allHTTPHeaderFields = route.headers(authorization: "abc")
+        request.allHTTPHeaderFields = route.headers()
         
         session.dataTask(with: request) { (data, response, error) in
             if let error = error {
