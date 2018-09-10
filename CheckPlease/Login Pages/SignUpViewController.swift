@@ -1,93 +1,44 @@
 //
-//  SignUpViewController.swift
+//  SignUpViewController2.swift
 //  CheckPlease
 //
-//  Created by Tony Cioara on 8/29/18.
+//  Created by Tony Cioara on 9/10/18.
 //  Copyright © 2018 Tony Cioara. All rights reserved.
 //
 
 import Foundation
 import UIKit
 import SnapKit
+import SwiftyJSON
 
 class SignUpViewController: UIViewController {
-
-    //    MARK: UI
     
-    let scrollView = UIScrollView()
+    let labelTextArray = ["Email", "First Name", "Last Name", "Password", "Phone number"]
+    let dictKeyArray = ["email", "first_name", "last_name", "password", "phone_number"]
     
-    let emailTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Email"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
+    var resultsDict: [String: String] = ["payment_method": "Card"]
     
-    let passwordTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Password"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
+    var step: Int = 0 {
+        didSet {
+            inputTypeLabel.text = labelTextArray[step]
+        }
+    }
     
-    let retypePasswordTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Retype Password"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
-    
-    let firstNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "First Name"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
-    
-    let lastNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Last Name"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
-    
-    let usernameTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Username"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
-    
-    let phoneNumberTextField: UITextField = {
-        let textField = UITextField()
-        textField.backgroundColor = .white
-        textField.font = AppFonts.regular14
-        textField.placeholder = "Phone Number"
-        textField.layer.cornerRadius = 5
-        return textField
-    }()
-    
-    let titleLabel: UILabel = {
+    let inputTypeLabel: UILabel = {
         let label = UILabel()
-        label.textColor = AppColors.darkBlue
-        label.font = AppFonts.bold48
-        label.text = "CHECK PLEASE"
-        label.numberOfLines = 2
-        label.contentMode = .center
-        label.textAlignment = .center
+        label.textColor = AppColors.white
+        label.font = AppFonts.bold22
         return label
+    }()
+    
+    let inputTextField: UITextField = {
+        let textField = UITextField()
+        textField.backgroundColor = AppColors.white
+        textField.font = AppFonts.regular14
+        textField.layer.cornerRadius = 5
+        textField.setLeftPaddingPoints(16)
+        textField.setRightPaddingPoints(16)
+        return textField
     }()
     
     let signUpButton: UIButton = {
@@ -95,9 +46,9 @@ class SignUpViewController: UIViewController {
         button.backgroundColor =  AppColors.darkBlue
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
-        button.setTitle("Login", for: UIControlState.normal)
+        button.setTitle("Next", for: UIControlState.normal)
         button.layer.cornerRadius = 5
-        button.addTarget(self, action: #selector(signUpButtonTapped(sender:)), for: UIControlEvents.touchDown)
+        button.addTarget(self, action: #selector(nextButtonTapped(sender:)), for: UIControlEvents.touchDown)
         
         return button
     }()
@@ -107,144 +58,68 @@ class SignUpViewController: UIViewController {
         button.titleLabel?.font = AppFonts.medium18
         button.titleLabel?.textColor = AppColors.white
         button.setTitle("Already signed up?", for: UIControlState.normal)
+        button.sizeToFit()
         button.addTarget(self, action: #selector(oldUserButtonTapped(sender:)), for: UIControlEvents.touchDown)
         
         return button
     }()
     
-    func addGradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        gradientLayer.colors = [AppColors.white.cgColor, AppColors.mediumBlue.cgColor]
-        view.layer.addSublayer(gradientLayer)
-    }
+    let nextButton: UIButton = {
+        let button = UIButton()
+        
+        return button
+    }()
     
     func addSubviews() {
-        addGradient()
-        self.view.addSubview(scrollView)
-        [emailTextField, usernameTextField, firstNameTextField, lastNameTextField, passwordTextField, retypePasswordTextField, phoneNumberTextField, titleLabel, signUpButton, oldUserButton].forEach { (view) in
-            scrollView.addSubview(view)
+        [signUpButton, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
+            self.view.addSubview(view)
         }
     }
     
     func setConstraints() {
-        scrollView.snp.makeConstraints { (make) in
-            make.top.equalTo((view.safeAreaLayoutGuide.snp.top))
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+        inputTypeLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(16)
+            make.right.left.equalToSuperview().inset(32)
         }
         
-        titleLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.width.equalToSuperview().offset(-64)
-            make.height.equalTo(200)
-        }
-        
-        emailTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        usernameTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(emailTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        firstNameTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(usernameTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        lastNameTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(firstNameTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        phoneNumberTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(lastNameTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        passwordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(phoneNumberTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.height.equalTo(50)
-        }
-        
-        retypePasswordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+        inputTextField.snp.makeConstraints { (make) in
+            make.top.equalTo(inputTypeLabel.snp.bottom).offset(16)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         signUpButton.snp.makeConstraints { (make) in
-            make.top.greaterThanOrEqualTo(retypePasswordTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.top.greaterThanOrEqualTo(inputTextField.snp.bottom).offset(16)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         oldUserButton.snp.makeConstraints { (make) in
             make.top.equalTo(signUpButton.snp.bottom).offset(8)
             make.right.equalTo(signUpButton.snp.right)
-            make.width.equalTo(180)
-            make.bottom.equalToSuperview().offset(-32)
         }
     }
     
-    func setUpViews() {
-        navigationController?.isNavigationBarHidden = true
-        
-        [emailTextField, usernameTextField, firstNameTextField, lastNameTextField, passwordTextField, phoneNumberTextField, retypePasswordTextField].forEach { (textField) in
-            textField.setLeftPaddingPoints(16)
-            textField.setRightPaddingPoints(16)
-        }
+    override func viewDidLoad() {
+        step = 0
+        self.view.backgroundColor = AppColors.mediumBlue
+        self.navigationController?.isNavigationBarHidden = true
         addSubviews()
         setConstraints()
-        
     }
     
-    //    MARK: Functionality
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @objc func nextButtonTapped(sender: UIButton) {
         
-        setUpViews()
-    }
-    
-    @objc func signUpButtonTapped(sender: UIButton) {
-        guard let email = emailTextField.text,
-            let username = usernameTextField.text,
-            let firstName = firstNameTextField.text,
-            let lastName = lastNameTextField.text,
-            let password = passwordTextField.text,
-            let retypePassword = retypePasswordTextField.text,
-            let phoneNumber = phoneNumberTextField.text
-            else {return}
-        if password != retypePassword {
-            let alert = UIAlertController(title: "The password was not retyped correctly", message: "Error", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-            return
+        guard let text = inputTextField.text else {return}
+        resultsDict[dictKeyArray[step]] = text
+        if step == labelTextArray.count - 1 {
+            Networking.fetch(route: .signUp(userDict: self.resultsDict)) { (data) in
+                print(JSON(data))
+            }
+        } else {
+            inputTextField.text = ""
+            step += 1
         }
-        
-        Networking.fetch(route: Route.signUp(email: email, password: password, username: username, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)) { (data) in
-            
-        }
-        
     }
     
     @objc func oldUserButtonTapped(sender: UIButton) {

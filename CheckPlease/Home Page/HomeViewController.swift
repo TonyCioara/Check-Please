@@ -25,9 +25,7 @@ class HomeViewController: UIViewController {
     func setConstraints() {
         tableView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            make.right.equalToSuperview()
-            make.left.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.left.bottom.right.equalToSuperview()
         }
     }
     

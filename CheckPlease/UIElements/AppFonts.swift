@@ -25,6 +25,7 @@ struct AppFonts {
     
     static let bold14 = UIFont(name: ".SFUIText-Bold", size: 14)
     static let bold18 = UIFont(name: ".SFUIText-Bold", size: 18)
+    static let bold22 = UIFont(name: ".SFUIText-Bold", size: 22)
     static let bold48 = UIFont(name: ".SFUIText-Bold", size: 48)
     
 }

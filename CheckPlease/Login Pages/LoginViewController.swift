@@ -20,6 +20,8 @@ class LoginViewController: UIViewController {
         textField.font = AppFonts.regular14
         textField.placeholder = "Email"
         textField.layer.cornerRadius = 5
+        textField.setLeftPaddingPoints(16)
+        textField.setRightPaddingPoints(16)
         return textField
     }()
     
@@ -29,12 +31,14 @@ class LoginViewController: UIViewController {
         textField.font = AppFonts.regular14
         textField.placeholder = "Password"
         textField.layer.cornerRadius = 5
+        textField.setLeftPaddingPoints(16)
+        textField.setRightPaddingPoints(16)
         return textField
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = AppColors.darkBlue
+        label.textColor = AppColors.white
         label.font = AppFonts.bold48
         label.text = "CHECK PLEASE"
         label.numberOfLines = 2
@@ -73,7 +77,7 @@ class LoginViewController: UIViewController {
     }
     
     func addSubviews() {
-        addGradient()
+        self.view.backgroundColor = AppColors.mediumBlue
         self.view.addSubview(scrollView)
         [emailTextField, passwordTextField, titleLabel, loginButton, newUserButton].forEach { (view) in
             scrollView.addSubview(view)
@@ -85,37 +89,31 @@ class LoginViewController: UIViewController {
         
         scrollView.snp.makeConstraints { (make) in
             make.top.equalTo((view.safeAreaLayoutGuide.snp.top))
-            make.left.equalToSuperview()
-            make.right.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.left.right.bottom.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview()
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
-            make.width.equalToSuperview().offset(-64)
+            make.left.right.equalToSuperview().inset(32)
+            make.width.equalTo(self.view.snp.width).offset(-64)
             make.height.equalTo(200)
         }
         
         emailTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         passwordTextField.snp.makeConstraints { (make) in
-            make.top.equalTo(emailTextField.snp.bottom).offset(20)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.top.equalTo(emailTextField.snp.bottom).offset(16)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         loginButton.snp.makeConstraints { (make) in
-            make.top.equalTo(passwordTextField.snp.bottom).offset(100)
-            make.left.equalToSuperview().offset(32)
-            make.right.equalToSuperview().offset(-32)
+            make.top.equalTo(passwordTextField.snp.bottom).offset(16)
+            make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
@@ -140,10 +138,33 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification:NSNotification){
+        //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+    
+    @objc func keyboardWillHide(notification:NSNotification){
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
     }
     
     @objc func loginButtonTapped(sender: UIButton) {
-        
+        guard let email = emailTextField.text,
+            let password = passwordTextField.text
+            else {return}
+        Networking.fetch(route: .login(email: email, password: password)) { (data) in
+            print(data)
+        }
     }
     
     @objc func newUserButtonTapped(sender: UIButton) {
