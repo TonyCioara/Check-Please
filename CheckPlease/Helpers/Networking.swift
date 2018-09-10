@@ -11,7 +11,7 @@ import SwiftyJSON
 
 enum Route {
     
-    case signUp(email: String, password: String, firstName: String, lastName: String, phoneNumber: String)
+    case signUp(userDict: [String: String])
     case login(email: String, password: String)
     
     func method() -> String {
@@ -35,22 +35,17 @@ enum Route {
     
     func body() -> Data? {
         switch self {
-        case let .signUp(email, password, firstName, lastName, phoneNumber):
-            let signUpDict = ["email": email,
-                              "password": password,
-                              "first_name": firstName,
-                              "last_name": lastName,
-                              "phone_number": phoneNumber,
-                              "payment_method": "Card"]
-            let json = JSON(signUpDict)
+        case let .signUp(userDict):
+            let json = JSON(userDict)
             do {
                 let result = try json.rawData()
                 return result
             }
             catch {
                 print("Json object did not convert to data")
+                return nil
             }
-            return nil
+            
         default:
             return nil
         }

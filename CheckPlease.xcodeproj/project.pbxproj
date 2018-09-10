@@ -10,6 +10,7 @@
 		4883F3BC2145AF20002D13F7 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BB2145AF20002D13F7 /* Networking.swift */; };
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
+		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
 		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
@@ -18,7 +19,6 @@
 		48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C377392137261F0029E490 /* LoginViewController.swift */; };
 		48C3773F213726210029E490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48C3773E213726210029E490 /* Assets.xcassets */; };
 		48C3774C2137279A0029E490 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3774B2137279A0029E490 /* AppFonts.swift */; };
-		48C3774E21373EE10029E490 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3774D21373EE10029E490 /* SignUpViewController.swift */; };
 		48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775221374AA00029E490 /* ReceiptDetailsViewController.swift */; };
 		48C3775521374B200029E490 /* PersonReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775421374B200029E490 /* PersonReceiptCell.swift */; };
 		48C37757213786420029E490 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C37756213786420029E490 /* AppColors.swift */; };
@@ -33,6 +33,7 @@
 		4883F3BB2145AF20002D13F7 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		48C3773E213726210029E490 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		48C37743213726210029E490 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48C3774B2137279A0029E490 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
-		48C3774D21373EE10029E490 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		48C3775221374AA00029E490 /* ReceiptDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptDetailsViewController.swift; sourceTree = "<group>"; };
 		48C3775421374B200029E490 /* PersonReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonReceiptCell.swift; sourceTree = "<group>"; };
 		48C37756213786420029E490 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				48C377392137261F0029E490 /* LoginViewController.swift */,
-				48C3774D21373EE10029E490 /* SignUpViewController.swift */,
+				488E41042146E26800FD0547 /* SignUpViewController.swift */,
 			);
 			path = "Login Pages";
 			sourceTree = "<group>";
@@ -306,6 +306,7 @@
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,
+				488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */,
 				48C3775521374B200029E490 /* PersonReceiptCell.swift in Sources */,
 				48C377382137261F0029E490 /* AppDelegate.swift in Sources */,
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
@@ -315,7 +316,6 @@
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
-				48C3774E21373EE10029E490 /* SignUpViewController.swift in Sources */,
 				48C37757213786420029E490 /* AppColors.swift in Sources */,
 				48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */,
 				48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */,
@@ -448,7 +448,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JDYWQEVARC;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TonyCioara.CheckPlease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -464,7 +467,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JDYWQEVARC;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.TonyCioara.CheckPlease;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
