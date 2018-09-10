@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
     
     private func setUpViews() {
         self.title = "Past Receipts"
+        self.view.backgroundColor = AppColors.white
         addSubviews()
         setConstraints()
         setUpTableView()

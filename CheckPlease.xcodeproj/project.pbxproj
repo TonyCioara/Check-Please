@@ -10,6 +10,7 @@
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
+		488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41072147138100FD0547 /* TotalPeopleCell.swift */; };
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
 		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
@@ -34,6 +35,7 @@
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		488E41072147138100FD0547 /* TotalPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPeopleCell.swift; sourceTree = "<group>"; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 				48C37759213786B40029E490 /* HomeViewController.swift */,
 				48C3775B2137873A0029E490 /* FullReceiptCell.swift */,
 				48C3775D21378C190029E490 /* PersonPortraitCell.swift */,
+				488E41072147138100FD0547 /* TotalPeopleCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,

@@ -37,7 +37,7 @@ class RequestTableViewCell: UITableViewCell {
     
     private let fullNameLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.semibold14
+        label.font = AppFonts.semibold18
         return label
     }()
     
