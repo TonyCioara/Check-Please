@@ -13,25 +13,35 @@ import SwiftyJSON
 
 class SignUpViewController: UIViewController {
     
-    let labelTextArray = ["Email", "First Name", "Last Name", "Password", "Phone number"]
-    let dictKeyArray = ["email", "first_name", "last_name", "password", "phone_number"]
+    override func viewDidLoad() {
+        step = 0
+        self.view.backgroundColor = AppColors.mediumBlue
+        self.navigationController?.isNavigationBarHidden = true
+        addSubviews()
+        setConstraints()
+    }
     
-    var resultsDict: [String: String] = ["payment_method": "Card"]
+    //    MARK: - Private
     
-    var step: Int = 0 {
+    private let labelTextArray = ["Email", "First Name", "Last Name", "Password", "Phone number"]
+    private let dictKeyArray = ["email", "firstName", "lastName", "password", "phoneNumber"]
+    
+    private var resultsDict: [String: String] = [:]
+    
+    private var step: Int = 0 {
         didSet {
             inputTypeLabel.text = labelTextArray[step]
         }
     }
     
-    let inputTypeLabel: UILabel = {
+    private let inputTypeLabel: UILabel = {
         let label = UILabel()
         label.textColor = AppColors.white
         label.font = AppFonts.bold22
         return label
     }()
     
-    let inputTextField: UITextField = {
+    private let inputTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = AppColors.white
         textField.font = AppFonts.regular14
@@ -41,7 +51,7 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
-    let signUpButton: UIButton = {
+    private let signUpButton: UIButton = {
         let button = UIButton()
         button.backgroundColor =  AppColors.darkBlue
         button.titleLabel?.font = AppFonts.bold18
@@ -53,7 +63,7 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
-    let oldUserButton: UIButton = {
+    private let oldUserButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = AppFonts.medium18
         button.titleLabel?.textColor = AppColors.white
@@ -64,19 +74,19 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
-    let nextButton: UIButton = {
+    private let nextButton: UIButton = {
         let button = UIButton()
         
         return button
     }()
     
-    func addSubviews() {
+    private func addSubviews() {
         [signUpButton, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
             self.view.addSubview(view)
         }
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         inputTypeLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).inset(16)
             make.right.left.equalToSuperview().inset(32)
@@ -100,15 +110,9 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        step = 0
-        self.view.backgroundColor = AppColors.mediumBlue
-        self.navigationController?.isNavigationBarHidden = true
-        addSubviews()
-        setConstraints()
-    }
     
-    @objc func nextButtonTapped(sender: UIButton) {
+    
+    @objc private func nextButtonTapped(sender: UIButton) {
         
         guard let text = inputTextField.text else {return}
         resultsDict[dictKeyArray[step]] = text
@@ -122,7 +126,7 @@ class SignUpViewController: UIViewController {
         }
     }
     
-    @objc func oldUserButtonTapped(sender: UIButton) {
+    @objc private func oldUserButtonTapped(sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
 }

@@ -11,10 +11,17 @@ import SnapKit
 
 class LoginViewController: UIViewController {
     
-    //    MARK: UI
-    let scrollView = UIScrollView()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUpViews()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
     
-    let emailTextField: UITextField = {
+    //    MARK: - Private
+    private let scrollView = UIScrollView()
+    
+    private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.font = AppFonts.regular14
@@ -25,7 +32,7 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
-    let passwordTextField: UITextField = {
+    private let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
         textField.font = AppFonts.regular14
@@ -36,7 +43,7 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = AppColors.white
         label.font = AppFonts.bold48
@@ -47,7 +54,7 @@ class LoginViewController: UIViewController {
         return label
     }()
     
-    let loginButton: UIButton = {
+    private let loginButton: UIButton = {
         let button = UIButton()
         button.backgroundColor =  AppColors.darkBlue
         button.titleLabel?.font = AppFonts.bold18
@@ -59,7 +66,7 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    let newUserButton: UIButton = {
+    private let newUserButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = AppFonts.medium18
         button.titleLabel?.textColor = AppColors.white
@@ -69,14 +76,14 @@ class LoginViewController: UIViewController {
         return button
     }()
     
-    func addGradient() {
+    private func addGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         gradientLayer.colors = [AppColors.white.cgColor, AppColors.mediumBlue.cgColor]
         view.layer.addSublayer(gradientLayer)
     }
     
-    func addSubviews() {
+    private func addSubviews() {
         self.view.backgroundColor = AppColors.mediumBlue
         self.view.addSubview(scrollView)
         [emailTextField, passwordTextField, titleLabel, loginButton, newUserButton].forEach { (view) in
@@ -85,7 +92,7 @@ class LoginViewController: UIViewController {
         
     }
     
-    func setConstraints() {
+    private func setConstraints() {
         
         scrollView.snp.makeConstraints { (make) in
             make.top.equalTo((view.safeAreaLayoutGuide.snp.top))
@@ -125,24 +132,14 @@ class LoginViewController: UIViewController {
         }
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         navigationController?.isNavigationBarHidden = true
         
         addSubviews()
         setConstraints()
-        
     }
     
-    //    MARK: Functionality
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUpViews()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification:NSNotification){
+    @objc private func keyboardWillShow(notification:NSNotification){
         //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
         var userInfo = notification.userInfo!
         var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
@@ -153,12 +150,12 @@ class LoginViewController: UIViewController {
         scrollView.contentInset = contentInset
     }
     
-    @objc func keyboardWillHide(notification:NSNotification){
+    @objc private func keyboardWillHide(notification:NSNotification){
         let contentInset:UIEdgeInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInset
     }
     
-    @objc func loginButtonTapped(sender: UIButton) {
+    @objc private func loginButtonTapped(sender: UIButton) {
         guard let email = emailTextField.text,
             let password = passwordTextField.text
             else {return}
@@ -167,7 +164,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @objc func newUserButtonTapped(sender: UIButton) {
+    @objc private func newUserButtonTapped(sender: UIButton) {
         
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
