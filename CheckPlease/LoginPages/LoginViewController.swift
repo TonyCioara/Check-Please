@@ -159,9 +159,6 @@ class LoginViewController: UIViewController {
         guard let email = emailTextField.text,
             let password = passwordTextField.text
             else {return}
-        Networking.fetch(route: .login(email: email, password: password)) { (data) in
-            print(data)
-        }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {
