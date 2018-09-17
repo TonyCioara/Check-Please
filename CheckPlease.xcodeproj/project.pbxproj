@@ -11,6 +11,8 @@
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
 		488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41072147138100FD0547 /* TotalPeopleCell.swift */; };
+		489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B621503E400036CD01 /* InvitePeopleViewController.swift */; };
+		489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */; };
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
 		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
@@ -36,6 +38,8 @@
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		488E41072147138100FD0547 /* TotalPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPeopleCell.swift; sourceTree = "<group>"; };
+		489B84B621503E400036CD01 /* InvitePeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleViewController.swift; sourceTree = "<group>"; };
+		489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +98,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		489B84B521503E150036CD01 /* InvitePeoplePage */ = {
+			isa = PBXGroup;
+			children = (
+				489B84B621503E400036CD01 /* InvitePeopleViewController.swift */,
+				489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */,
+			);
+			path = InvitePeoplePage;
+			sourceTree = "<group>";
+		};
 		48B9B2E52140650500215E73 /* SelectItemsPage */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +153,7 @@
 				48C3774A213727810029E490 /* UIElements */,
 				48C3775121374A090029E490 /* ReceiptDetailsPage */,
 				48B9B2EA2140BF3B00215E73 /* RequestMoneyPage */,
+				489B84B521503E150036CD01 /* InvitePeoplePage */,
 				48B9B2E52140650500215E73 /* SelectItemsPage */,
 				48C37758213786700029E490 /* HomePage */,
 				48C37749213726720029E490 /* LoginPages */,
@@ -317,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */,
 				488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
@@ -327,6 +342,7 @@
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
+				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
