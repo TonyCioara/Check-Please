@@ -36,6 +36,11 @@ class SignUpViewController: UIViewController {
             } else {
                 actionViewButtonTwo.setTitle("Next", for: .normal)
             }
+            if dictKeyArray[step] == "password" {
+                inputTextField.isSecureTextEntry = true
+            } else {
+                inputTextField.isSecureTextEntry = false
+            }
             if let text = resultsDict[dictKeyArray[step]] {
                 inputTextField.text = text
             }
