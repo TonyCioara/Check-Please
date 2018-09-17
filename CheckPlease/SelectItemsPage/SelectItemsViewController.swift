@@ -56,7 +56,7 @@ class SelectItemsViewController: UIViewController {
     }()
     
     private func addSubviews() {
-        [actionView, tableView].forEach { (view) in
+        [tableView, actionView].forEach { (view) in
             self.view.addSubview(view)
         }
         
@@ -97,6 +97,7 @@ class SelectItemsViewController: UIViewController {
     
     private func setUpViews() {
         self.title = "Select Items"
+        self.view.backgroundColor = AppColors.white
         setUpCollectionView()
         setUpTableView()
         addSubviews()
