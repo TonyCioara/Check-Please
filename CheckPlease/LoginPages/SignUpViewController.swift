@@ -31,6 +31,14 @@ class SignUpViewController: UIViewController {
     private var step: Int = 0 {
         didSet {
             inputTypeLabel.text = labelTextArray[step]
+            if step == dictKeyArray.count - 1 {
+                actionViewButtonTwo.setTitle("Sign Up", for: .normal)
+            } else {
+                actionViewButtonTwo.setTitle("Next", for: .normal)
+            }
+            if let text = resultsDict[dictKeyArray[step]] {
+                inputTextField.text = text
+            }
         }
     }
     
@@ -51,15 +59,36 @@ class SignUpViewController: UIViewController {
         return textField
     }()
     
-    private let signUpButton: UIButton = {
+    private let actionView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.darkBlue
+        view.layer.cornerRadius = 5
+        return view
+    }()
+    
+    private let actionViewSeparator: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.white
+        return view
+    }()
+    
+    private let actionViewButtonOne: UIButton = {
+//        This is the back button
         let button = UIButton()
-        button.backgroundColor =  AppColors.darkBlue
+        button.setTitle("<", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
-        button.setTitle("Next", for: UIControlState.normal)
-        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(backButtonTapped(sender:)), for: UIControlEvents.touchDown)
+        return button
+    }()
+    
+    private let actionViewButtonTwo: UIButton = {
+//        This is the next button
+        let button = UIButton()
+        button.setTitle("Next", for: .normal)
+        button.titleLabel?.font = AppFonts.bold18
+        button.titleLabel?.textColor = AppColors.white
         button.addTarget(self, action: #selector(nextButtonTapped(sender:)), for: UIControlEvents.touchDown)
-        
         return button
     }()
     
@@ -74,15 +103,12 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
-    private let nextButton: UIButton = {
-        let button = UIButton()
-        
-        return button
-    }()
-    
     private func addSubviews() {
-        [signUpButton, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
+        [actionView, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
             self.view.addSubview(view)
+        }
+        [actionViewSeparator ,actionViewButtonOne, actionViewButtonTwo].forEach { (view) in
+            self.actionView.addSubview(view)
         }
     }
     
@@ -98,15 +124,31 @@ class SignUpViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        signUpButton.snp.makeConstraints { (make) in
+        actionView.snp.makeConstraints { (make) in
             make.top.greaterThanOrEqualTo(inputTextField.snp.bottom).offset(16)
             make.left.right.equalToSuperview().inset(32)
             make.height.equalTo(50)
         }
         
         oldUserButton.snp.makeConstraints { (make) in
-            make.top.equalTo(signUpButton.snp.bottom).offset(8)
-            make.right.equalTo(signUpButton.snp.right)
+            make.top.equalTo(actionView.snp.bottom).offset(8)
+            make.right.equalTo(actionView.snp.right)
+        }
+        
+        actionViewButtonOne.snp.makeConstraints { (make) in
+            make.left.top.bottom.equalToSuperview()
+        }
+        
+        actionViewSeparator.snp.makeConstraints { (make) in
+            make.top.bottom.equalToSuperview().inset(8)
+            make.width.equalTo(2)
+            make.left.equalTo(actionViewButtonOne.snp.right)
+            make.right.equalTo(actionViewButtonTwo.snp.left)
+        }
+        
+        actionViewButtonTwo.snp.makeConstraints { (make) in
+            make.top.bottom.right.equalToSuperview()
+            make.width.equalTo(actionViewButtonOne).multipliedBy(4)
         }
     }
     
@@ -120,6 +162,12 @@ class SignUpViewController: UIViewController {
         } else {
             inputTextField.text = ""
             step += 1
+        }
+    }
+    
+    @objc private func backButtonTapped(sender: UIButton) {
+        if step > 0 {
+            step -= 1
         }
     }
     

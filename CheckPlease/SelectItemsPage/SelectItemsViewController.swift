@@ -80,8 +80,7 @@ class SelectItemsViewController: UIViewController {
         
         actionViewSeparator.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-8)
-            make.top.equalToSuperview().offset(8)
+            make.bottom.top.equalToSuperview().inset(8)
             make.width.equalTo(2)
         }
         
