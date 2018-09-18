@@ -16,7 +16,9 @@ class TakePhotoViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = "Take photo"
         view.backgroundColor = .yellow
-        buildCameraPreviewLayer()
+        
+        guard let captureSession = buildCaptureSession() else { return }
+        buildCameraPreviewLayer(withCaptureSession: captureSession)
         let backgroundButtonViews = buildBackgroundButtonViews()
         buildButtons(withBackgroundView: backgroundButtonViews.background,
                      midLineView: backgroundButtonViews.midLine)
@@ -27,6 +29,48 @@ class TakePhotoViewController: UIViewController {
     }
     
     // MARK: - Private
+    
+    private var photoSettings: AVCapturePhotoSettings?
+    private var photoOutput: AVCapturePhotoOutput?
+    private var imageData: Data?
+    
+    private func buildCaptureSession() -> AVCaptureSession? {
+        guard let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
+            return nil
+        }
+        let captureSession = AVCaptureSession()
+        captureSession.beginConfiguration()
+        guard let videoDeviceInput = try? AVCaptureDeviceInput(device: cameraDevice),
+            captureSession.canAddInput(videoDeviceInput) else {
+                return nil
+        }
+        captureSession.addInput(videoDeviceInput)
+        
+        let photoOutput = AVCapturePhotoOutput()
+        self.photoOutput = photoOutput
+        photoOutput.isHighResolutionCaptureEnabled = true
+        
+        guard captureSession.canAddOutput(photoOutput) else {
+            return nil
+        }
+        captureSession.sessionPreset = .photo
+        captureSession.addOutput(photoOutput)
+        captureSession.commitConfiguration()
+        captureSession.startRunning()
+        
+        let photoSettings = AVCapturePhotoSettings(format: [AVVideoCodecKey:AVVideoCodecType.jpeg])
+        photoSettings.isHighResolutionPhotoEnabled = true
+        self.photoSettings = photoSettings
+    
+        return captureSession
+    }
+    
+    private func buildCameraPreviewLayer(withCaptureSession session: AVCaptureSession) {
+        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.frame = view.bounds
+        view.layer.addSublayer(previewLayer)
+    }
     
     private func buildBackgroundButtonViews() -> (background: UIView, midLine: UIView) {
         let backgroundButtonView = UIView()
@@ -74,38 +118,24 @@ class TakePhotoViewController: UIViewController {
         }
     }
     
-    private func buildCameraPreviewLayer() {
-        // TODO: Refactor
-        let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)!
-        let captureSession = AVCaptureSession()
-        captureSession.beginConfiguration()
-        guard let videoDeviceInput = try? AVCaptureDeviceInput(device: cameraDevice),
-            captureSession.canAddInput(videoDeviceInput) else { return }
-        captureSession.addInput(videoDeviceInput)
-        
-        let photoOutput = AVCapturePhotoOutput()
-        guard captureSession.canAddOutput(photoOutput) else { return }
-        captureSession.sessionPreset = .photo
-        captureSession.addOutput(photoOutput)
-        captureSession.commitConfiguration()
-        
-        captureSession.startRunning()
-        
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        previewLayer.videoGravity = .resizeAspectFill
-        previewLayer.frame = view.bounds
-        view.layer.addSublayer(previewLayer)
-    }
-    
     @objc private func takePhotoButtonPressed() {
-        print("\n* TakePhotoButtonPressed")
+        guard let photoOutput = self.photoOutput,
+            let photoSettings = self.photoSettings else {
+                return
+        }
+        photoOutput.capturePhoto(with: AVCapturePhotoSettings(from: photoSettings), delegate: self)
     }
     
     @objc private func confirmButtonPressed() {
         print("\n* ConfirmButtonPressed")
+        // TODO: Send image to backend
     }
 }
 
-extension TakePhotoViewController: UIImagePickerControllerDelegate {
-    
+extension TakePhotoViewController: AVCapturePhotoCaptureDelegate {
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        guard let imageData = photo.fileDataRepresentation() else { return }
+        self.imageData = imageData
+        print("\n* Image data: \(imageData)")
+    }
 }
