@@ -31,20 +31,41 @@ class SignUpViewController: UIViewController {
     private var step: Int = 0 {
         didSet {
             inputTypeLabel.text = labelTextArray[step]
+//            If we get to the last step change the text of the next button
             if step == dictKeyArray.count - 1 {
-                actionViewButtonTwo.setTitle("Sign Up", for: .normal)
+                nextButton.setTitle("Sign Up", for: .normal)
             } else {
-                actionViewButtonTwo.setTitle("Next", for: .normal)
+                nextButton.setTitle("Next", for: .normal)
             }
+//            If it's the password make it hidden
             if dictKeyArray[step] == "password" {
                 inputTextField.isSecureTextEntry = true
             } else {
                 inputTextField.isSecureTextEntry = false
             }
+//            If user has already added this field show the progress
             if let text = resultsDict[dictKeyArray[step]] {
-                inputTextField.text = text
+                if text.isEmptyOrWhitespace {
+                    inputTextField.text = ""
+                    disableNextButton()
+                } else {
+                    inputTextField.text = text
+                    enableNextButton()
+                }
+            } else {
+                inputTextField.text = ""
+                disableNextButton()
             }
         }
+    }
+    private func enableNextButton() {
+        nextButton.backgroundColor = UIColor.clear
+        nextButton.isEnabled = true
+    }
+    
+    private func disableNextButton() {
+        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+        nextButton.isEnabled = false
     }
     
     private let inputTypeLabel: UILabel = {
@@ -61,6 +82,8 @@ class SignUpViewController: UIViewController {
         textField.layer.cornerRadius = 5
         textField.setLeftPaddingPoints(16)
         textField.setRightPaddingPoints(16)
+        textField.addTarget(self, action: #selector(textFieldDidChange(_:)),
+                            for: UIControlEvents.editingChanged)
         return textField
     }()
     
@@ -77,7 +100,7 @@ class SignUpViewController: UIViewController {
         return view
     }()
     
-    private let actionViewButtonOne: UIButton = {
+    private let backButton: UIButton = {
 //        This is the back button
         let button = UIButton()
         button.setTitle("<", for: .normal)
@@ -87,7 +110,7 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
-    private let actionViewButtonTwo: UIButton = {
+    private let nextButton: UIButton = {
 //        This is the next button
         let button = UIButton()
         button.setTitle("Next", for: .normal)
@@ -112,7 +135,7 @@ class SignUpViewController: UIViewController {
         [actionView, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
             self.view.addSubview(view)
         }
-        [actionViewSeparator ,actionViewButtonOne, actionViewButtonTwo].forEach { (view) in
+        [actionViewSeparator ,backButton, nextButton].forEach { (view) in
             self.actionView.addSubview(view)
         }
     }
@@ -140,20 +163,20 @@ class SignUpViewController: UIViewController {
             make.right.equalTo(actionView.snp.right)
         }
         
-        actionViewButtonOne.snp.makeConstraints { (make) in
+        backButton.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
         }
         
         actionViewSeparator.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(2)
-            make.left.equalTo(actionViewButtonOne.snp.right)
-            make.right.equalTo(actionViewButtonTwo.snp.left)
+            make.left.equalTo(backButton.snp.right)
+            make.right.equalTo(nextButton.snp.left)
         }
         
-        actionViewButtonTwo.snp.makeConstraints { (make) in
+        nextButton.snp.makeConstraints { (make) in
             make.top.bottom.right.equalToSuperview()
-            make.width.equalTo(actionViewButtonOne).multipliedBy(4)
+            make.width.equalTo(backButton).multipliedBy(4)
         }
     }
     
@@ -164,13 +187,15 @@ class SignUpViewController: UIViewController {
         guard let text = inputTextField.text else {return}
         resultsDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
+            //
         } else {
-            inputTextField.text = ""
             step += 1
         }
     }
     
     @objc private func backButtonTapped(sender: UIButton) {
+        guard let text = inputTextField.text else {return}
+        resultsDict[dictKeyArray[step]] = text
         if step > 0 {
             step -= 1
         }
@@ -178,5 +203,13 @@ class SignUpViewController: UIViewController {
     
     @objc private func oldUserButtonTapped(sender: UIButton) {
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if (textField.text?.isEmptyOrWhitespace)! {
+            disableNextButton()
+        } else {
+            enableNextButton()
+        }
     }
 }

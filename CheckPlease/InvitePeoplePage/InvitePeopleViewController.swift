@@ -14,9 +14,7 @@ class InvitePeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setUpViews()
-        
     }
     
     //    MARK: - Private
