@@ -15,11 +15,12 @@ class TakePhotoViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         navigationItem.title = "Take photo"
-        view.backgroundColor = .yellow
+        view.backgroundColor = .white
         
         guard let captureSession = buildCaptureSession() else { return }
         buildCameraPreviewLayer(withCaptureSession: captureSession)
         let backgroundButtonViews = buildBackgroundButtonViews()
+        buildPreviewImageView(withButtonBackgroundView: backgroundButtonViews.background)
         buildButtons(withBackgroundView: backgroundButtonViews.background,
                      midLineView: backgroundButtonViews.midLine)
     }
@@ -30,9 +31,25 @@ class TakePhotoViewController: UIViewController {
     
     // MARK: - Private
     
+    private var captureImageButton: UIButton?
+    private var confirmButton: UIButton?
+    private var previewImageView: UIImageView?
+    
     private var photoSettings: AVCapturePhotoSettings?
     private var photoOutput: AVCapturePhotoOutput?
-    private var imageData: Data?
+    private var imageData: Data? {
+        didSet {
+            confirmButton?.isEnabled = imageData != nil ? true : false
+            guard let data = self.imageData else {
+                captureImageButton?.setTitle("Take Photo", for: .normal)
+                previewImageView?.image = nil
+                return
+            }
+            captureImageButton?.setTitle("Retake", for: .normal)
+            let image = UIImage(data: data)
+            previewImageView?.image = image
+        }
+    }
     
     private func buildCaptureSession() -> AVCaptureSession? {
         guard let cameraDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else {
@@ -93,6 +110,18 @@ class TakePhotoViewController: UIViewController {
         return (backgroundButtonView, midLineView)
     }
     
+    private func buildPreviewImageView(withButtonBackgroundView backgroundView: UIView) {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        self.previewImageView = imageView
+        view.addSubview(imageView)
+        imageView.snp.makeConstraints { maker in
+            maker.leading.trailing.equalToSuperview()
+            maker.top.equalTo(view.snp.topMargin)
+            maker.bottom.equalTo(backgroundView.snp.top)
+        }
+    }
+    
     private func buildButtons(withBackgroundView backgroundView: UIView, midLineView: UIView) {
         let buttonMaker: (String) -> UIButton = { title in
             let button = UIButton()
@@ -105,12 +134,15 @@ class TakePhotoViewController: UIViewController {
         }
         
         let takePhotoButton = buttonMaker("Take Photo")
+        self.captureImageButton = takePhotoButton
         takePhotoButton.addTarget(self, action: #selector(takePhotoButtonPressed), for: .touchUpInside)
         takePhotoButton.snp.makeConstraints { maker in
             maker.leading.bottom.top.equalToSuperview()
             maker.trailing.equalTo(midLineView)
         }
         let confirmButton = buttonMaker("Confirm")
+        confirmButton.isEnabled = false
+        self.confirmButton = confirmButton
         confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
         confirmButton.snp.makeConstraints { maker in
             maker.top.trailing.bottom.equalToSuperview()
@@ -122,6 +154,11 @@ class TakePhotoViewController: UIViewController {
         guard let photoOutput = self.photoOutput,
             let photoSettings = self.photoSettings else {
                 return
+        }
+        // Only allow image capture if we don't have and image already. This case is hit when pressing "retake"
+        guard imageData == nil else {
+            imageData = nil
+            return
         }
         photoOutput.capturePhoto(with: AVCapturePhotoSettings(from: photoSettings), delegate: self)
     }
