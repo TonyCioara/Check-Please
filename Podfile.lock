@@ -1,20 +1,24 @@
 PODS:
+  - KeychainSwift (12.0.0)
   - SnapKit (4.0.0)
   - SwiftyJSON (4.1.0)
 
 DEPENDENCIES:
+  - KeychainSwift (~> 12.0)
   - SnapKit (~> 4.0.0)
   - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - KeychainSwift
     - SnapKit
     - SwiftyJSON
 
 SPEC CHECKSUMS:
+  KeychainSwift: d5e776578587ee5958ce36601df22f168f65138a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   SwiftyJSON: c29297daf073d2aa016295d5809cdd68045c39b3
 
-PODFILE CHECKSUM: 1fcc706ecdb75003edf91d3f5a023a58e7c8cc80
+PODFILE CHECKSUM: 0e83476a9efbff9fb1b7fa286278ade0d248b5e8
 
 COCOAPODS: 1.5.0

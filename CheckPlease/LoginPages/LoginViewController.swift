@@ -159,6 +159,10 @@ class LoginViewController: UIViewController {
         guard let email = emailTextField.text,
             let password = passwordTextField.text
             else {return}
+        
+        CheckPleaseAPI.login(withEmail: email, password: password) { (json, err) in
+            print(json)
+        }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {

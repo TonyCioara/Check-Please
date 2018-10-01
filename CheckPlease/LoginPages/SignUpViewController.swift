@@ -26,7 +26,7 @@ class SignUpViewController: UIViewController {
     private let labelTextArray = ["Email", "First Name", "Last Name", "Password", "Phone number"]
     private let dictKeyArray = ["email", "firstName", "lastName", "password", "phoneNumber"]
     
-    private var resultsDict: [String: String] = [:]
+    private var userDict: [String: String] = [:]
     
     private var step: Int = 0 {
         didSet {
@@ -44,7 +44,7 @@ class SignUpViewController: UIViewController {
                 inputTextField.isSecureTextEntry = false
             }
 //            If user has already added this field show the progress
-            if let text = resultsDict[dictKeyArray[step]] {
+            if let text = userDict[dictKeyArray[step]] {
                 if text.isEmptyOrWhitespace {
                     inputTextField.text = ""
                     disableNextButton()
@@ -185,9 +185,13 @@ class SignUpViewController: UIViewController {
     @objc private func nextButtonTapped(sender: UIButton) {
         
         guard let text = inputTextField.text else {return}
-        resultsDict[dictKeyArray[step]] = text
+        userDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
-            //
+            CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
+                
+                
+                
+            }
         } else {
             step += 1
         }
@@ -195,7 +199,7 @@ class SignUpViewController: UIViewController {
     
     @objc private func backButtonTapped(sender: UIButton) {
         guard let text = inputTextField.text else {return}
-        resultsDict[dictKeyArray[step]] = text
+        userDict[dictKeyArray[step]] = text
         if step > 0 {
             step -= 1
         }

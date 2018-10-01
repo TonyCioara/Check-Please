@@ -60,13 +60,13 @@ enum Route {
         switch self {
         case let .signUp(userObject):
             let json: [String: String] = [
-                "first_name": userObject["firstName"]!,
-                "last_name": userObject["lastName"]!,
-                "phone_number": userObject["phoneNumber"]!,
+                "firstName": userObject["firstName"]!,
+                "lastName": userObject["lastName"]!,
+                "phoneNumber": userObject["phoneNumber"]!,
                 "email": userObject["email"]!,
-                "password": userObject["password"]!,
+                "password": userObject["password"]!
                 // TODO: Remove payment_method key-value pair & User
-                "payment_method": "card",
+//                "payment_method": "card",
                 ]
             return serialize(json)
         default:
