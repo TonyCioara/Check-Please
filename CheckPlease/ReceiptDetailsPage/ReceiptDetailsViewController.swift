@@ -38,6 +38,7 @@ class ReceiptDetailsViewController: UIViewController {
     
     private func setUpViews() {
         self.title = "Receipt Details"
+        self.view.backgroundColor = AppColors.white
         addSubviews()
         setConstraints()
         setUpTableView()

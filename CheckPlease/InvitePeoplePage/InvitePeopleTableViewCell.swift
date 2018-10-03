@@ -1,8 +1,8 @@
 //
-//  RequestTableViewCell.swift
+//  InvitePeopleTableViewCell.swift
 //  CheckPlease
 //
-//  Created by Tony Cioara on 9/5/18.
+//  Created by Tony Cioara on 9/17/18.
 //  Copyright © 2018 Tony Cioara. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class RequestTableViewCell: UITableViewCell {
+class InviteTableViewCell: UITableViewCell {
     
     func setUp() {
         addSubviews()
@@ -53,6 +53,16 @@ class RequestTableViewCell: UITableViewCell {
         return view
     }()
     
+    private let inviteButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Invite", for: .normal)
+        button.titleLabel?.font = AppFonts.regular14
+        button.backgroundColor = AppColors.veryBlue
+        button.layer.cornerRadius = 5
+        button.addTarget(self, action: #selector(inviteButtonClicked(sender:)), for: .touchDown)
+        return button
+    }()
+    
     private let infoButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Light - Info"), for: .normal)
@@ -61,7 +71,7 @@ class RequestTableViewCell: UITableViewCell {
     }()
     
     private func addSubviews() {
-        [portraitImageView, fullNameLabel, usernameLabel, bottomView, infoButton].forEach { (view) in
+        [portraitImageView, fullNameLabel, usernameLabel, bottomView, infoButton, inviteButton].forEach { (view) in
             self.addSubview(view)
         }
     }
@@ -75,13 +85,13 @@ class RequestTableViewCell: UITableViewCell {
         fullNameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(portraitImageView.snp.top)
             make.left.equalTo(portraitImageView.snp.right).offset(8)
-            make.right.greaterThanOrEqualTo(infoButton.snp.right).inset(16)
+            make.right.greaterThanOrEqualTo(inviteButton.snp.left).inset(16)
         }
         
         usernameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(fullNameLabel.snp.bottom).offset(2)
             make.left.equalTo(fullNameLabel.snp.left)
-            make.right.greaterThanOrEqualTo(infoButton.snp.right).inset(16)
+            make.right.greaterThanOrEqualTo(inviteButton.snp.left).inset(16)
         }
         
         bottomView.snp.makeConstraints { (make) in
@@ -94,9 +104,20 @@ class RequestTableViewCell: UITableViewCell {
             make.top.bottom.right.equalToSuperview().inset(16)
             make.width.equalTo(infoButton.snp.height)
         }
+        
+        inviteButton.snp.makeConstraints { (make) in
+            make.centerY.equalToSuperview()
+            make.height.equalTo(28)
+            make.width.equalToSuperview().multipliedBy(0.3)
+            make.right.equalTo(infoButton.snp.left)
+        }
     }
     
     @objc private func infoButtonClicked(sender: UIButton) {
+        
+    }
+    
+    @objc private func inviteButtonClicked(sender: UIButton) {
         
     }
 }

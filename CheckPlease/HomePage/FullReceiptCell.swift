@@ -26,14 +26,19 @@ class FullReceiptCell: UITableViewCell {
     
     //    MARK: - Private
     
+//    Replace this with the actual model when you get it
+    private let model = Array(1 ... 99)
+    
     private let personPortraitCellId = "personPortraitCellId"
+    private let totalPeopleCellId = "totalPeopleCellId"
+    
     private let collectionViewLineSpacing: CGFloat = 10
     
     private var collectionView: UICollectionView!
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.semibold14
+        label.font = AppFonts.semibold18
         return label
     }()
     
@@ -103,6 +108,7 @@ class FullReceiptCell: UITableViewCell {
         layout.minimumLineSpacing = 10
         collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
         collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
+        collectionView.register(TotalPeopleCell.self, forCellWithReuseIdentifier: totalPeopleCellId)
         collectionView.backgroundColor = .white
         collectionView.isUserInteractionEnabled = false
         
@@ -115,13 +121,24 @@ class FullReceiptCell: UITableViewCell {
 extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if model.count < 5 {
+            return model.count
+        } else {
+            return 5
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: personPortraitCellId, for: indexPath) as! PersonPortraitCell
-        cell.setUp(image: #imageLiteral(resourceName: "IMG_0932"))
-        return cell
+        if indexPath.item == 4 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: totalPeopleCellId, for: indexPath) as! TotalPeopleCell
+            cell.setUp(count: model.count - 4)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: personPortraitCellId, for: indexPath) as! PersonPortraitCell
+            cell.setUp(image: #imageLiteral(resourceName: "IMG_0932"))
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

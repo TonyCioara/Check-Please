@@ -56,7 +56,7 @@ class SelectItemsViewController: UIViewController {
     }()
     
     private func addSubviews() {
-        [actionView, tableView].forEach { (view) in
+        [tableView, actionView].forEach { (view) in
             self.view.addSubview(view)
         }
         
@@ -80,8 +80,7 @@ class SelectItemsViewController: UIViewController {
         
         actionViewSeparator.snp.makeConstraints { (make) in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-8)
-            make.top.equalToSuperview().offset(8)
+            make.bottom.top.equalToSuperview().inset(8)
             make.width.equalTo(2)
         }
         
@@ -98,6 +97,8 @@ class SelectItemsViewController: UIViewController {
     
     private func setUpViews() {
         self.title = "Select Items"
+        self.view.backgroundColor = AppColors.white
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Invite", style: .plain, target: self, action: #selector(inviteButtonTapped(sender:)))
         setUpCollectionView()
         setUpTableView()
         addSubviews()
@@ -106,6 +107,10 @@ class SelectItemsViewController: UIViewController {
     
     @objc private func payButtonTapped(sender: UIButton) {
         
+    }
+    
+    @objc private func inviteButtonTapped(sender: UIButton) {
+        self.navigationController?.pushViewController(InvitePeopleViewController(), animated: true)
     }
     
     @objc private func requestButtonTapped(sender: UIButton) {

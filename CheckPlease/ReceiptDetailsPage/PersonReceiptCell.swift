@@ -37,7 +37,7 @@ class PreviousReceiptCell: UITableViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.semibold14
+        label.font = AppFonts.semibold18
         return label
     }()
     
