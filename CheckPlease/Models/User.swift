@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct User {
     
@@ -24,13 +25,12 @@ struct User {
         self.phoneNumber = phoneNumber
     }
     
-    init(userDict: Dictionary<String, String>) {
-        let email = userDict["email"] ?? ""
-        let username = userDict["username"] ?? ""
-        let firstName = userDict["firstName"] ?? ""
-        let lastName = userDict["lastName"] ?? ""
-        let phoneNumber = userDict["phoneNumber"] ?? ""
-        self.init(email: email, username: username, firstName: firstName, lastName: lastName, phoneNumber: phoneNumber)
+    init(json: JSON) {
+        self.email = json["email"].stringValue
+        self.username = json["username"].stringValue
+        self.firstName = json["firstName"].stringValue
+        self.lastName = json["lastName"].stringValue
+        self.phoneNumber = json["phoneNumber"].stringValue
     }
     
 }

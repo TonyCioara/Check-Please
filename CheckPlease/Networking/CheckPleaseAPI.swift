@@ -30,7 +30,7 @@ class CheckPleaseAPI {
     // MARK: - Private
     
     // TODO: Add URL
-    private static let baseStringURL = "https://133780a0.ngrok.io"
+    private static let baseStringURL = ""
     
     private static func request(withRoute route: Route, completionHandler handler: @escaping CompletionHandler) {
         
