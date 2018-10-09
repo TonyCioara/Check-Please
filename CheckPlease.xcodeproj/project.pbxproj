@@ -30,6 +30,7 @@
 		48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775D21378C190029E490 /* PersonPortraitCell.swift */; };
 		860F866B2146E66A00B32022 /* CheckPleaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */; };
 		860F866D2146E69E00B32022 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866C2146E69E00B32022 /* Route.swift */; };
+		860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866F214714BC00B32022 /* TakePhotoViewController.swift */; };
 		93FE25D8A771092D2DCBD733 /* Pods_CheckPlease.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339629119946F64974C33B85 /* Pods_CheckPlease.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		48C3775D21378C190029E490 /* PersonPortraitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPortraitCell.swift; sourceTree = "<group>"; };
 		860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPleaseAPI.swift; sourceTree = "<group>"; };
 		860F866C2146E69E00B32022 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
+		860F866F214714BC00B32022 /* TakePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoViewController.swift; sourceTree = "<group>"; };
 		B0599B7C9A8652B1BB3E13EE /* Pods-CheckPlease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckPlease.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckPlease/Pods-CheckPlease.debug.xcconfig"; sourceTree = "<group>"; };
 		CF364183EA9AA83E1294AD3D /* Pods-CheckPlease.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckPlease.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckPlease/Pods-CheckPlease.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -154,6 +156,7 @@
 				860F86692146E63500B32022 /* Networking */,
 				4883F3BA2145AF00002D13F7 /* Helpers */,
 				48C3774A213727810029E490 /* UIElements */,
+				860F866E2147149500B32022 /* TakePhotoViewController */,
 				48C3775121374A090029E490 /* ReceiptDetailsPage */,
 				48B9B2EA2140BF3B00215E73 /* RequestMoneyPage */,
 				489B84B521503E150036CD01 /* InvitePeoplePage */,
@@ -212,6 +215,14 @@
 				860F866C2146E69E00B32022 /* Route.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		860F866E2147149500B32022 /* TakePhotoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				860F866F214714BC00B32022 /* TakePhotoViewController.swift */,
+			);
+			path = TakePhotoViewController;
 			sourceTree = "<group>";
 		};
 		EEDC33EF6B73DF709DA16523 /* Frameworks */ = {
@@ -351,6 +362,7 @@
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
+				860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
 				48C37757213786420029E490 /* AppColors.swift in Sources */,
 				48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */,
