@@ -98,7 +98,7 @@ class SelectItemsViewController: UIViewController {
     private func setUpViews() {
         self.title = "Select Items"
         self.view.backgroundColor = AppColors.white
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Invite", style: .plain, target: self, action: #selector(inviteButtonTapped(sender:)))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Invite", style: .plain, target: self, action: #selector(inviteButtonTapped(sender:)))
         setUpCollectionView()
         setUpTableView()
         addSubviews()
@@ -109,9 +109,9 @@ class SelectItemsViewController: UIViewController {
         
     }
     
-    @objc private func inviteButtonTapped(sender: UIButton) {
-        self.navigationController?.pushViewController(InvitePeopleViewController(), animated: true)
-    }
+//    @objc private func inviteButtonTapped(sender: UIButton) {
+//        self.navigationController?.pushViewController(InvitePeopleViewController(), animated: true)
+//    }
     
     @objc private func requestButtonTapped(sender: UIButton) {
         navigationController?.pushViewController(RequestMoneyViewController(), animated: true)
@@ -176,9 +176,9 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return topCollectionView
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        return topCollectionView
+//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 54
