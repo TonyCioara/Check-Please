@@ -187,7 +187,8 @@ class SignUpViewController: UIViewController {
         guard let text = inputTextField.text else {return}
         resultsDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
-            //
+            // TODO: Fire sign-up request
+            // TODO: Cache user info after successful sign up
         } else {
             step += 1
         }

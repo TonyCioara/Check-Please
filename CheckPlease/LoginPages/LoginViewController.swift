@@ -156,9 +156,11 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(sender: UIButton) {
+        // TODO: Fire login request
+        // TODO: Cache user info after successful login
         guard let email = emailTextField.text,
             let password = passwordTextField.text
-            else {return}
+            else { return }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {
