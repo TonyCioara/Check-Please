@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 struct User {
     
@@ -23,25 +24,17 @@ struct User {
         self.lastName = lastName
         self.phoneNumber = phoneNumber
     }
-    
-    init?(json: [String: String]) {
-        // TODO: Verify correct keys for json response
-        guard
-            let username = json["username"],
-            let firstName = json["first_name"],
-            let lastName = json["last_name"],
-            let email = json["email"],
-            let phoneNumber = json["phone_number"] else {
-                return nil
-        }
-        
-        self.username = username
-        self.firstName = firstName
-        self.lastName = lastName
-        self.email = email
-        self.phoneNumber = phoneNumber
+  
+    init(json: JSON) {
+        self.email = json["email"].stringValue
+        self.username = json["username"].stringValue
+        self.firstName = json["firstName"].stringValue
+        self.lastName = json["lastName"].stringValue
+        self.phoneNumber = json["phoneNumber"].stringValue
     }
     
+    /// Called when the local user's chatroom partner has stopped sharing their video feed.
+    /// - Returns: Boolean value indicating if caching was successful.
     func cache() -> Bool {
         let fileURL = FileManager.default
             .urls(for: .cachesDirectory, in: .allDomainsMask)

@@ -159,8 +159,11 @@ class LoginViewController: UIViewController {
         // TODO: Fire login request
         // TODO: Cache user info after successful login
         guard let email = emailTextField.text,
-            let password = passwordTextField.text
-            else { return }
+            let password = passwordTextField.text else { return }
+        CheckPleaseAPI.login(withEmail: email, password: password) { (json, err) in
+            // TODO: Implement closure body
+            print(json)
+        }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {
@@ -168,4 +171,3 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
 }
-
