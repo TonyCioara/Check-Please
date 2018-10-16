@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4840316521596703006D25DA /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4840316421596703006D25DA /* StringExtensions.swift */; };
-		485ED1E02175595C0047B386 /* ButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1DF2175595C0047B386 /* ButtonExtensions.swift */; };
+		485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */; };
 		485ED1E2217560180047B386 /* SelectItemCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E1217560180047B386 /* SelectItemCellDelegate.swift */; };
+		485ED1E42176721E0047B386 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E32176721E0047B386 /* DataSource.swift */; };
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
@@ -39,8 +40,9 @@
 /* Begin PBXFileReference section */
 		339629119946F64974C33B85 /* Pods_CheckPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4840316421596703006D25DA /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		485ED1DF2175595C0047B386 /* ButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonExtensions.swift; sourceTree = "<group>"; };
+		485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		485ED1E1217560180047B386 /* SelectItemCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemCellDelegate.swift; sourceTree = "<group>"; };
+		485ED1E32176721E0047B386 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				4840316421596703006D25DA /* StringExtensions.swift */,
-				485ED1DF2175595C0047B386 /* ButtonExtensions.swift */,
+				485ED1E32176721E0047B386 /* DataSource.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -190,6 +192,7 @@
 				48C3774B2137279A0029E490 /* AppFonts.swift */,
 				48C37756213786420029E490 /* AppColors.swift */,
 				4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */,
+				485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -354,7 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */,
-				485ED1E02175595C0047B386 /* ButtonExtensions.swift in Sources */,
+				485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */,
 				488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
@@ -369,6 +372,7 @@
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
+				485ED1E42176721E0047B386 /* DataSource.swift in Sources */,
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,

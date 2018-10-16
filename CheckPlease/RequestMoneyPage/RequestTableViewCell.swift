@@ -12,15 +12,15 @@ import SnapKit
 
 class RequestTableViewCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(user: User) {
         addSubviews()
         setConstraints()
         
         portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
         
         portraitImageView.image = #imageLiteral(resourceName: "IMG_0932")
-        fullNameLabel.text = "Tony Cioara"
-        usernameLabel.text = "@Tony-Cioara"
+        fullNameLabel.text = user.firstName + " " + user.lastName
+        usernameLabel.text = user.phoneNumber
         
     }
     
@@ -61,27 +61,26 @@ class RequestTableViewCell: UITableViewCell {
     }()
     
     private func addSubviews() {
-        [portraitImageView, fullNameLabel, usernameLabel, bottomView, infoButton].forEach { (view) in
+        [fullNameLabel, usernameLabel, bottomView].forEach { (view) in
             self.addSubview(view)
         }
     }
     
     private func setConstraints() {
-        portraitImageView.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview().inset(16)
-            make.height.equalTo(portraitImageView.snp.width)
-        }
+//        portraitImageView.snp.makeConstraints { (make) in
+//            make.left.top.bottom.equalToSuperview().inset(16)
+//            make.height.equalTo(portraitImageView.snp.width)
+//        }
         
         fullNameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(portraitImageView.snp.top)
-            make.left.equalTo(portraitImageView.snp.right).offset(8)
-            make.right.greaterThanOrEqualTo(infoButton.snp.right).inset(16)
+            make.top.left.equalToSuperview().inset(16)
+            make.right.greaterThanOrEqualToSuperview().inset(16)
         }
         
         usernameLabel.snp.makeConstraints { (make) in
             make.top.equalTo(fullNameLabel.snp.bottom).offset(2)
             make.left.equalTo(fullNameLabel.snp.left)
-            make.right.greaterThanOrEqualTo(infoButton.snp.right).inset(16)
+            make.right.greaterThanOrEqualToSuperview().inset(16)
         }
         
         bottomView.snp.makeConstraints { (make) in
@@ -90,10 +89,10 @@ class RequestTableViewCell: UITableViewCell {
             make.right.left.equalToSuperview().inset(32)
         }
         
-        infoButton.snp.makeConstraints { (make) in
-            make.top.bottom.right.equalToSuperview().inset(16)
-            make.width.equalTo(infoButton.snp.height)
-        }
+//        infoButton.snp.makeConstraints { (make) in
+//            make.top.bottom.right.equalToSuperview().inset(16)
+//            make.width.equalTo(infoButton.snp.height)
+//        }
     }
     
     @objc private func infoButtonClicked(sender: UIButton) {

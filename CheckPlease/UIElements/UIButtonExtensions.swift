@@ -14,20 +14,20 @@ extension UIButton {
     func switchState() {
         self.isEnabled = !self.isEnabled
         if self.isEnabled {
-            self.backgroundColor = UIColor.clear
+            self.backgroundColor = AppColors.darkBlue
         } else {
-            self.backgroundColor = AppColors.white.withAlphaComponent(0.4)
+            self.backgroundColor = AppColors.lightBlue
         }
     }
     
     func disable() {
         self.isEnabled = false
-        self.backgroundColor = AppColors.white.withAlphaComponent(0.4)
+        self.backgroundColor = AppColors.lightBlue
     }
 
     func enable() {
         self.isEnabled = true
-        self.backgroundColor = UIColor.clear
+        self.backgroundColor = AppColors.darkBlue
     }
     
 }
