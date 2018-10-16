@@ -19,6 +19,16 @@ class SelectItemsViewController: UIViewController {
     
     //    MARK: - Private
     
+    private var selectedIndexes = Set<Int>() {
+        didSet {
+            if selectedIndexes.count == 0 {
+                requestButton.disable()
+            } else {
+                requestButton.enable()
+            }
+        }
+    }
+    
     private var topCollectionView: UICollectionView!
     private let personPortraitCellId = "personPortraitCellId"
     
@@ -30,28 +40,29 @@ class SelectItemsViewController: UIViewController {
         view.backgroundColor = AppColors.darkBlue
         return view
     }()
+//
+//    private let actionViewSeparator: UIView = {
+//        let view = UIView()
+//        view.backgroundColor = AppColors.white
+//        return view
+//    }()
+//
+//    private let payButton: UIButton = {
+//        let button = UIButton()
+//        button.setTitle("Pay", for: .normal)
+//        button.titleLabel?.font = AppFonts.bold18
+//        button.titleLabel?.textColor = AppColors.white
+//        button.addTarget(self, action: #selector(payButtonTapped(sender: )), for: UIControlEvents.touchDown)
+//        return button
+//    }()
     
-    private let actionViewSeparator: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColors.white
-        return view
-    }()
-    
-    private let actionViewButtonOne: UIButton = {
-        let button = UIButton()
-        button.setTitle("Pay", for: .normal)
-        button.titleLabel?.font = AppFonts.bold18
-        button.titleLabel?.textColor = AppColors.white
-        button.addTarget(self, action: #selector(payButtonTapped(sender: )), for: UIControlEvents.touchDown)
-        return button
-    }()
-    
-    private let actionViewButtonTwo: UIButton = {
+    private let requestButton: UIButton = {
         let button = UIButton()
         button.setTitle("Request", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
         button.titleLabel?.textColor = AppColors.white
         button.addTarget(self, action: #selector(requestButtonTapped(sender: )), for: UIControlEvents.touchDown)
+        button.disable()
         return button
     }()
     
@@ -60,7 +71,7 @@ class SelectItemsViewController: UIViewController {
             self.view.addSubview(view)
         }
         
-        [actionViewSeparator, actionViewButtonOne, actionViewButtonTwo].forEach { (view) in
+        [requestButton].forEach { (view) in
             actionView.addSubview(view)
         }
     }
@@ -77,21 +88,20 @@ class SelectItemsViewController: UIViewController {
             make.bottom.left.right.equalToSuperview()
             make.height.equalTo(50)
         }
+//
+//        actionViewSeparator.snp.makeConstraints { (make) in
+//            make.centerX.equalToSuperview()
+//            make.bottom.top.equalToSuperview().inset(8)
+//            make.width.equalTo(2)
+//        }
+//
+//        payButton.snp.makeConstraints { (make) in
+//            make.left.top.bottom.equalToSuperview()
+//            make.right.equalTo(actionViewSeparator.snp.left)
+//        }
         
-        actionViewSeparator.snp.makeConstraints { (make) in
-            make.centerX.equalToSuperview()
-            make.bottom.top.equalToSuperview().inset(8)
-            make.width.equalTo(2)
-        }
-        
-        actionViewButtonOne.snp.makeConstraints { (make) in
-            make.left.top.bottom.equalToSuperview()
-            make.right.equalTo(actionViewSeparator.snp.left)
-        }
-        
-        actionViewButtonTwo.snp.makeConstraints { (make) in
-            make.right.top.bottom.equalToSuperview()
-            make.left.equalTo(actionViewSeparator.snp.right)
+        requestButton.snp.makeConstraints { (make) in
+            make.top.left.right.bottom.equalToSuperview()
         }
     }
     
@@ -105,10 +115,10 @@ class SelectItemsViewController: UIViewController {
         setConstraints()
     }
     
-    @objc private func payButtonTapped(sender: UIButton) {
-        
-    }
-    
+//    @objc private func payButtonTapped(sender: UIButton) {
+//
+//    }
+//
 //    @objc private func inviteButtonTapped(sender: UIButton) {
 //        self.navigationController?.pushViewController(InvitePeopleViewController(), animated: true)
 //    }
@@ -172,7 +182,7 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: selectItemTableViewCellId, for: indexPath) as! SelectItemTableViewCell
-        cell.setUp()
+        cell.setUp(indexPath: indexPath, delegate: self)
         return cell
     }
     
@@ -182,5 +192,17 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 54
+    }
+}
+
+extension SelectItemsViewController: SelectItemCellDelegate {
+    func cellWasTapped(indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            if selectedIndexes.contains(indexPath.row) {
+                selectedIndexes.remove(indexPath.row)
+            } else {
+                selectedIndexes.insert(indexPath.row)
+            }
+        }
     }
 }

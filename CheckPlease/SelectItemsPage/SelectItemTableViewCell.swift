@@ -12,7 +12,7 @@ import SnapKit
 
 class SelectItemTableViewCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(indexPath: IndexPath, delegate: SelectItemCellDelegate) {
         
         titleLabel.text = "Chicken Katsu"
         priceLabel.text = "$5"
@@ -23,9 +23,15 @@ class SelectItemTableViewCell: UITableViewCell {
         
         containerView.layer.cornerRadius = (self.frame.height - 16) / 2
         bubbleView.layer.cornerRadius = (self.frame.height - 32) / 2
+        
+        self.indexPath = indexPath
+        self.delegate = delegate
     }
     
     //    MARK: - Private
+    
+    private var delegate: SelectItemCellDelegate!
+    private var indexPath: IndexPath!
     
     private let containerView: UIView = {
         let view = UIView()
@@ -64,21 +70,17 @@ class SelectItemTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         containerView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(8)
-            make.bottom.equalToSuperview().offset(-8)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.top.bottom.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(16)
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().inset(16)
         }
         
         bubbleView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(8)
-            make.bottom.equalToSuperview().offset(-8)
-            make.right.equalToSuperview().offset(-8)
+            make.top.bottom.right.equalToSuperview().inset(8)
             make.width.equalTo(bubbleView.snp.height)
         }
         
@@ -115,6 +117,7 @@ class SelectItemTableViewCell: UITableViewCell {
         timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
             self.containerView.backgroundColor = AppColors.white
         })
+        delegate.cellWasTapped(indexPath: self.indexPath)
     }
 }
 
