@@ -16,13 +16,13 @@ extension UIButton {
         if self.isEnabled {
             self.backgroundColor = UIColor.clear
         } else {
-            self.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+            self.backgroundColor = AppColors.white.withAlphaComponent(0.4)
         }
     }
     
     func disable() {
         self.isEnabled = false
-        self.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+        self.backgroundColor = AppColors.white.withAlphaComponent(0.4)
     }
 
     func enable() {
