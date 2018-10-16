@@ -44,7 +44,7 @@ class RequestMoneyViewController: UIViewController {
     
     private let searchController : UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
-        searchController.searchBar.keyboardType = .numberPad
+//        searchController.searchBar.keyboardType = .numberPad
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Name, e-mail, phone"
         searchController.definesPresentationContext = true
@@ -114,7 +114,12 @@ class RequestMoneyViewController: UIViewController {
         alertController.addAction(actionOne)
         alertController.addAction(actionTwo)
         
-        self.present(alertController, animated: true, completion: nil)
+        if isFiltering() {
+            searchController.present(alertController, animated: true, completion: nil)
+        } else {
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
     }
     
 }
@@ -150,6 +155,7 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
             selectedUser = users[indexPath.row]
         }
         
+//        searchController.isActive = false
         displayAlert(user: selectedUser)
     }
 }
@@ -158,7 +164,7 @@ extension RequestMoneyViewController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {return}
-        filterContentWhenSearching(_searchText: text)
+        filterContentWhenSearching(searchText: text)
     }
     
     //    MARK: - Private
@@ -167,12 +173,12 @@ extension RequestMoneyViewController: UISearchResultsUpdating {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    private func filterContentWhenSearching(_searchText: String, scope: String = "All") {
+    private func filterContentWhenSearching(searchText: String, scope: String = "All") {
         filteredUsers = users.filter({ (user) -> Bool in
-            if user.firstName.contains(_searchText) ||
-                    user.lastName.contains(_searchText) ||
-                    user.email.contains(_searchText) ||
-                    user.phoneNumber.contains(_searchText) {
+            if user.firstName.contains(searchText) ||
+                    user.lastName.contains(searchText) ||
+                    user.email.contains(searchText) ||
+                    user.phoneNumber.contains(searchText) {
                 return true
             }
             return false
