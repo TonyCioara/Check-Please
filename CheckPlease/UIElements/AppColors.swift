@@ -21,6 +21,8 @@ struct AppColors {
     static let darkBlue = UIColor(red: 74 / 255, green: 144 / 255, blue: 226 / 255, alpha: 1)
     static let veryBlue = UIColor(red: 0 / 255, green: 122 / 255, blue: 255 / 255, alpha: 1)
     
+    static let mediumGreen = UIColor(red: 188 / 255, green: 233 / 255, blue: 184 / 255, alpha: 1)
+    
     static let black = UIColor.black
 }
 

@@ -15,9 +15,15 @@ class SelectItemsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
+        unsentItems = receipt.items
     }
     
     //    MARK: - Private
+    
+    private var receipt = DataSource.receipt
+    
+    private var unsentItems = [ReceiptItem]()
+    private var sentItems = [ReceiptItem]()
     
     private var selectedIndexes = Set<Int>() {
         didSet {
@@ -29,7 +35,6 @@ class SelectItemsViewController: UIViewController {
         }
     }
     
-    private var topCollectionView: UICollectionView!
     private let personPortraitCellId = "personPortraitCellId"
     
     private var tableView = UITableView()
@@ -40,21 +45,6 @@ class SelectItemsViewController: UIViewController {
         view.backgroundColor = AppColors.darkBlue
         return view
     }()
-//
-//    private let actionViewSeparator: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = AppColors.white
-//        return view
-//    }()
-//
-//    private let payButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("Pay", for: .normal)
-//        button.titleLabel?.font = AppFonts.bold18
-//        button.titleLabel?.textColor = AppColors.white
-//        button.addTarget(self, action: #selector(payButtonTapped(sender: )), for: UIControlEvents.touchDown)
-//        return button
-//    }()
     
     private let requestButton: UIButton = {
         let button = UIButton()
@@ -88,17 +78,6 @@ class SelectItemsViewController: UIViewController {
             make.bottom.left.right.equalToSuperview()
             make.height.equalTo(50)
         }
-//
-//        actionViewSeparator.snp.makeConstraints { (make) in
-//            make.centerX.equalToSuperview()
-//            make.bottom.top.equalToSuperview().inset(8)
-//            make.width.equalTo(2)
-//        }
-//
-//        payButton.snp.makeConstraints { (make) in
-//            make.left.top.bottom.equalToSuperview()
-//            make.right.equalTo(actionViewSeparator.snp.left)
-//        }
         
         requestButton.snp.makeConstraints { (make) in
             make.top.left.right.bottom.equalToSuperview()
@@ -108,23 +87,17 @@ class SelectItemsViewController: UIViewController {
     private func setUpViews() {
         self.title = "Select Items"
         self.view.backgroundColor = AppColors.white
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Invite", style: .plain, target: self, action: #selector(inviteButtonTapped(sender:)))
-        setUpCollectionView()
         setUpTableView()
         addSubviews()
         setConstraints()
     }
     
-//    @objc private func payButtonTapped(sender: UIButton) {
-//
-//    }
-//
-//    @objc private func inviteButtonTapped(sender: UIButton) {
-//        self.navigationController?.pushViewController(InvitePeopleViewController(), animated: true)
-//    }
-    
     @objc private func requestButtonTapped(sender: UIButton) {
-        navigationController?.pushViewController(RequestMoneyViewController(), animated: true)
+        var items = [ReceiptItem]()
+        for index in selectedIndexes {
+            items.append(unsentItems[index])
+        }
+        navigationController?.pushViewController(RequestMoneyViewController(items: items, delegate: self), animated: true)
     }
     
     private func setUpTableView() {
@@ -134,46 +107,20 @@ class SelectItemsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
-    
-    private func setUpCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        topCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 50), collectionViewLayout: layout)
-        topCollectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
-        topCollectionView.backgroundColor = .white
-        topCollectionView.allowsSelection = false
-        topCollectionView.contentInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-        topCollectionView.backgroundColor = AppColors.darkBlue
-        topCollectionView.showsHorizontalScrollIndicator = false
-        
-        topCollectionView.delegate = self
-        topCollectionView.dataSource = self
-    }
-}
-
-extension SelectItemsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 12
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        You can find this cell in the home page folder
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: personPortraitCellId, for: indexPath) as! PersonPortraitCell
-        cell.setUp(image: #imageLiteral(resourceName: "IMG_0932"))
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 44, height: 44)
-    }
 }
 
 extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 12
+        switch section {
+        case 0:
+            return unsentItems.count
+        case 1:
+            return sentItems.count
+        default:
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -182,20 +129,41 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: selectItemTableViewCellId, for: indexPath) as! SelectItemTableViewCell
-        cell.setUp(indexPath: indexPath, delegate: self)
+        switch indexPath.section {
+        case 0:
+            cell.setUp(indexPath: indexPath, delegate: self, receiptItem: unsentItems[indexPath.row])
+        case 1:
+            cell.setUp(indexPath: indexPath, delegate: self, receiptItem: sentItems[indexPath.row])
+        default: break
+        }
+        
         return cell
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        return topCollectionView
-//    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 54
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        switch section {
+//        case 0:
+//            return "Unsent Items"
+        case 1:
+            return "Sent Items"
+        default:
+            return nil
+        }
+    }
 }
 
-extension SelectItemsViewController: SelectItemCellDelegate {
+extension SelectItemsViewController: CellTapDelegate {
+//    This is a replacement for tableview(did select row at)
+//    We only want to trigger it when a view is tap, and not the whole cell
     func cellWasTapped(indexPath: IndexPath) {
         if indexPath.section == 0 {
             if selectedIndexes.contains(indexPath.row) {
@@ -205,4 +173,23 @@ extension SelectItemsViewController: SelectItemCellDelegate {
             }
         }
     }
+}
+
+extension SelectItemsViewController: RequestMoneyDelegate {
+    func confirmButtonPressed() {
+        var indexArray = [Int]()
+        for index in selectedIndexes {
+            sentItems.append(unsentItems[index])
+            indexArray.append(index)
+        }
+        indexArray = indexArray.sorted().reversed()
+        for index in indexArray {
+            unsentItems.remove(at: index)
+        }
+        
+        selectedIndexes = []
+        tableView.reloadData()
+    }
+    
+    
 }

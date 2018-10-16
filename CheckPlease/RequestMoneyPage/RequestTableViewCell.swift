@@ -25,6 +25,7 @@ class RequestTableViewCell: UITableViewCell {
     }
     
     //    MARK: - Private
+    
     private let portraitImageView: UIImageView = {
         let imageView = UIImageView()
         

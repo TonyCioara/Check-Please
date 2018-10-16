@@ -12,10 +12,10 @@ import SnapKit
 
 class SelectItemTableViewCell: UITableViewCell {
     
-    func setUp(indexPath: IndexPath, delegate: SelectItemCellDelegate) {
+    func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receiptItem: ReceiptItem) {
         
-        titleLabel.text = "Chicken Katsu"
-        priceLabel.text = "$5"
+        titleLabel.text = receiptItem.name
+        priceLabel.text = receiptItem.price
         
         addSubviews()
         setConstraints()
@@ -26,11 +26,22 @@ class SelectItemTableViewCell: UITableViewCell {
         
         self.indexPath = indexPath
         self.delegate = delegate
+        
+        switch indexPath.section {
+        case 0:
+            bubbleView.backgroundColor = AppColors.mediumBlue
+            bubbleView.isHidden = true
+        case 1:
+            bubbleView.backgroundColor = AppColors.mediumGreen
+            bubbleView.isHidden = false
+        default:
+            break
+        }
     }
     
     //    MARK: - Private
     
-    private var delegate: SelectItemCellDelegate!
+    private var delegate: CellTapDelegate!
     private var indexPath: IndexPath!
     
     private let containerView: UIView = {
@@ -112,12 +123,14 @@ class SelectItemTableViewCell: UITableViewCell {
     
     @objc private func handleTap(sender: UITapGestureRecognizer? = nil) {
         // handling code
-        bubbleView.isHidden = !bubbleView.isHidden
-        containerView.backgroundColor = AppColors.lightGray
-        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
-            self.containerView.backgroundColor = AppColors.white
-        })
-        delegate.cellWasTapped(indexPath: self.indexPath)
+        if indexPath.section == 0 {
+            bubbleView.isHidden = !bubbleView.isHidden
+            containerView.backgroundColor = AppColors.lightGray
+            timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
+                self.containerView.backgroundColor = AppColors.white
+            })
+            delegate.cellWasTapped(indexPath: self.indexPath)
+        }
     }
 }
 

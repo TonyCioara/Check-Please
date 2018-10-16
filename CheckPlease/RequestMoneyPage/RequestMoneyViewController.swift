@@ -21,20 +21,32 @@ class RequestMoneyViewController: UIViewController {
         
     }
     
+    init(items: [ReceiptItem], delegate: RequestMoneyDelegate) {
+        
+        self.receiptItems = items
+        self.delegate = delegate
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //    MARK: - Private
     
+    private var delegate: RequestMoneyDelegate!
 //  Change this to users once connected to the backend.
-    private var filteredPhoneNumbers = [String]()
-    private var phoneNumbers: [String] = ["9712810024", "43243243431", "576767653", "971824512", "099933321"]
     
     private let users = DataSource.users
     private var filteredUsers = [User]()
+    
+    private var receiptItems: [ReceiptItem]
     
     private let searchController : UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.keyboardType = .numberPad
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "phone"
+        searchController.searchBar.placeholder = "Name, e-mail, phone"
         searchController.definesPresentationContext = true
         return searchController
     }()
@@ -75,6 +87,36 @@ class RequestMoneyViewController: UIViewController {
         tableView.dataSource = self
     }
     
+    private func displayAlert(user: User) {
+        var message = "Items: "
+        for index in 0..<receiptItems.count {
+            let item = receiptItems[index]
+            if index == receiptItems.count - 1 {
+                message.append(item.name)
+            } else {
+                message.append("\(item.name), ")
+            }
+            
+        }
+        
+        let alertController = UIAlertController(title: "Request \(user.firstName) \(user.lastName)", message: message, preferredStyle: .actionSheet)
+        
+        let actionOne = UIAlertAction(title: "Confirm", style: .default) { (action) in
+            //            TODO: Perform networking request here
+            self.delegate.confirmButtonPressed()
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        let actionTwo = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            
+        }
+        
+        alertController.addAction(actionOne)
+        alertController.addAction(actionTwo)
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 }
 
 extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource {
@@ -98,6 +140,17 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var selectedUser: User
+        if isFiltering() {
+            selectedUser = filteredUsers[indexPath.row]
+        } else {
+            selectedUser = users[indexPath.row]
+        }
+        
+        displayAlert(user: selectedUser)
     }
 }
 
