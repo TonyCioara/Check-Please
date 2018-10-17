@@ -20,7 +20,9 @@ class RequestTableViewCell: UITableViewCell {
         
         portraitImageView.image = #imageLiteral(resourceName: "IMG_0932")
         fullNameLabel.text = user.firstName + " " + user.lastName
-        usernameLabel.text = user.phoneNumber
+        var phoneNumber = user.phoneNumber
+        phoneNumber.formatPhoneNumber()
+        phoneNumberLabel.text = phoneNumber
         
     }
     
@@ -42,9 +44,9 @@ class RequestTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let usernameLabel: UILabel = {
+    private let phoneNumberLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.light12
+        label.font = AppFonts.light14
         return label
     }()
     
@@ -62,7 +64,7 @@ class RequestTableViewCell: UITableViewCell {
     }()
     
     private func addSubviews() {
-        [fullNameLabel, usernameLabel, bottomView].forEach { (view) in
+        [fullNameLabel, phoneNumberLabel, bottomView].forEach { (view) in
             self.addSubview(view)
         }
     }
@@ -78,8 +80,8 @@ class RequestTableViewCell: UITableViewCell {
             make.right.greaterThanOrEqualToSuperview().inset(16)
         }
         
-        usernameLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(fullNameLabel.snp.bottom).offset(2)
+        phoneNumberLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(fullNameLabel.snp.bottom).offset(6)
             make.left.equalTo(fullNameLabel.snp.left)
             make.right.greaterThanOrEqualToSuperview().inset(16)
         }

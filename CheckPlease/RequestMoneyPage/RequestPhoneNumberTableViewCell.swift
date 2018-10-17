@@ -33,7 +33,7 @@ class RequestPhoneNumberTableViewCell: UITableViewCell {
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.light12
+        label.font = AppFonts.light14
         return label
     }()
     
@@ -52,8 +52,8 @@ class RequestPhoneNumberTableViewCell: UITableViewCell {
             }
             
             phoneNumberLabel.snp.makeConstraints { (make) in
-                make.top.equalTo(descriptionLabel.snp.bottom).offset(2)
-                make.left.equalTo(descriptionLabel.snp.left)
+                make.top.equalTo(descriptionLabel.snp.bottom).offset(4)
+                make.left.equalTo(descriptionLabel.snp.left).offset(6)
                 make.right.greaterThanOrEqualToSuperview().inset(16)
             }
         }
