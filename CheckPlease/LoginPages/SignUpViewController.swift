@@ -58,6 +58,7 @@ class SignUpViewController: UIViewController {
             }
         }
     }
+    
     private func enableNextButton() {
         nextButton.backgroundColor = UIColor.clear
         nextButton.isEnabled = true
@@ -187,10 +188,10 @@ class SignUpViewController: UIViewController {
         guard let text = inputTextField.text else {return}
         userDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
+            // TODO: Fire sign-up request
+            // TODO: Cache user info after successful sign up
             CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
-                
-                
-                
+                // TODO: Implement closure body
             }
         } else {
             step += 1
