@@ -18,6 +18,7 @@ class SelectItemsViewController: UIViewController {
         unsentItems = receipt.items
     }
     
+    
     //    MARK: - Private
     
     private var receipt = DataSource.receipt
@@ -189,6 +190,7 @@ extension SelectItemsViewController: RequestMoneyDelegate {
         
         selectedIndexes = []
         tableView.reloadData()
+
     }
     
     

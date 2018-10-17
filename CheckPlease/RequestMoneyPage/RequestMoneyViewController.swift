@@ -41,6 +41,7 @@ class RequestMoneyViewController: UIViewController {
     private var filteredUsers = [User]()
     
     private var receiptItems: [ReceiptItem]
+    private var selectedPath: IndexPath?
     
     private let searchController : UISearchController = {
         let searchController = UISearchController(searchResultsController: nil)
@@ -101,25 +102,29 @@ class RequestMoneyViewController: UIViewController {
         
         let alertController = UIAlertController(title: "Request \(user.firstName) \(user.lastName)", message: message, preferredStyle: .actionSheet)
         
-        let actionOne = UIAlertAction(title: "Confirm", style: .default) { (action) in
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
             //            TODO: Perform networking request here
             self.delegate.confirmButtonPressed()
+            self.searchController.isActive = false
             self.navigationController?.popViewController(animated: true)
-        }
-        
-        let actionTwo = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
             
         }
         
-        alertController.addAction(actionOne)
-        alertController.addAction(actionTwo)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+            if let path = self.selectedPath {
+                self.tableView.deselectRow(at: path, animated: true)
+            }
+        }
         
-        if isFiltering() {
+        alertController.addAction(confirmAction)
+        alertController.addAction(cancelAction)
+        
+        if searchController.isActive {
             searchController.present(alertController, animated: true, completion: nil)
         } else {
             self.present(alertController, animated: true, completion: nil)
         }
-        
+//        self.navigationController?.present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -148,6 +153,8 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.selectedPath = indexPath
+        
         var selectedUser: User
         if isFiltering() {
             selectedUser = filteredUsers[indexPath.row]
@@ -157,6 +164,7 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
         
 //        searchController.isActive = false
         displayAlert(user: selectedUser)
+        
     }
 }
 
