@@ -156,11 +156,12 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(sender: UIButton) {
+        // TODO: Fire login request
+        // TODO: Cache user info after successful login
         guard let email = emailTextField.text,
-            let password = passwordTextField.text
-            else {return}
-        
+            let password = passwordTextField.text else { return }
         CheckPleaseAPI.login(withEmail: email, password: password) { (json, err) in
+            // TODO: Implement closure body
             print(json)
         }
     }
@@ -170,4 +171,3 @@ class LoginViewController: UIViewController {
         navigationController?.pushViewController(SignUpViewController(), animated: true)
     }
 }
-

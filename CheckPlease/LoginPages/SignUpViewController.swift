@@ -31,19 +31,21 @@ class SignUpViewController: UIViewController {
     private var step: Int = 0 {
         didSet {
             inputTypeLabel.text = labelTextArray[step]
-//            If we get to the last step change the text of the next button
+            // If we get to the last step change the text of the next button
             if step == dictKeyArray.count - 1 {
                 nextButton.setTitle("Sign Up", for: .normal)
+                inputTextField.keyboardType = .numberPad
             } else {
                 nextButton.setTitle("Next", for: .normal)
+                inputTextField.keyboardType = .default
             }
-//            If it's the password make it hidden
+            // If it's the password make it hidden
             if dictKeyArray[step] == "password" {
                 inputTextField.isSecureTextEntry = true
             } else {
                 inputTextField.isSecureTextEntry = false
             }
-//            If user has already added this field show the progress
+            // If user has already added this field show the progress
             if let text = userDict[dictKeyArray[step]] {
                 if text.isEmptyOrWhitespace {
                     inputTextField.text = ""
@@ -57,15 +59,6 @@ class SignUpViewController: UIViewController {
                 disableNextButton()
             }
         }
-    }
-    private func enableNextButton() {
-        nextButton.backgroundColor = UIColor.clear
-        nextButton.isEnabled = true
-    }
-    
-    private func disableNextButton() {
-        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.08)
-        nextButton.isEnabled = false
     }
     
     private let inputTypeLabel: UILabel = {
@@ -101,7 +94,6 @@ class SignUpViewController: UIViewController {
     }()
     
     private let backButton: UIButton = {
-//        This is the back button
         let button = UIButton()
         button.setTitle("<", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
@@ -111,7 +103,6 @@ class SignUpViewController: UIViewController {
     }()
     
     private let nextButton: UIButton = {
-//        This is the next button
         let button = UIButton()
         button.setTitle("Next", for: .normal)
         button.titleLabel?.font = AppFonts.bold18
@@ -130,6 +121,8 @@ class SignUpViewController: UIViewController {
         
         return button
     }()
+    
+    // MARK: Methods
     
     private func addSubviews() {
         [actionView, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
@@ -180,17 +173,26 @@ class SignUpViewController: UIViewController {
         }
     }
     
+    private func enableNextButton() {
+        nextButton.backgroundColor = UIColor.clear
+        nextButton.isEnabled = true
+    }
+    
+    private func disableNextButton() {
+        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+        nextButton.isEnabled = false
+    }
+    
     
     
     @objc private func nextButtonTapped(sender: UIButton) {
-        
         guard let text = inputTextField.text else {return}
         userDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
+            // TODO: Fire sign-up request
+            // TODO: Cache user info after successful sign up
             CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
-                
-                
-                
+                // TODO: Implement closure body
             }
         } else {
             step += 1

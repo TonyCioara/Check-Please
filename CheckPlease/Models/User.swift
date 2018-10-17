@@ -11,10 +11,11 @@ import SwiftyJSON
 
 struct User {
     
-    var email: String
-    var firstName: String
-    var lastName: String
-    var phoneNumber: String
+    let username: String
+    let firstName: String
+    let lastName: String
+    let email: String
+    let phoneNumber: String
     
     init(email: String, firstName: String, lastName: String, phoneNumber: String) {
         self.email = email
@@ -22,7 +23,7 @@ struct User {
         self.lastName = lastName
         self.phoneNumber = phoneNumber
     }
-    
+  
     init(json: JSON) {
         self.email = json["email"].stringValue
         self.firstName = json["firstName"].stringValue
@@ -30,4 +31,27 @@ struct User {
         self.phoneNumber = json["phoneNumber"].stringValue
     }
     
+    /// Called when the local user's chatroom partner has stopped sharing their video feed.
+    /// - Returns: Boolean value indicating if caching was successful.
+    func cache() -> Bool {
+        let fileURL = FileManager.default
+            .urls(for: .cachesDirectory, in: .allDomainsMask)
+            .first!
+            .appendingPathComponent("user.plist")
+        return dictionary.write(to: fileURL, atomically: true)
+    }
+    
+    // MARK: - Private
+    
+    /// NSDictionary representation of user object used to facilitate caching to
+    /// document directory.
+    private var dictionary: NSDictionary {
+        return [
+            "username": username,
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "phoneNumber": phoneNumber
+        ]
+    }
 }
