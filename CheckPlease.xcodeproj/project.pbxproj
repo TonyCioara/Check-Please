@@ -135,7 +135,6 @@
 				48B9B2E62140653000215E73 /* SelectItemsViewController.swift */,
 				48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */,
 				485ED1EB21767FA30047B386 /* CellTapDelegate.swift */,
-				485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */,
 			);
 			path = SelectItemsPage;
 			sourceTree = "<group>";
@@ -146,6 +145,7 @@
 				48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */,
 				48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */,
 				485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */,
+				485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */,
 			);
 			path = RequestMoneyPage;
 			sourceTree = "<group>";
