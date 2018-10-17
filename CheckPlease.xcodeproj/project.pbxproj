@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4840316521596703006D25DA /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4840316421596703006D25DA /* StringExtensions.swift */; };
+		485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */; };
+		485ED1E42176721E0047B386 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E32176721E0047B386 /* DataSource.swift */; };
+		485ED1E6217675950047B386 /* ReceiptItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E5217675950047B386 /* ReceiptItem.swift */; };
+		485ED1E8217675EC0047B386 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E7217675EC0047B386 /* Receipt.swift */; };
+		485ED1EC21767FA30047B386 /* CellTapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1EB21767FA30047B386 /* CellTapDelegate.swift */; };
+		485ED1EE2176867F0047B386 /* RequestMoneyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */; };
+		485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */; };
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
@@ -37,6 +44,13 @@
 /* Begin PBXFileReference section */
 		339629119946F64974C33B85 /* Pods_CheckPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4840316421596703006D25DA /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
+		485ED1E32176721E0047B386 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		485ED1E5217675950047B386 /* ReceiptItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptItem.swift; sourceTree = "<group>"; };
+		485ED1E7217675EC0047B386 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		485ED1EB21767FA30047B386 /* CellTapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTapDelegate.swift; sourceTree = "<group>"; };
+		485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyDelegate.swift; sourceTree = "<group>"; };
+		485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPhoneNumberTableViewCell.swift; sourceTree = "<group>"; };
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -91,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				4840316421596703006D25DA /* StringExtensions.swift */,
+				485ED1E32176721E0047B386 /* DataSource.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -99,6 +114,8 @@
 			isa = PBXGroup;
 			children = (
 				4883F3C02145BAB3002D13F7 /* User.swift */,
+				485ED1E5217675950047B386 /* ReceiptItem.swift */,
+				485ED1E7217675EC0047B386 /* Receipt.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -117,6 +134,7 @@
 			children = (
 				48B9B2E62140653000215E73 /* SelectItemsViewController.swift */,
 				48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */,
+				485ED1EB21767FA30047B386 /* CellTapDelegate.swift */,
 			);
 			path = SelectItemsPage;
 			sourceTree = "<group>";
@@ -126,6 +144,8 @@
 			children = (
 				48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */,
 				48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */,
+				485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */,
+				485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */,
 			);
 			path = RequestMoneyPage;
 			sourceTree = "<group>";
@@ -184,6 +204,7 @@
 				48C3774B2137279A0029E490 /* AppFonts.swift */,
 				48C37756213786420029E490 /* AppColors.swift */,
 				4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */,
+				485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -348,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */,
+				485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */,
 				488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
@@ -359,13 +381,19 @@
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
+				485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */,
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
+				485ED1E8217675EC0047B386 /* Receipt.swift in Sources */,
+				485ED1E42176721E0047B386 /* DataSource.swift in Sources */,
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
+				485ED1EC21767FA30047B386 /* CellTapDelegate.swift in Sources */,
 				48C37757213786420029E490 /* AppColors.swift in Sources */,
 				48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */,
+				485ED1E6217675950047B386 /* ReceiptItem.swift in Sources */,
+				485ED1EE2176867F0047B386 /* RequestMoneyDelegate.swift in Sources */,
 				860F866B2146E66A00B32022 /* CheckPleaseAPI.swift in Sources */,
 				48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */,
 				48C3774C2137279A0029E490 /* AppFonts.swift in Sources */,
@@ -496,7 +524,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QFR976VMLD;
+				DEVELOPMENT_TEAM = JDYWQEVARC;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -515,7 +543,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = QFR976VMLD;
+				DEVELOPMENT_TEAM = JDYWQEVARC;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

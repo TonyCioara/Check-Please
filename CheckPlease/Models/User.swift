@@ -11,15 +11,13 @@ import SwiftyJSON
 
 struct User {
     
-    let username: String
     let firstName: String
     let lastName: String
     let email: String
     let phoneNumber: String
     
-    init(email: String, username: String, firstName: String, lastName: String, phoneNumber: String) {
+    init(email: String, firstName: String, lastName: String, phoneNumber: String) {
         self.email = email
-        self.username = username
         self.firstName = firstName
         self.lastName = lastName
         self.phoneNumber = phoneNumber
@@ -27,7 +25,6 @@ struct User {
   
     init(json: JSON) {
         self.email = json["email"].stringValue
-        self.username = json["username"].stringValue
         self.firstName = json["firstName"].stringValue
         self.lastName = json["lastName"].stringValue
         self.phoneNumber = json["phoneNumber"].stringValue
@@ -49,7 +46,6 @@ struct User {
     /// document directory.
     private var dictionary: NSDictionary {
         return [
-            "username": username,
             "firstName": firstName,
             "lastName": lastName,
             "email": email,

@@ -12,20 +12,37 @@ import SnapKit
 
 class SelectItemTableViewCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receiptItem: ReceiptItem) {
         
-        titleLabel.text = "Chicken Katsu"
-        priceLabel.text = "$5"
+        titleLabel.text = receiptItem.name
+        priceLabel.text = "$" + receiptItem.price 
         
         addSubviews()
         setConstraints()
         setUpTapGesture()
         
         containerView.layer.cornerRadius = (self.frame.height - 16) / 2
-        portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
+        bubbleView.layer.cornerRadius = (self.frame.height - 32) / 2
+        
+        self.indexPath = indexPath
+        self.delegate = delegate
+        
+        switch indexPath.section {
+        case 0:
+            bubbleView.backgroundColor = AppColors.mediumBlue
+            bubbleView.isHidden = true
+        case 1:
+            bubbleView.backgroundColor = AppColors.mediumGreen
+            bubbleView.isHidden = false
+        default:
+            break
+        }
     }
     
     //    MARK: - Private
+    
+    private var delegate: CellTapDelegate!
+    private var indexPath: IndexPath!
     
     private let containerView: UIView = {
         let view = UIView()
@@ -53,37 +70,34 @@ class SelectItemTableViewCell: UITableViewCell {
         return label
     }()
     
-    private let portraitImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = AppColors.mediumBlue
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = AppColors.darkGray.cgColor
-        return imageView
+    private let bubbleView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.mediumBlue
+        view.layer.borderWidth = 1
+        view.layer.borderColor = AppColors.darkGray.cgColor
+        view.isHidden = true
+        return view
     }()
     
     private func setConstraints() {
         containerView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(8)
-            make.bottom.equalToSuperview().offset(-8)
-            make.left.equalToSuperview().offset(16)
-            make.right.equalToSuperview().offset(-16)
+            make.top.bottom.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(16)
         }
         
         titleLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.left.equalToSuperview().offset(16)
+            make.left.equalToSuperview().inset(16)
         }
         
-        portraitImageView.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(8)
-            make.bottom.equalToSuperview().offset(-8)
-            make.right.equalToSuperview().offset(-8)
-            make.width.equalTo(portraitImageView.snp.height)
+        bubbleView.snp.makeConstraints { (make) in
+            make.top.bottom.right.equalToSuperview().inset(8)
+            make.width.equalTo(bubbleView.snp.height)
         }
         
         priceLabel.snp.makeConstraints { (make) in
             make.centerY.equalToSuperview()
-            make.right.equalTo(portraitImageView.snp.left).offset(-8)
+            make.right.equalTo(bubbleView.snp.left).offset(-8)
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(8)
         }
         
@@ -92,7 +106,7 @@ class SelectItemTableViewCell: UITableViewCell {
     private func addSubviews() {
         self.addSubview(containerView)
         
-        [titleLabel, priceLabel, portraitImageView].forEach { (view) in
+        [titleLabel, priceLabel, bubbleView].forEach { (view) in
             containerView.addSubview(view)
         }
     }
@@ -109,10 +123,14 @@ class SelectItemTableViewCell: UITableViewCell {
     
     @objc private func handleTap(sender: UITapGestureRecognizer? = nil) {
         // handling code
-        containerView.backgroundColor = AppColors.lightGray
-        timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: false, block: { (_) in
-            self.containerView.backgroundColor = AppColors.white
-        })
+        if indexPath.section == 0 {
+            bubbleView.isHidden = !bubbleView.isHidden
+            containerView.backgroundColor = AppColors.lightGray
+            timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
+                self.containerView.backgroundColor = AppColors.white
+            })
+            delegate.cellWasTapped(indexPath: self.indexPath)
+        }
     }
 }
 
