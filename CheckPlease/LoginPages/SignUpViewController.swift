@@ -19,6 +19,8 @@ class SignUpViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         addSubviews()
         setConstraints()
+        // Present keyboard at instantiation of controller
+        inputTextField.becomeFirstResponder()
     }
     
     //    MARK: - Private
@@ -58,6 +60,18 @@ class SignUpViewController: UIViewController {
                 inputTextField.text = ""
                 disableNextButton()
             }
+            // Only enable backButton after first entry is accepted
+            if step > 0 {
+                backButton.backgroundColor = .clear
+                // This alpha affects the buttons title label
+                backButton.alpha = 1.0
+                backButton.isEnabled = true
+            } else {
+                backButton.backgroundColor = AppColors.black.withAlphaComponent(0.3)
+                // This alpha affects the buttons title label
+                backButton.alpha = 0.5
+                backButton.isEnabled = false
+            }
         }
     }
     
@@ -83,6 +97,7 @@ class SignUpViewController: UIViewController {
     private let actionView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.darkBlue
+        view.clipsToBounds = true
         view.layer.cornerRadius = 5
         return view
     }()
@@ -128,7 +143,7 @@ class SignUpViewController: UIViewController {
         [actionView, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
             self.view.addSubview(view)
         }
-        [actionViewSeparator ,backButton, nextButton].forEach { (view) in
+        [backButton, nextButton, actionViewSeparator].forEach { (view) in
             self.actionView.addSubview(view)
         }
     }
@@ -158,12 +173,12 @@ class SignUpViewController: UIViewController {
         
         backButton.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
+            make.right.equalTo(nextButton.snp.left)
         }
         
         actionViewSeparator.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(2)
-            make.left.equalTo(backButton.snp.right)
             make.right.equalTo(nextButton.snp.left)
         }
         
@@ -174,22 +189,21 @@ class SignUpViewController: UIViewController {
     }
     
     private func enableNextButton() {
-        nextButton.backgroundColor = UIColor.clear
+        nextButton.backgroundColor = .clear
+        nextButton.alpha = 1.0
         nextButton.isEnabled = true
     }
     
     private func disableNextButton() {
-        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.3)
+        nextButton.alpha = 0.5
         nextButton.isEnabled = false
     }
-    
-    
     
     @objc private func nextButtonTapped(sender: UIButton) {
         guard let text = inputTextField.text else {return}
         userDict[dictKeyArray[step]] = text
         if step == labelTextArray.count - 1 {
-            // TODO: Fire sign-up request
             // TODO: Cache user info after successful sign up
             CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
                 // TODO: Implement closure body

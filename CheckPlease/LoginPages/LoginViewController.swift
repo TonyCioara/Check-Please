@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 5
         textField.setLeftPaddingPoints(16)
         textField.setRightPaddingPoints(16)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -40,6 +41,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 5
         textField.setLeftPaddingPoints(16)
         textField.setRightPaddingPoints(16)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -61,6 +63,8 @@ class LoginViewController: UIViewController {
         button.titleLabel?.textColor = AppColors.white
         button.setTitle("Login", for: UIControlState.normal)
         button.layer.cornerRadius = 5
+        button.isEnabled = false
+        button.alpha = 0.5
         button.addTarget(self, action: #selector(loginButtonTapped(sender:)), for: UIControlEvents.touchDown)
         
         return button
@@ -156,7 +160,6 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(sender: UIButton) {
-        // TODO: Fire login request
         // TODO: Cache user info after successful login
         guard let email = emailTextField.text,
             let password = passwordTextField.text else { return }
@@ -169,5 +172,18 @@ class LoginViewController: UIViewController {
     @objc private func newUserButtonTapped(sender: UIButton) {
         
         navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        // Check for valid entries in both textfields in order to enable 'login' button
+        let isEmailFieldTextValid = emailTextField.text != nil && !emailTextField.text!.isEmptyOrWhitespace
+        let isPasswordFieldTextValid = passwordTextField.text != nil && !passwordTextField.text!.isEmptyOrWhitespace
+        guard isEmailFieldTextValid && isPasswordFieldTextValid else {
+            loginButton.isEnabled = false
+            loginButton.alpha = 0.5
+            return
+        }
+        loginButton.isEnabled = true
+        loginButton.alpha = 1.0
     }
 }
