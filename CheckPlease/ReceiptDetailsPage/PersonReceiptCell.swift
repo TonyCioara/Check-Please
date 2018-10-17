@@ -12,15 +12,30 @@ import SnapKit
 
 class PreviousReceiptCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(user: User, items: [ReceiptItem]) {
         addSubviews()
         setConstraints()
         
-        priceLabel.text = "$11"
-        itemsLabel.text = "Rice Bowl, Dinner Set, Beer"
-        nameLabel.text = "Tony Cioara"
-        usernameLabel.text = "@Tony-Cioara"
-        profileImageView.image = #imageLiteral(resourceName: "IMG_0932")
+        var totalPrice = 0
+        var itemsText = ""
+        for index in 0..<items.count {
+            let item = items[index]
+            if let price = Int(item.price) {
+                totalPrice += price
+            }
+            itemsText += item.name
+            if index < items.count - 1 {
+                itemsText += ", "
+            }
+        }
+        
+        priceLabel.text = "$" + String(totalPrice)
+        itemsLabel.text = itemsText
+        nameLabel.text = user.firstName + " " + user.lastName
+        
+        var phoneNumber = user.phoneNumber
+        phoneNumber.formatPhoneNumber()
+        phoneNumberLabel.text = phoneNumber
     }
     
     //    MARK: - Private
@@ -41,16 +56,16 @@ class PreviousReceiptCell: UITableViewCell {
         return label
     }()
     
-    private let usernameLabel: UILabel = {
+    private let phoneNumberLabel: UILabel = {
         let label = UILabel()
-        label.font = AppFonts.light12
+        label.font = AppFonts.light14
         return label
     }()
     
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.medium14
-        label.textColor = AppColors.mediumBlue
+        label.textColor = AppColors.veryBlue
         label.textAlignment = .right
         return label
     }()
@@ -76,23 +91,22 @@ class PreviousReceiptCell: UITableViewCell {
     
     private func addSubviews() {
         
-        [profileImageView, nameLabel, usernameLabel, priceLabel, itemsLabel, sideLine, bottomLine].forEach { (view) in
+        [nameLabel, phoneNumberLabel, priceLabel, itemsLabel, sideLine, bottomLine].forEach { (view) in
             self.addSubview(view)
         }
     }
     
     private func setConstraints() {
-        profileImageView.snp.makeConstraints { (make) in
-            make.top.bottom.left.equalToSuperview().inset(16)
-            make.width.equalTo(profileImageView.snp.height)
-        }
+//        profileImageView.snp.makeConstraints { (make) in
+//            make.top.bottom.left.equalToSuperview().inset(16)
+//            make.width.equalTo(profileImageView.snp.height)
+//        }
         
         nameLabel.snp.makeConstraints { (make) in
-            make.top.equalToSuperview().offset(16)
-            make.left.equalTo(profileImageView.snp.right).offset(8)
+            make.top.left.equalToSuperview().offset(16)
         }
         
-        usernameLabel.snp.makeConstraints { (make) in
+        phoneNumberLabel.snp.makeConstraints { (make) in
             make.top.equalTo(nameLabel.snp.bottom).offset(8)
             make.left.equalTo(nameLabel.snp.left)
         }

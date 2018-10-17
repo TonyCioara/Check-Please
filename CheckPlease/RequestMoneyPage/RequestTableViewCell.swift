@@ -78,13 +78,13 @@ class RequestTableViewCell: UITableViewCell {
         fullNameLabel.snp.makeConstraints { (make) in
             make.top.equalToSuperview().inset(16)
             make.left.equalToSuperview().inset(32)
-            make.right.greaterThanOrEqualToSuperview().inset(16)
+            make.right.greaterThanOrEqualToSuperview().inset(32)
         }
         
         phoneNumberLabel.snp.makeConstraints { (make) in
             make.top.equalTo(fullNameLabel.snp.bottom).offset(6)
             make.left.equalTo(fullNameLabel.snp.left)
-            make.right.greaterThanOrEqualToSuperview().inset(16)
+            make.right.greaterThanOrEqualToSuperview().inset(32)
         }
         
         bottomView.snp.makeConstraints { (make) in
