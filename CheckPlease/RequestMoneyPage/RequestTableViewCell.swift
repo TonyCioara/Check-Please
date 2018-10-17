@@ -76,7 +76,8 @@ class RequestTableViewCell: UITableViewCell {
 //        }
         
         fullNameLabel.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview().inset(16)
+            make.top.equalToSuperview().inset(16)
+            make.left.equalToSuperview().inset(32)
             make.right.greaterThanOrEqualToSuperview().inset(16)
         }
         

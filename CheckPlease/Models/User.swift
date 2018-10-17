@@ -11,7 +11,6 @@ import SwiftyJSON
 
 struct User {
     
-    let username: String
     let firstName: String
     let lastName: String
     let email: String
@@ -47,7 +46,6 @@ struct User {
     /// document directory.
     private var dictionary: NSDictionary {
         return [
-            "username": username,
             "firstName": firstName,
             "lastName": lastName,
             "email": email,
