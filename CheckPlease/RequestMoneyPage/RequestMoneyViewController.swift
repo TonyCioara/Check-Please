@@ -18,6 +18,7 @@ class RequestMoneyViewController: UIViewController {
         
         setUpViews()
         searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
         
     }
     
@@ -49,11 +50,13 @@ class RequestMoneyViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Name, e-mail, phone"
         searchController.definesPresentationContext = true
+        searchController.searchBar.returnKeyType = .send
         return searchController
     }()
     
     private let tableView = UITableView()
     private let requestTableViewCellId = "requestTableViewCellId"
+    private let requestPhoneNumberCellId = "requestPhoneNumberCellId"
     
     private func addSubviews() {
         [tableView].forEach { (view) in
@@ -82,14 +85,17 @@ class RequestMoneyViewController: UIViewController {
     
     private func setUpTableView() {
         tableView.register(RequestTableViewCell.self, forCellReuseIdentifier: requestTableViewCellId)
+        tableView.register(RequestPhoneNumberTableViewCell.self, forCellReuseIdentifier: requestPhoneNumberCellId)
         tableView.separatorStyle = .none
+        
         
         tableView.delegate = self
         tableView.dataSource = self
     }
     
-    private func displayAlert(user: User) {
+    private func displayAlert(user: User?, phoneNumber: String?) {
         var message = "Items: "
+        var title = ""
         for index in 0..<receiptItems.count {
             let item = receiptItems[index]
             if index == receiptItems.count - 1 {
@@ -99,8 +105,13 @@ class RequestMoneyViewController: UIViewController {
             }
             
         }
+        if let user = user {
+            title = "Request \(user.firstName) \(user.lastName)"
+        } else if let phoneNumber = phoneNumber {
+            title = "Request \(phoneNumber)"
+        }
         
-        let alertController = UIAlertController(title: "Request \(user.firstName) \(user.lastName)", message: message, preferredStyle: .actionSheet)
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
             //            TODO: Perform networking request here
@@ -133,12 +144,23 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.isFiltering() {
+            if isPhoneNumber() && filteredUsers.count == 0 {
+                return 1
+            }
             return filteredUsers.count
         }
         return users.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if isFiltering() && isPhoneNumber() && filteredUsers.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: requestPhoneNumberCellId, for: indexPath) as! RequestPhoneNumberTableViewCell
+            if let phoneNumber = self.searchController.searchBar.text {
+                cell.setUp(phoneNumber: phoneNumber)
+            }
+            
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: requestTableViewCellId, for: indexPath) as! RequestTableViewCell
         if isFiltering() {
             cell.setUp(user: filteredUsers[indexPath.row])
@@ -155,24 +177,46 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.selectedPath = indexPath
         
-        var selectedUser: User
-        if isFiltering() {
-            selectedUser = filteredUsers[indexPath.row]
+        if isFiltering() && filteredUsers.count == 0 {
+            if isPhoneNumber() {
+                if var phoneNumber = searchController.searchBar.text {
+                    phoneNumber.formatPhoneNumber()
+                    self.displayAlert(user: nil, phoneNumber: phoneNumber)
+                }
+            }
         } else {
-            selectedUser = users[indexPath.row]
+            var selectedUser: User
+            if isFiltering() {
+                selectedUser = filteredUsers[indexPath.row]
+            } else {
+                selectedUser = users[indexPath.row]
+            }
+            displayAlert(user: selectedUser, phoneNumber: nil)
+            
         }
         
 //        searchController.isActive = false
-        displayAlert(user: selectedUser)
+        
         
     }
 }
 
-extension RequestMoneyViewController: UISearchResultsUpdating {
+extension RequestMoneyViewController: UISearchResultsUpdating, UISearchBarDelegate {
     
     func updateSearchResults(for searchController: UISearchController) {
         guard let text = searchController.searchBar.text else {return}
         filterContentWhenSearching(searchText: text)
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if isPhoneNumber() {
+            if var phoneNumber = searchBar.text {
+                phoneNumber.formatPhoneNumber()
+                self.displayAlert(user: nil, phoneNumber: phoneNumber)
+            }
+        }
+        
+        searchBar.resignFirstResponder()
     }
     
     //    MARK: - Private
@@ -197,6 +241,12 @@ extension RequestMoneyViewController: UISearchResultsUpdating {
     
     private func isFiltering() -> Bool {
         return searchController.isActive && !searchBarIsEmpty()
+    }
+    private func isPhoneNumber() -> Bool {
+        if let _ = Int(searchController.searchBar.text!) {
+            return true
+        }
+        return false
     }
     
 }

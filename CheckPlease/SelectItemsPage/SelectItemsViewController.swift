@@ -147,7 +147,10 @@ extension SelectItemsViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        if sentItems.count > 0{
+            return 2
+        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

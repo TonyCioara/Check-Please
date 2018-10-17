@@ -15,7 +15,7 @@ class SelectItemTableViewCell: UITableViewCell {
     func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receiptItem: ReceiptItem) {
         
         titleLabel.text = receiptItem.name
-        priceLabel.text = receiptItem.price
+        priceLabel.text = "$" + receiptItem.price 
         
         addSubviews()
         setConstraints()

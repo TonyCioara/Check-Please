@@ -14,6 +14,7 @@
 		485ED1E8217675EC0047B386 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E7217675EC0047B386 /* Receipt.swift */; };
 		485ED1EC21767FA30047B386 /* CellTapDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1EB21767FA30047B386 /* CellTapDelegate.swift */; };
 		485ED1EE2176867F0047B386 /* RequestMoneyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */; };
+		485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */; };
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
@@ -49,6 +50,7 @@
 		485ED1E7217675EC0047B386 /* Receipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		485ED1EB21767FA30047B386 /* CellTapDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellTapDelegate.swift; sourceTree = "<group>"; };
 		485ED1ED2176867F0047B386 /* RequestMoneyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyDelegate.swift; sourceTree = "<group>"; };
+		485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestPhoneNumberTableViewCell.swift; sourceTree = "<group>"; };
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			children = (
 				48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */,
 				48B9B2ED2140D7D900215E73 /* RequestTableViewCell.swift */,
+				485ED1EF2176BB220047B386 /* RequestPhoneNumberTableViewCell.swift */,
 			);
 			path = RequestMoneyPage;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
+				485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */,
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,
 				485ED1E8217675EC0047B386 /* Receipt.swift in Sources */,
