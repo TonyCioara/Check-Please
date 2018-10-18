@@ -60,7 +60,7 @@ extension ReceiptDetailsViewController: UITableViewDelegate, UITableViewDataSour
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: personReceiptCellId, for: indexPath) as! PreviousReceiptCell
-        cell.setUp()
+        cell.setUp(user: DataSource.user1, items: DataSource.receipt.items)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

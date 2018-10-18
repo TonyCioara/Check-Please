@@ -19,7 +19,7 @@ class FullReceiptCell: UITableViewCell {
         priceLabel.text = "$126"
         timeLabel.text = "11m"
         
-        setUpCollectionView()
+//        setUpCollectionView()
         addSubviews()
         setConstraints()
     }
@@ -45,7 +45,7 @@ class FullReceiptCell: UITableViewCell {
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.medium14
-        label.textColor = AppColors.darkBlue
+        label.textColor = AppColors.veryBlue
         return label
     }()
     
@@ -61,8 +61,29 @@ class FullReceiptCell: UITableViewCell {
         return view
     }()
     
+    private let previewLabel1: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.light12
+        label.text = "Hello"
+        return label
+    }()
+    
+    private let previewLabel2: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.light12
+        label.text = "Hello"
+        return label
+    }()
+    
+    private let previewLabel3: UILabel = {
+        let label = UILabel()
+        label.font = AppFonts.light12
+        label.text = "HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello"
+        return label
+    }()
+    
     private func addSubviews() {
-        [collectionView, titleLabel, timeLabel, priceLabel, bottomLine].forEach { (view) in
+        [titleLabel, timeLabel, priceLabel, bottomLine, previewLabel1, previewLabel2, previewLabel3].forEach { (view) in
             self.addSubview(view)
         }
     }
@@ -70,26 +91,33 @@ class FullReceiptCell: UITableViewCell {
     private func setConstraints() {
         
         titleLabel.snp.makeConstraints { (make) in
-            make.top.left.equalToSuperview().inset(16)
-            make.right.equalTo(collectionView.snp.right)
+            make.left.top.equalToSuperview().inset(16)
         }
         
-        let collectionViewHeight = self.frame.width / (1.8 * 5)
-        let collectionViewWidth = self.frame.width / 1.8 + collectionViewLineSpacing * 4
-        collectionView.snp.makeConstraints { (make) in
-            make.height.equalTo(collectionViewHeight)
-            make.left.equalToSuperview().offset(16)
-            make.width.equalTo(collectionViewWidth)
+        previewLabel1.snp.makeConstraints { (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.left.equalTo(titleLabel.snp.left)
+            make.right.lessThanOrEqualTo(timeLabel.snp.left).offset(-16)
+        }
+        
+        previewLabel2.snp.makeConstraints { (make) in
+            make.top.equalTo(previewLabel1.snp.bottom).offset(8)
+            make.left.equalTo(titleLabel.snp.left)
+            make.right.lessThanOrEqualTo(timeLabel.snp.left).offset(-16)
+        }
+        
+        previewLabel3.snp.makeConstraints { (make) in
+            make.top.equalTo(previewLabel2.snp.bottom).offset(8)
+            make.left.equalTo(titleLabel.snp.left)
+            make.right.lessThanOrEqualTo(timeLabel.snp.left).offset(-16)
         }
         
         priceLabel.snp.makeConstraints { (make) in
             make.top.right.equalToSuperview().inset(16)
-            make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(8)
+            make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(24)
         }
         
         timeLabel.snp.makeConstraints { (make) in
-            // make.centerY.equalTo(collectionView)
             make.left.greaterThanOrEqualTo(titleLabel.snp.right).offset(8)
             make.right.equalToSuperview().offset(-16)
             make.top.equalTo(priceLabel.snp.bottom).offset(16)

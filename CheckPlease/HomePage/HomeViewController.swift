@@ -64,9 +64,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        height of collectionView + (height of 3 constraints (16 + 8 + 8) + height of label and a bit extra for the bottom)
-        let cellHeight = (self.view.frame.width / (1.8 * 5)) + 56
-        return cellHeight
+        return 116
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigationController?.pushViewController(ReceiptDetailsViewController(), animated: true)
