@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import Contacts
 
 class SelectItemsViewController: UIViewController {
     
@@ -20,6 +21,8 @@ class SelectItemsViewController: UIViewController {
     
     
     //    MARK: - Private
+    
+    private var allContacts = [Contact]()
     
     private var receipt = DataSource.receipt
     
@@ -98,7 +101,63 @@ class SelectItemsViewController: UIViewController {
         for index in selectedIndexes {
             items.append(unsentItems[index])
         }
-        navigationController?.pushViewController(RequestMoneyViewController(items: items, delegate: self), animated: true)
+        
+        if allContacts.count == 0 {
+            fetchContacts(completion: { (success) in
+                if success {
+                    DispatchQueue.main.async {
+                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: self.allContacts, delegate: self), animated: true)
+                    }
+                }  else {
+                    DispatchQueue.main.async {
+                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: self.allContacts, delegate: self), animated: true)
+                    }
+                }
+                
+            })
+        }
+        else if allContacts.count >= 1 {
+            navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: allContacts, delegate: self), animated: true)
+        }
+        
+    }
+    
+    private func fetchContacts(completion: @escaping (Bool) -> Void) {
+        let store = CNContactStore()
+        
+        
+        store.requestAccess(for: .contacts) { (granted, error) in
+            if let _ = error {
+                completion(false)
+                return
+            }
+            if granted {
+                print("ACCESS GRANTED")
+                let keys = [CNContactGivenNameKey, CNContactFamilyNameKey, CNContactPhoneNumbersKey]
+                let request = CNContactFetchRequest(keysToFetch: keys as [CNKeyDescriptor])
+                
+                do {
+                    try store.enumerateContacts(with: request, usingBlock: { (contact, stopPointer) in
+                        let newContact = Contact(firstName: contact.givenName , lastName: contact.familyName , phoneNumber: contact.phoneNumbers.first?.value.stringValue ?? "")
+                        self.allContacts.append(newContact)
+                    })
+                    self.allContacts.sort(by: { (contact1, contact2) -> Bool in
+                        if contact1.firstName < contact2.firstName {
+                            return true
+                        }
+                        return false
+                    })
+                    completion(true)
+                }
+                catch let err{
+                    print("Error: ", err)
+                    completion(false)
+                }
+            } else {
+                print("ACCESS DENIED")
+                completion(false)
+            }
+        }
     }
     
     private func setUpTableView() {

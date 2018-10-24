@@ -156,13 +156,24 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(sender: UIButton) {
-        // TODO: Fire login request
-        // TODO: Cache user info after successful login
+        // TODO: Add loading icon
         guard let email = emailTextField.text,
             let password = passwordTextField.text else { return }
         CheckPleaseAPI.login(withEmail: email, password: password) { (json, err) in
-            // TODO: Implement closure body
-            print(json)
+            // TODO: Cache user info after successful login
+            if let _ = err {
+                return
+            }
+            DispatchQueue.main.async {
+                let navController = UINavigationController(rootViewController: HomeViewController())
+                navController.navigationBar.prefersLargeTitles = true
+                navController.navigationBar.barTintColor = AppColors.white
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.window = UIWindow()
+                appDelegate.window?.rootViewController = navController
+                appDelegate.window?.makeKeyAndVisible()
+            }
         }
     }
     

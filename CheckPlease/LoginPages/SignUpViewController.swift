@@ -183,16 +183,27 @@ class SignUpViewController: UIViewController {
         nextButton.isEnabled = false
     }
     
-    
-    
     @objc private func nextButtonTapped(sender: UIButton) {
         guard let text = inputTextField.text else {return}
         userDict[dictKeyArray[step]] = text
+        // TODO: Add loading icon
         if step == labelTextArray.count - 1 {
-            // TODO: Fire sign-up request
-            // TODO: Cache user info after successful sign up
             CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
-                // TODO: Implement closure body
+                // TODO: Cache user info after successful sign up
+                
+                if let _ = err {
+                    return
+                }
+                DispatchQueue.main.async {
+                    let navController = UINavigationController(rootViewController: HomeViewController())
+                    navController.navigationBar.prefersLargeTitles = true
+                    navController.navigationBar.barTintColor = AppColors.white
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window = UIWindow()
+                    appDelegate.window?.rootViewController = navController
+                    appDelegate.window?.makeKeyAndVisible()
+                }
             }
         } else {
             step += 1

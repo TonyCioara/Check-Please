@@ -12,16 +12,15 @@ import SnapKit
 
 class RequestTableViewCell: UITableViewCell {
     
-    func setUp(user: User) {
+    func setUp(contact: Contact) {
         addSubviews()
         setConstraints()
         
         portraitImageView.layer.cornerRadius = (self.frame.height - 32) / 2
         
-        portraitImageView.image = #imageLiteral(resourceName: "IMG_0932")
-        fullNameLabel.text = user.firstName + " " + user.lastName
-        var phoneNumber = user.phoneNumber
-        phoneNumber.formatPhoneNumber()
+        fullNameLabel.text = contact.firstName + " " + contact.lastName
+        var phoneNumber = contact.phoneNumber
+//        phoneNumber.formatPhoneNumber()
         phoneNumberLabel.text = phoneNumber
         
     }

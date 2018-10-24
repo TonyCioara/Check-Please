@@ -21,6 +21,7 @@
 		488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41072147138100FD0547 /* TotalPeopleCell.swift */; };
 		489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B621503E400036CD01 /* InvitePeopleViewController.swift */; };
 		489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */; };
+		489F44C7217944D9002E1ABA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489F44C6217944D9002E1ABA /* Contact.swift */; };
 		48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E62140653000215E73 /* SelectItemsViewController.swift */; };
 		48B9B2E921406A1400215E73 /* SelectItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */; };
 		48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */; };
@@ -57,6 +58,7 @@
 		488E41072147138100FD0547 /* TotalPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPeopleCell.swift; sourceTree = "<group>"; };
 		489B84B621503E400036CD01 /* InvitePeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleViewController.swift; sourceTree = "<group>"; };
 		489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleTableViewCell.swift; sourceTree = "<group>"; };
+		489F44C6217944D9002E1ABA /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		48B9B2E62140653000215E73 /* SelectItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemsViewController.swift; sourceTree = "<group>"; };
 		48B9B2E821406A1400215E73 /* SelectItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectItemTableViewCell.swift; sourceTree = "<group>"; };
 		48B9B2EB2140D0D000215E73 /* RequestMoneyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestMoneyViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				4883F3C02145BAB3002D13F7 /* User.swift */,
+				489F44C6217944D9002E1ABA /* Contact.swift */,
 				485ED1E5217675950047B386 /* ReceiptItem.swift */,
 				485ED1E7217675EC0047B386 /* Receipt.swift */,
 			);
@@ -381,6 +384,7 @@
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
 				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
+				489F44C7217944D9002E1ABA /* Contact.swift in Sources */,
 				485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */,
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,
 				48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */,

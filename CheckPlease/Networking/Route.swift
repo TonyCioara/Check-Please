@@ -38,9 +38,9 @@ enum Route {
     var path: String {
         switch self {
         case .signUp:
-            return "/signup"
+            return "/auth/signup"
         case .login:
-            return "/login"
+            return "/auth/login"
         }
     }
     
@@ -65,8 +65,6 @@ enum Route {
                 "phoneNumber": userObject["phoneNumber"]!,
                 "email": userObject["email"]!,
                 "password": userObject["password"]!
-                // TODO: Remove payment_method key-value pair & User
-//                "payment_method": "card",
                 ]
             return serialize(json)
         default:
