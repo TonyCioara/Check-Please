@@ -19,6 +19,8 @@ class SignUpViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         addSubviews()
         setConstraints()
+        // Present keyboard at instantiation of controller
+        inputTextField.becomeFirstResponder()
     }
     
     //    MARK: - Private
@@ -58,6 +60,18 @@ class SignUpViewController: UIViewController {
                 inputTextField.text = ""
                 disableNextButton()
             }
+            // Only enable backButton after first entry is accepted
+            if step > 0 {
+                backButton.backgroundColor = .clear
+                // This alpha affects the buttons title label
+                backButton.alpha = 1.0
+                backButton.isEnabled = true
+            } else {
+                backButton.backgroundColor = AppColors.mediumBlue.withAlphaComponent(0.4)
+                // This alpha affects the buttons title label
+                backButton.alpha = 0.5
+                backButton.isEnabled = false
+            }
         }
     }
     
@@ -83,6 +97,7 @@ class SignUpViewController: UIViewController {
     private let actionView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.darkBlue
+        view.clipsToBounds = true
         view.layer.cornerRadius = 5
         return view
     }()
@@ -122,13 +137,21 @@ class SignUpViewController: UIViewController {
         return button
     }()
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.activityIndicatorViewStyle = .white
+        indicator.isHidden = true
+        return indicator
+    }()
+    
     // MARK: Methods
     
     private func addSubviews() {
+        nextButton.addSubview(activityIndicator)
         [actionView, oldUserButton, inputTypeLabel, inputTextField].forEach { (view) in
             self.view.addSubview(view)
         }
-        [actionViewSeparator ,backButton, nextButton].forEach { (view) in
+        [backButton, nextButton, actionViewSeparator].forEach { (view) in
             self.actionView.addSubview(view)
         }
     }
@@ -158,12 +181,12 @@ class SignUpViewController: UIViewController {
         
         backButton.snp.makeConstraints { (make) in
             make.left.top.bottom.equalToSuperview()
+            make.right.equalTo(nextButton.snp.left)
         }
         
         actionViewSeparator.snp.makeConstraints { (make) in
             make.top.bottom.equalToSuperview().inset(8)
             make.width.equalTo(2)
-            make.left.equalTo(backButton.snp.right)
             make.right.equalTo(nextButton.snp.left)
         }
         
@@ -171,16 +194,34 @@ class SignUpViewController: UIViewController {
             make.top.bottom.right.equalToSuperview()
             make.width.equalTo(backButton).multipliedBy(4)
         }
+        
+        activityIndicator.snp.makeConstraints { maker in
+            // Superview is nextButton
+            maker.center.equalToSuperview()
+        }
     }
     
     private func enableNextButton() {
-        nextButton.backgroundColor = UIColor.clear
+        nextButton.backgroundColor = .clear
+        nextButton.alpha = 1.0
         nextButton.isEnabled = true
     }
     
     private func disableNextButton() {
-        nextButton.backgroundColor = AppColors.black.withAlphaComponent(0.08)
+        nextButton.backgroundColor = AppColors.mediumBlue.withAlphaComponent(0.4)
+        nextButton.alpha = 0.5
         nextButton.isEnabled = false
+    }
+    
+    private func showActivityIndicator() {
+        nextButton.setTitle("", for: .normal)
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideActivityIndicator() {
+        nextButton.setTitle("Sign Up", for: .normal)
+        activityIndicator.stopAnimating()
     }
     
     @objc private func nextButtonTapped(sender: UIButton) {
@@ -188,6 +229,9 @@ class SignUpViewController: UIViewController {
         userDict[dictKeyArray[step]] = text
         // TODO: Add loading icon
         if step == labelTextArray.count - 1 {
+            // TODO: Cache user info after successful sign up
+            // TODO: Hide activity indicator
+            showActivityIndicator()
             CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
                 // TODO: Cache user info after successful sign up
                 

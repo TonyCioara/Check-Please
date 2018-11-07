@@ -29,6 +29,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 5
         textField.setLeftPaddingPoints(16)
         textField.setRightPaddingPoints(16)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -40,6 +41,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 5
         textField.setLeftPaddingPoints(16)
         textField.setRightPaddingPoints(16)
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -61,6 +63,8 @@ class LoginViewController: UIViewController {
         button.titleLabel?.textColor = AppColors.white
         button.setTitle("Login", for: UIControlState.normal)
         button.layer.cornerRadius = 5
+        button.isEnabled = false
+        button.alpha = 0.5
         button.addTarget(self, action: #selector(loginButtonTapped(sender:)), for: UIControlEvents.touchDown)
         
         return button
@@ -76,6 +80,15 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        indicator.activityIndicatorViewStyle = .white
+        indicator.isHidden = true
+        return indicator
+    }()
+    
+    // MARK: Methods
+    
     private func addGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
@@ -86,6 +99,7 @@ class LoginViewController: UIViewController {
     private func addSubviews() {
         self.view.backgroundColor = AppColors.mediumBlue
         self.view.addSubview(scrollView)
+        loginButton.addSubview(activityIndicator)
         [emailTextField, passwordTextField, titleLabel, loginButton, newUserButton].forEach { (view) in
             scrollView.addSubview(view)
         }
@@ -93,7 +107,6 @@ class LoginViewController: UIViewController {
     }
     
     private func setConstraints() {
-        
         scrollView.snp.makeConstraints { (make) in
             make.top.equalTo((view.safeAreaLayoutGuide.snp.top))
             make.left.right.bottom.equalToSuperview()
@@ -130,13 +143,29 @@ class LoginViewController: UIViewController {
             make.width.equalTo(85)
             make.bottom.equalToSuperview().offset(-32)
         }
+        
+        activityIndicator.snp.makeConstraints { maker in
+            // Superview is loginButton
+            maker.center.equalToSuperview()
+        }
+        
     }
     
     private func setUpViews() {
         navigationController?.isNavigationBarHidden = true
-        
         addSubviews()
         setConstraints()
+    }
+    
+    private func showActivityIndicator() {
+        loginButton.setTitle("", for: .normal)
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    
+    private func hideActivityIndicator() {
+        loginButton.setTitle("Login", for: .normal)
+        activityIndicator.stopAnimating()
     }
     
     @objc private func keyboardWillShow(notification:NSNotification){
@@ -186,5 +215,18 @@ class LoginViewController: UIViewController {
     @objc private func newUserButtonTapped(sender: UIButton) {
         
         navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        // Check for valid entries in both textfields in order to enable 'login' button
+        let isEmailFieldTextValid = emailTextField.text != nil && !emailTextField.text!.isEmptyOrWhitespace
+        let isPasswordFieldTextValid = passwordTextField.text != nil && !passwordTextField.text!.isEmptyOrWhitespace
+        guard isEmailFieldTextValid && isPasswordFieldTextValid else {
+            loginButton.isEnabled = false
+            loginButton.alpha = 0.5
+            return
+        }
+        loginButton.isEnabled = true
+        loginButton.alpha = 1.0
     }
 }
