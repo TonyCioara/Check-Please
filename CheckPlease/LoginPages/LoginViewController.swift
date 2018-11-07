@@ -203,18 +203,16 @@ class LoginViewController: UIViewController {
                 let navController = UINavigationController(rootViewController: HomeViewController())
                 navController.navigationBar.prefersLargeTitles = true
                 navController.navigationBar.barTintColor = AppColors.white
+                self.present(navController, animated: true)
                 
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                appDelegate.window = UIWindow()
-                appDelegate.window?.rootViewController = navController
-                appDelegate.window?.makeKeyAndVisible()
             }
         }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {
         
-        navigationController?.pushViewController(SignUpViewController(), animated: true)
+        let signUpVC = SignUpViewController()
+        self.present(signUpVC, animated: true)
     }
     
     @objc private func textFieldEditingChanged(_ textField: UITextField) {

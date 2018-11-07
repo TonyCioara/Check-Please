@@ -250,10 +250,7 @@ class SignUpViewController: UIViewController {
                     navController.navigationBar.prefersLargeTitles = true
                     navController.navigationBar.barTintColor = AppColors.white
                     
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    appDelegate.window = UIWindow()
-                    appDelegate.window?.rootViewController = navController
-                    appDelegate.window?.makeKeyAndVisible()
+                    self.present(navController, animated: true)
                 }
             }
         } else {
@@ -270,7 +267,7 @@ class SignUpViewController: UIViewController {
     }
     
     @objc private func oldUserButtonTapped(sender: UIButton) {
-        navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
