@@ -15,12 +15,20 @@ extension String {
     }
     
     mutating func formatPhoneNumber() {
-        if self.count >= 7 {
-            self.insert("-", at: self.index(self.startIndex, offsetBy: 6))
+        var a = 0
+        var b = 3
+        var c = 7
+        if self.prefix(1) == "+" {
+            a += 2
+            b += 2
+            c += 2
         }
-        if self.count >= 3 {
-            self.insert(")", at: self.index(self.startIndex, offsetBy: 3))
+        if self.count >= c {
+            self.insert("-", at: self.index(self.startIndex, offsetBy: c - 1))
         }
-        self.insert("(", at: self.startIndex)
+        if self.count >= b {
+            self.insert(")", at: self.index(self.startIndex, offsetBy: b))
+        }
+        self.insert("(", at: self.index(self.startIndex, offsetBy: a))
     }
 }

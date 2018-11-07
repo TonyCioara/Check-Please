@@ -16,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         //        TODO: Check if user is cached and go to home page instead
         // Override point for customization after application launch.
-        let signUpVC = LoginViewController()
-        let navController = UINavigationController(rootViewController: SignUpViewController())
+        let loginVC = LoginViewController()
+        let navController = UINavigationController(rootViewController: SelectItemsViewController())
         navController.navigationBar.prefersLargeTitles = true
         navController.navigationBar.barTintColor = AppColors.white
         window = UIWindow()
-        window?.rootViewController = signUpVC
-//        window?.rootViewController = navController
+//        window?.rootViewController = loginVC
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         return true
     }
