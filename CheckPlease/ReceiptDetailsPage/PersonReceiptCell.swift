@@ -31,11 +31,11 @@ class PreviousReceiptCell: UITableViewCell {
         
         priceLabel.text = "$" + String(totalPrice)
         itemsLabel.text = itemsText
-        nameLabel.text = user.firstName + " " + user.lastName
+//        nameLabel.text = user.firstName + " " + user.lastName
         
-        var phoneNumber = user.phoneNumber
-        phoneNumber.formatPhoneNumber()
-        phoneNumberLabel.text = phoneNumber
+//        var phoneNumber = user.phoneNumber
+//        phoneNumber.formatPhoneNumber()
+//        phoneNumberLabel.text = phoneNumber
     }
     
     //    MARK: - Private

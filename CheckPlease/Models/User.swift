@@ -7,27 +7,27 @@
 //
 
 import Foundation
-import SwiftyJSON
 
 struct User {
     
-    let firstName: String
-    let lastName: String
-    let email: String
-    let phoneNumber: String
+    let token: String
+    let recoveryToken: String
+    let id: String
     
-    init(email: String, firstName: String, lastName: String, phoneNumber: String) {
-        self.email = email
-        self.firstName = firstName
-        self.lastName = lastName
-        self.phoneNumber = phoneNumber
+    init(token: String, recoveryToken: String, id: String) {
+        self.token = token
+        self.recoveryToken = recoveryToken
+        self.id = id
     }
   
-    init(json: JSON) {
-        self.email = json["email"].stringValue
-        self.firstName = json["firstName"].stringValue
-        self.lastName = json["lastName"].stringValue
-        self.phoneNumber = json["phoneNumber"].stringValue
+    init(json: [String: Any]) {
+        let token = json["auth_token"] as! String
+        let id = json["user_id"] as! String
+        let recoveryToken = json["recovery_token"] as! String
+        
+        self.token = token
+        self.id = id
+        self.recoveryToken = recoveryToken
     }
     
     /// Called when the local user's chatroom partner has stopped sharing their video feed.
@@ -46,10 +46,9 @@ struct User {
     /// document directory.
     private var dictionary: NSDictionary {
         return [
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "phoneNumber": phoneNumber
+            "id": id,
+            "token": token,
+            "recoveryToken": token
         ]
     }
 }

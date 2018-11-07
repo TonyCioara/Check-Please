@@ -17,11 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        TODO: Check if user is cached and go to home page instead
         // Override point for customization after application launch.
         let signUpVC = SignUpViewController()
-//        let navController = UINavigationController(rootViewController: HomeViewController())
-//        navController.navigationBar.prefersLargeTitles = true
-//        navController.navigationBar.barTintColor = AppColors.white
+        let navController = UINavigationController(rootViewController: SelectItemsViewController())
+        navController.navigationBar.prefersLargeTitles = true
+        navController.navigationBar.barTintColor = AppColors.white
         window = UIWindow()
         window?.rootViewController = signUpVC
+//        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         return true
     }
