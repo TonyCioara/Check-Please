@@ -43,8 +43,7 @@ struct User {
     private var dictionary: NSDictionary {
         return [
             "id": id,
-            "token": token,
-            "recoveryToken": token
+            "token": token
         ]
     }
 }
