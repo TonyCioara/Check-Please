@@ -12,9 +12,11 @@ import SwiftyJSON
 struct Receipt {
     
     var items: [ReceiptItem]
+    var id: String
     
-    init(items: [ReceiptItem]) {
+    init(items: [ReceiptItem], id: String) {
         self.items = items
+        self.id = id
     }
     
 }

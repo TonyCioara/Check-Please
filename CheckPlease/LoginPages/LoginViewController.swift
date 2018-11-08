@@ -197,7 +197,6 @@ class LoginViewController: UIViewController {
             guard let jsonDict = json else {return}
             
             let user = User(json: jsonDict)
-            user.cache()
             
             DispatchQueue.main.async {
                 let navController = UINavigationController(rootViewController: HomeViewController())

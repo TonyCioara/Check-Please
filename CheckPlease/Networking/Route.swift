@@ -18,10 +18,11 @@ enum HTTPMethod: String {
 enum Route {
     case login(email: String, password: String)
     case signUp(userObject: [String: String])
+    case sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String)
     
     var httpMethod: String {
         switch self {
-        case .signUp:
+        case .signUp, .sendRequest:
             return HTTPMethod.post.rawValue
         case .login:
             return HTTPMethod.get.rawValue
@@ -41,6 +42,8 @@ enum Route {
             return "/auth/signup"
         case .login:
             return "/auth/login"
+        case .sendRequest:
+            return "/invoice/smsconvert"
         }
     }
     
@@ -66,6 +69,15 @@ enum Route {
                 "email": userObject["email"]!,
                 "password": userObject["password"]!
                 ]
+            return serialize(json)
+        case let .sendRequest(userId, receiptId, receipient, amount, message):
+            let json: [String: String] = [
+                "user_id": userId,
+                "receipt_id": receiptId,
+                "recipient": receipient,
+                "amount": amount,
+                "msg": message
+            ]
             return serialize(json)
         default:
             return nil

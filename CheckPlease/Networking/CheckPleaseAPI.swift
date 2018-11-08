@@ -27,6 +27,11 @@ class CheckPleaseAPI {
         request(withRoute: .signUp(userObject: object), completionHandler: handler)
     }
     
+    static func sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String, completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withRoute: .sendRequest(userId: userId, receiptId: receiptId, receipient: receipient, amount: amount, message: message), completionHandler: handler)
+    }
+    
     // MARK: - Private
     
     // TODO: Add URL

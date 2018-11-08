@@ -24,5 +24,5 @@ class DataSource {
     static let receiptItem4 = ReceiptItem(name: "Coca-Cola", price: "4")
     static let receiptItem5 = ReceiptItem(name: "California Roll", price: "7")
     
-    static let receipt = Receipt(items: [receiptItem1, receiptItem2, receiptItem3, receiptItem4, receiptItem5])
+    static let receipt = Receipt(items: [receiptItem1, receiptItem2, receiptItem3, receiptItem4, receiptItem5], id: "9919239")
 }

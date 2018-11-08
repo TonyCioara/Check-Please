@@ -243,8 +243,6 @@ class SignUpViewController: UIViewController {
                 
                 let user = User(json: jsonDict)
                 
-                _ = user.cache()
-                
                 DispatchQueue.main.async {
                     let navController = UINavigationController(rootViewController: HomeViewController())
                     navController.navigationBar.prefersLargeTitles = true
