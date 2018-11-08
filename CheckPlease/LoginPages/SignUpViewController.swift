@@ -243,7 +243,7 @@ class SignUpViewController: UIViewController {
                 
                 let user = User(json: jsonDict)
                 
-                user.cache()
+                _ = user.cache()
                 
                 DispatchQueue.main.async {
                     let navController = UINavigationController(rootViewController: HomeViewController())

@@ -11,23 +11,19 @@ import Foundation
 struct User {
     
     let token: String
-    let recoveryToken: String
     let id: String
     
-    init(token: String, recoveryToken: String, id: String) {
+    init(token: String, id: String) {
         self.token = token
-        self.recoveryToken = recoveryToken
         self.id = id
     }
   
     init(json: [String: Any]) {
         let token = json["auth_token"] as! String
         let id = json["user_id"] as! String
-        let recoveryToken = json["recovery_token"] as! String
         
         self.token = token
         self.id = id
-        self.recoveryToken = recoveryToken
     }
     
     /// Called when the local user's chatroom partner has stopped sharing their video feed.

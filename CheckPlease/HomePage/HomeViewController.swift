@@ -39,6 +39,8 @@ class HomeViewController: UIViewController {
     private func setUpViews() {
         self.title = "Past Receipts"
         self.view.backgroundColor = AppColors.white
+        let rightItem = UIBarButtonItem(image: #imageLiteral(resourceName: "smallCameraIcon"), style: .plain, target: self, action: #selector(rightBarButtonTapped(sender:)))
+        self.navigationItem.rightBarButtonItem = rightItem
         addSubviews()
         setConstraints()
         setUpTableView()
@@ -49,6 +51,10 @@ class HomeViewController: UIViewController {
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    @objc private func rightBarButtonTapped(sender: UIBarButtonItem) {
+        print("abcd")
     }
 }
 
