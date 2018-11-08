@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainSwift
 
 struct User {
     
@@ -28,12 +29,10 @@ struct User {
     
     /// Called when the local user's chatroom partner has stopped sharing their video feed.
     /// - Returns: Boolean value indicating if caching was successful.
-    func cache() -> Bool {
-        let fileURL = FileManager.default
-            .urls(for: .cachesDirectory, in: .allDomainsMask)
-            .first!
-            .appendingPathComponent("user.plist")
-        return dictionary.write(to: fileURL, atomically: true)
+    func cache() {
+        let keychain = KeychainSwift()
+        keychain.set(id, forKey: "userId")
+        keychain.set(token, forKey: "userToken")
     }
     
     // MARK: - Private

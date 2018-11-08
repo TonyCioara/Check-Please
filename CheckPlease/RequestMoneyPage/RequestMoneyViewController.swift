@@ -124,6 +124,11 @@ class RequestMoneyViewController: UIViewController {
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
             //            TODO: Perform networking request here
+            
+            
+            
+            
+            CheckPleaseAPI.sendSms(userId: "!23", receiptId: "123", receipient: "123", amount: "32", message: "")
             self.delegate.confirmButtonPressed()
             self.searchController.isActive = false
             self.navigationController?.popViewController(animated: true)
@@ -206,10 +211,6 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
             displayAlert(contact: selectedContact, phoneNumber: nil)
             
         }
-        
-//        searchController.isActive = false
-        
-        
     }
 }
 
