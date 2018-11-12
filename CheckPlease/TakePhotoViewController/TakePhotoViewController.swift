@@ -12,21 +12,16 @@ import AVFoundation
 
 class TakePhotoViewController: UIViewController {
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    override func viewDidLoad() {
         navigationItem.title = "Take photo"
-        view.backgroundColor = .white
+        view.backgroundColor = .red
         
         guard let captureSession = buildCaptureSession() else { return }
-        buildCameraPreviewLayer(withCaptureSession: captureSession)
         let backgroundButtonViews = buildBackgroundButtonViews()
+        buildCameraPreviewView(withCaptureSession: captureSession, buttonBackgroundView: backgroundButtonViews.background)
         buildPreviewImageView(withButtonBackgroundView: backgroundButtonViews.background)
         buildButtons(withBackgroundView: backgroundButtonViews.background,
                      midLineView: backgroundButtonViews.midLine)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("Method not supported")
     }
     
     // MARK: - Private
@@ -40,6 +35,7 @@ class TakePhotoViewController: UIViewController {
     private var imageData: Data? {
         didSet {
             confirmButton?.isEnabled = imageData != nil ? true : false
+            confirmButton?.alpha = imageData != nil ? 1.0 : 0.5
             guard let data = self.imageData else {
                 captureImageButton?.setTitle("Take Photo", for: .normal)
                 previewImageView?.image = nil
@@ -82,11 +78,21 @@ class TakePhotoViewController: UIViewController {
         return captureSession
     }
     
-    private func buildCameraPreviewLayer(withCaptureSession session: AVCaptureSession) {
+    private func buildCameraPreviewView(withCaptureSession session: AVCaptureSession, buttonBackgroundView: UIView) {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        let topBarHeight: CGFloat = navigationBar.frame.height + statusBarHeight
+        
+        let previewView = UIView()
+        view.addSubview(previewView)
+        // AutoLayout is not used b/c frame won't be accurate. An accurate frame is needed to add preview layer
+        let previewViewHeight = (view.frame.height - topBarHeight) - buttonBackgroundView.frame.height
+        previewView.frame = CGRect(x: 0, y: topBarHeight, width: view.frame.width, height: previewViewHeight)
+        
         let previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer.videoGravity = .resizeAspectFill
-        previewLayer.frame = view.bounds
-        view.layer.addSublayer(previewLayer)
+        previewLayer.frame = previewView.bounds
+        previewView.layer.addSublayer(previewLayer)
     }
     
     private func buildBackgroundButtonViews() -> (background: UIView, midLine: UIView) {
@@ -97,6 +103,7 @@ class TakePhotoViewController: UIViewController {
             maker.leading.trailing.bottom.equalToSuperview()
             maker.height.equalTo(60)
         }
+        backgroundButtonView.layoutIfNeeded()
         
         let midLineView = UIView()
         backgroundButtonView.addSubview(midLineView)
@@ -141,6 +148,7 @@ class TakePhotoViewController: UIViewController {
             maker.trailing.equalTo(midLineView)
         }
         let confirmButton = buttonMaker("Confirm")
+        confirmButton.alpha = 0.5
         confirmButton.isEnabled = false
         self.confirmButton = confirmButton
         confirmButton.addTarget(self, action: #selector(confirmButtonPressed), for: .touchUpInside)
