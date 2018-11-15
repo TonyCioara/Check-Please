@@ -12,14 +12,25 @@ import SnapKit
 
 class FullReceiptCell: UITableViewCell {
     
-    func setUp(indexPath: IndexPath, delegate: CellTapDelegate) {
+    func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receipt: Receipt) {
         
         // Add data to views
-        titleLabel.text = "Grandma's Deli"
-        priceLabel.text = "$126"
-        timeLabel.text = "11m"
+        self.receipt = receipt
         self.delegate = delegate
         self.indexPath = indexPath
+        
+        titleLabel.text = receipt.merchant
+        var totalPrice = Float(0)
+        for item in receipt.items {
+            totalPrice += Float(item.price) ?? 0
+        }
+        priceLabel.text = "$" + String(roundf(totalPrice * 100) / 100)
+        timeLabel.text = "abc"
+        
+        previewLabel1.text = String(receipt.items[0].product.split(separator: " ")[0])
+        previewLabel2.text = String(receipt.items[1].product.split(separator: " ")[0])
+        previewLabel3.text = String(receipt.items[2].product.split(separator: " ")[0])
+        
         addSubviews()
         setConstraints()
         setUpTapGesture()
@@ -27,18 +38,10 @@ class FullReceiptCell: UITableViewCell {
     
     //    MARK: - Private
     
-//    Replace this with the actual model when you get it
-    private let model = Array(1 ... 99)
+    private var receipt: Receipt?
     
     private var delegate: CellTapDelegate?
     private var indexPath: IndexPath?
-    
-    private let personPortraitCellId = "personPortraitCellId"
-    private let totalPeopleCellId = "totalPeopleCellId"
-    
-    private let collectionViewLineSpacing: CGFloat = 10
-    
-    private var collectionView: UICollectionView!
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -72,30 +75,24 @@ class FullReceiptCell: UITableViewCell {
         return label
     }()
     
-    private let bottomLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColors.lightGray
-        return view
-    }()
-    
     private let previewLabel1: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "Hello"
+        label.text = ""
         return label
     }()
     
     private let previewLabel2: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "Hello"
+        label.text = ""
         return label
     }()
     
     private let previewLabel3: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello"
+        label.text = ""
         return label
     }()
     
@@ -109,7 +106,9 @@ class FullReceiptCell: UITableViewCell {
     private func setConstraints() {
         
         containerView.snp.makeConstraints { (make) in
-            make.top.left.bottom.right.equalToSuperview().inset(8)
+            make.left.right.equalToSuperview().inset(8)
+            make.top.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
         }
         
         titleLabel.snp.makeConstraints { (make) in
@@ -144,27 +143,6 @@ class FullReceiptCell: UITableViewCell {
             make.right.equalToSuperview().offset(-16)
             make.top.equalTo(priceLabel.snp.bottom).offset(16)
         }
-        
-//        bottomLine.snp.makeConstraints { (make) in
-//            make.bottom.equalToSuperview()
-//            make.left.right.equalToSuperview().inset(16)
-//            make.height.equalTo(1)
-//        }
-    }
-    
-    private func setUpCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
-        collectionView.register(TotalPeopleCell.self, forCellWithReuseIdentifier: totalPeopleCellId)
-        collectionView.backgroundColor = .white
-        collectionView.isUserInteractionEnabled = false
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.reloadData()
     }
     
     private func setUpTapGesture() {
@@ -185,33 +163,5 @@ class FullReceiptCell: UITableViewCell {
         })
         guard let indexPath = self.indexPath, let delegate = self.delegate else {return}
         delegate.cellWasTapped(indexPath: indexPath)
-    }
-}
-
-extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if model.count < 5 {
-            return model.count
-        } else {
-            return 5
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 4 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: totalPeopleCellId, for: indexPath) as! TotalPeopleCell
-            cell.setUp(count: model.count - 4)
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: personPortraitCellId, for: indexPath) as! PersonPortraitCell
-            cell.setUp(image: #imageLiteral(resourceName: "IMG_0932"))
-            return cell
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
     }
 }

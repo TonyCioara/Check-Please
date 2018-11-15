@@ -14,7 +14,7 @@ class SelectItemTableViewCell: UITableViewCell {
     
     func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receiptItem: ReceiptItem) {
         
-        titleLabel.text = receiptItem.name
+        titleLabel.text = receiptItem.product
         priceLabel.text = "$" + receiptItem.price 
         
         addSubviews()

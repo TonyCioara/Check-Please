@@ -22,13 +22,13 @@ struct ReceiptItem {
     
     var id: String
     var receiptId: String
-    var invoiceId: String
+    var invoiceId: String?
     var product: String
     var price: String
     var createdAt: String
     var updatedAt: String
     
-    init(id: String, receiptId: String, invoiceId: String, product: String, price: String, createdAt: String, updatedAt: String) {
+    init(id: String, receiptId: String, invoiceId: String?, product: String, price: String, createdAt: String, updatedAt: String) {
         self.id = id
         self.receiptId = receiptId
         self.invoiceId = invoiceId

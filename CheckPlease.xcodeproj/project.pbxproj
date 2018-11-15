@@ -18,7 +18,6 @@
 		4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */; };
 		4883F3C12145BAB3002D13F7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4883F3C02145BAB3002D13F7 /* User.swift */; };
 		488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41042146E26800FD0547 /* SignUpViewController.swift */; };
-		488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488E41072147138100FD0547 /* TotalPeopleCell.swift */; };
 		489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B621503E400036CD01 /* InvitePeopleViewController.swift */; };
 		489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */; };
 		489F44C7217944D9002E1ABA /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489F44C6217944D9002E1ABA /* Contact.swift */; };
@@ -35,7 +34,6 @@
 		48C37757213786420029E490 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C37756213786420029E490 /* AppColors.swift */; };
 		48C3775A213786B40029E490 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C37759213786B40029E490 /* HomeViewController.swift */; };
 		48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775B2137873A0029E490 /* FullReceiptCell.swift */; };
-		48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775D21378C190029E490 /* PersonPortraitCell.swift */; };
 		860F866B2146E66A00B32022 /* CheckPleaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */; };
 		860F866D2146E69E00B32022 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866C2146E69E00B32022 /* Route.swift */; };
 		860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866F214714BC00B32022 /* TakePhotoViewController.swift */; };
@@ -55,7 +53,6 @@
 		4883F3BD2145B9AA002D13F7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		4883F3C02145BAB3002D13F7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		488E41042146E26800FD0547 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		488E41072147138100FD0547 /* TotalPeopleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalPeopleCell.swift; sourceTree = "<group>"; };
 		489B84B621503E400036CD01 /* InvitePeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleViewController.swift; sourceTree = "<group>"; };
 		489B84B821503EB60036CD01 /* InvitePeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitePeopleTableViewCell.swift; sourceTree = "<group>"; };
 		489F44C6217944D9002E1ABA /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
@@ -74,7 +71,6 @@
 		48C37756213786420029E490 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		48C37759213786B40029E490 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		48C3775B2137873A0029E490 /* FullReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullReceiptCell.swift; sourceTree = "<group>"; };
-		48C3775D21378C190029E490 /* PersonPortraitCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonPortraitCell.swift; sourceTree = "<group>"; };
 		860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPleaseAPI.swift; sourceTree = "<group>"; };
 		860F866C2146E69E00B32022 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		860F866F214714BC00B32022 /* TakePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoViewController.swift; sourceTree = "<group>"; };
@@ -226,8 +222,6 @@
 			children = (
 				48C37759213786B40029E490 /* HomeViewController.swift */,
 				48C3775B2137873A0029E490 /* FullReceiptCell.swift */,
-				48C3775D21378C190029E490 /* PersonPortraitCell.swift */,
-				488E41072147138100FD0547 /* TotalPeopleCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -373,7 +367,6 @@
 			files = (
 				489B84B721503E400036CD01 /* InvitePeopleViewController.swift in Sources */,
 				485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */,
-				488E41082147138100FD0547 /* TotalPeopleCell.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,
@@ -383,7 +376,6 @@
 				48C377382137261F0029E490 /* AppDelegate.swift in Sources */,
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
-				48C3775E21378C190029E490 /* PersonPortraitCell.swift in Sources */,
 				489F44C7217944D9002E1ABA /* Contact.swift in Sources */,
 				485ED1F02176BB220047B386 /* RequestPhoneNumberTableViewCell.swift in Sources */,
 				489B84B921503EB60036CD01 /* InvitePeopleTableViewCell.swift in Sources */,

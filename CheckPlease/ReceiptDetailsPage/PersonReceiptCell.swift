@@ -23,7 +23,7 @@ class PreviousReceiptCell: UITableViewCell {
             if let price = Int(item.price) {
                 totalPrice += price
             }
-            itemsText += item.name
+            itemsText += item.product
             if index < items.count - 1 {
                 itemsText += ", "
             }

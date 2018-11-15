@@ -112,9 +112,9 @@ class RequestMoneyViewController: UIViewController {
         for index in 0..<receiptItems.count {
             let item = receiptItems[index]
             if index == receiptItems.count - 1 {
-                message.append(item.name)
+                message.append(item.product)
             } else {
-                message.append("\(item.name), ")
+                message.append("\(item.product), ")
             }
             
         }

@@ -14,14 +14,26 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpData()
         setUpViews()
     }
     
     //    MARK: - Private
     
+    private var receipts = [Receipt]()
+    
     private let fullReceiptCellId = "fullReceiptCellId"
     
     private let tableView = UITableView()
+    
+    private func setUpData() {
+        var receipt = DataSource.receipt
+        receipt.items = [DataSource.receiptItem1, DataSource.receiptItem2, DataSource.receiptItem3, DataSource.receiptItem4, DataSource.receiptItem5]
+        
+        for _ in 1...5 {
+            receipts.append(receipt)
+        }
+    }
     
     private func addSubviews() {
         [tableView].forEach { (view) in
@@ -39,7 +51,7 @@ class HomeViewController: UIViewController {
     private func setUpViews() {
         self.title = "Past Receipts"
         self.view.backgroundColor = AppColors.white
-        let button = UIButton(frame: CGRect(x: 0, y: 10, width: 48, height: 48))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
         button.setImage(#imageLiteral(resourceName: "smallCameraIcon"), for: .normal)
         button.addTarget(self, action: #selector(rightBarButtonTapped(sender:)), for: .touchDown)
         let rightItem = UIBarButtonItem(customView: button)
@@ -57,19 +69,19 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func rightBarButtonTapped(sender: UIBarButtonItem) {
-        print("abcd")
+        navigationController?.pushViewController(TakePhotoViewController(), animated: true)
     }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource, CellTapDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return receipts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: fullReceiptCellId, for: indexPath) as! FullReceiptCell
-        cell.setUp(indexPath: indexPath, delegate: self)
+        cell.setUp(indexPath: indexPath, delegate: self, receipt: receipts[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
