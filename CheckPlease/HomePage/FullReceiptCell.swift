@@ -25,11 +25,12 @@ class FullReceiptCell: UITableViewCell {
             totalPrice += Float(item.price) ?? 0
         }
         priceLabel.text = "$" + String(roundf(totalPrice * 100) / 100)
-        timeLabel.text = "abc"
         
-        previewLabel1.text = String(receipt.items[0].product.split(separator: " ")[0])
-        previewLabel2.text = String(receipt.items[1].product.split(separator: " ")[0])
-        previewLabel3.text = String(receipt.items[2].product.split(separator: " ")[0])
+        timeLabel.text = formatTime(createdAt: receipt.createdAt)
+        
+        previewLabel1.text = String(receipt.items[0].product.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel2.text = String(receipt.items[1].product.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel3.text = String(receipt.items[2].product.split(separator: " ")[0]).lowercased().capitalized
         
         addSubviews()
         setConstraints()
@@ -95,6 +96,26 @@ class FullReceiptCell: UITableViewCell {
         label.text = ""
         return label
     }()
+    
+    private func formatTime(createdAt: String) -> String {
+        let timeComponents1 = createdAt.split(separator: "T")
+        let timeComponents2 = String(timeComponents1[1]).split(separator: ".")
+        let timeString = String(timeComponents1[0]) + " " + String(timeComponents2[0])
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        guard let date = dateFormatter.date(from: timeString) else { return "" }
+        let timeInterval = Date().timeIntervalSince(date)
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.unitsStyle = .abbreviated
+        formatter.maximumUnitCount = 1
+        
+        guard let timeSince = formatter.string(from: timeInterval) else { return "" }
+        return timeSince
+        
+    }
     
     private func addSubviews() {
         self.addSubview(containerView)

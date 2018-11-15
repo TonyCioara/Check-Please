@@ -23,6 +23,7 @@ class HomeViewController: UIViewController {
     private var receipts = [Receipt]()
     
     private let fullReceiptCellId = "fullReceiptCellId"
+    private let cameraButtonCellId = "cameraButtonCellId"
     
     private let tableView = UITableView()
     
@@ -63,6 +64,7 @@ class HomeViewController: UIViewController {
     
     private func setUpTableView() {
         tableView.register(FullReceiptCell.self, forCellReuseIdentifier: fullReceiptCellId)
+        tableView.register(CameraButtonCell.self, forCellReuseIdentifier: cameraButtonCellId)
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -76,16 +78,30 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource, CellTapDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if receipts.count == 0 {
+            return 1
+        }
         return receipts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if receipts.count == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: cameraButtonCellId, for: indexPath) as! CameraButtonCell
+            cell.setUp()
+            return cell
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: fullReceiptCellId, for: indexPath) as! FullReceiptCell
         cell.setUp(indexPath: indexPath, delegate: self, receipt: receipts[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if receipts.count == 0 {
+            return self.view.frame.height - (self.navigationController?.navigationBar.frame.height ?? 0)
+        }
         return 130
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.pushViewController(TakePhotoViewController(), animated: true)
     }
     func cellWasTapped(indexPath: IndexPath) {
         navigationController?.pushViewController(ReceiptDetailsViewController(), animated: true)
