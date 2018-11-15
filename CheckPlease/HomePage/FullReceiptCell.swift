@@ -12,22 +12,26 @@ import SnapKit
 
 class FullReceiptCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(indexPath: IndexPath, delegate: CellTapDelegate) {
         
         // Add data to views
         titleLabel.text = "Grandma's Deli"
         priceLabel.text = "$126"
         timeLabel.text = "11m"
-        
-//        setUpCollectionView()
+        self.delegate = delegate
+        self.indexPath = indexPath
         addSubviews()
         setConstraints()
+        setUpTapGesture()
     }
     
     //    MARK: - Private
     
 //    Replace this with the actual model when you get it
     private let model = Array(1 ... 99)
+    
+    private var delegate: CellTapDelegate?
+    private var indexPath: IndexPath?
     
     private let personPortraitCellId = "personPortraitCellId"
     private let totalPeopleCellId = "totalPeopleCellId"
@@ -40,6 +44,19 @@ class FullReceiptCell: UITableViewCell {
         let label = UILabel()
         label.font = AppFonts.semibold18
         return label
+    }()
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.white
+//        view.layer.borderWidth = 1
+//        view.layer.borderColor = AppColors.darkGray.withAlphaComponent(0.5).cgColor
+        
+        view.layer.shadowColor = AppColors.darkGray.cgColor
+        view.layer.shadowOpacity = 0.35
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = 5
+        return view
     }()
     
     private let priceLabel: UILabel = {
@@ -83,12 +100,17 @@ class FullReceiptCell: UITableViewCell {
     }()
     
     private func addSubviews() {
-        [titleLabel, timeLabel, priceLabel, bottomLine, previewLabel1, previewLabel2, previewLabel3].forEach { (view) in
-            self.addSubview(view)
+        self.addSubview(containerView)
+        [titleLabel, timeLabel, priceLabel, previewLabel1, previewLabel2, previewLabel3].forEach { (view) in
+            containerView.addSubview(view)
         }
     }
     
     private func setConstraints() {
+        
+        containerView.snp.makeConstraints { (make) in
+            make.top.left.bottom.right.equalToSuperview().inset(8)
+        }
         
         titleLabel.snp.makeConstraints { (make) in
             make.left.top.equalToSuperview().inset(16)
@@ -123,11 +145,11 @@ class FullReceiptCell: UITableViewCell {
             make.top.equalTo(priceLabel.snp.bottom).offset(16)
         }
         
-        bottomLine.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(1)
-        }
+//        bottomLine.snp.makeConstraints { (make) in
+//            make.bottom.equalToSuperview()
+//            make.left.right.equalToSuperview().inset(16)
+//            make.height.equalTo(1)
+//        }
     }
     
     private func setUpCollectionView() {
@@ -143,6 +165,26 @@ class FullReceiptCell: UITableViewCell {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.reloadData()
+    }
+    
+    private func setUpTapGesture() {
+        self.selectionStyle = .none
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        tap.delegate = self
+        containerView.addGestureRecognizer(tap)
+    }
+
+    private var timer = Timer()
+
+    @objc private func handleTap(sender: UITapGestureRecognizer? = nil) {
+        // handling code
+        containerView.backgroundColor = AppColors.lightGray
+        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
+            self.containerView.backgroundColor = AppColors.white
+        })
+        guard let indexPath = self.indexPath, let delegate = self.delegate else {return}
+        delegate.cellWasTapped(indexPath: indexPath)
     }
 }
 

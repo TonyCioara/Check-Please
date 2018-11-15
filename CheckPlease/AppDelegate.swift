@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //        TODO: Check if user is cached and go to home page instead
         // Override point for customization after application launch.
         let loginVC = LoginViewController()
-        let navController = UINavigationController(rootViewController: SelectItemsViewController())
+        let navController = UINavigationController(rootViewController: HomeViewController())
         navController.navigationBar.prefersLargeTitles = true
         navController.navigationBar.barTintColor = AppColors.white
         window = UIWindow()

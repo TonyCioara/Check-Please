@@ -39,7 +39,10 @@ class HomeViewController: UIViewController {
     private func setUpViews() {
         self.title = "Past Receipts"
         self.view.backgroundColor = AppColors.white
-        let rightItem = UIBarButtonItem(image: #imageLiteral(resourceName: "smallCameraIcon"), style: .plain, target: self, action: #selector(rightBarButtonTapped(sender:)))
+        let button = UIButton(frame: CGRect(x: 0, y: 10, width: 48, height: 48))
+        button.setImage(#imageLiteral(resourceName: "smallCameraIcon"), for: .normal)
+        button.addTarget(self, action: #selector(rightBarButtonTapped(sender:)), for: .touchDown)
+        let rightItem = UIBarButtonItem(customView: button)
         self.navigationItem.rightBarButtonItem = rightItem
         addSubviews()
         setConstraints()
@@ -58,7 +61,7 @@ class HomeViewController: UIViewController {
     }
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource, CellTapDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -66,13 +69,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: fullReceiptCellId, for: indexPath) as! FullReceiptCell
-        cell.setUp()
+        cell.setUp(indexPath: indexPath, delegate: self)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 116
+        return 130
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func cellWasTapped(indexPath: IndexPath) {
         navigationController?.pushViewController(ReceiptDetailsViewController(), animated: true)
     }
 }
