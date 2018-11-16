@@ -26,13 +26,12 @@ class CameraButtonCell: UITableViewCell {
     
     private func setConstraints() {
         titleLabel.snp.makeConstraints { (make) in
-            make.left.right.top.equalToSuperview().inset(32)
+            make.left.right.top.equalToSuperview().inset(16)
         }
         cameraImageView.snp.makeConstraints { (make) in
             make.width.equalTo(cameraImageView.snp.height).multipliedBy(320 / 416)
             make.top.equalTo(titleLabel.snp.bottom)
             make.left.right.equalToSuperview().inset(100)
-            make.bottom.greaterThanOrEqualToSuperview().inset(16)
         }
     }
     
@@ -50,7 +49,7 @@ class CameraButtonCell: UITableViewCell {
         label.textColor = AppColors.darkGray
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.text = "You have no previous receipts.\nTake a photo of your first receipt!"
+        label.text = "You have no previous receipts. Take a photo of your first receipt!"
         return label
     }()
 }

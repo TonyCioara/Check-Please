@@ -18,6 +18,7 @@ class FullReceiptCell: UITableViewCell {
         self.receipt = receipt
         self.delegate = delegate
         self.indexPath = indexPath
+        self.backgroundColor = UIColor.clear
         
         titleLabel.text = receipt.merchant
         var totalPrice = Float(0)
@@ -53,8 +54,8 @@ class FullReceiptCell: UITableViewCell {
     private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = AppColors.white
-//        view.layer.borderWidth = 1
-//        view.layer.borderColor = AppColors.darkGray.withAlphaComponent(0.5).cgColor
+        view.layer.borderWidth = 1
+        view.layer.borderColor = AppColors.darkGray.withAlphaComponent(0.25).cgColor
         
         view.layer.shadowColor = AppColors.darkGray.cgColor
         view.layer.shadowOpacity = 0.35
