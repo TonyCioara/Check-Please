@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
         let label = UILabel()
         label.textColor = AppColors.white
         label.font = AppFonts.bold48
-        label.text = "CHECK PLEASE"
+        label.text = "Pay-Split"
         label.numberOfLines = 2
         label.contentMode = .center
         label.textAlignment = .center

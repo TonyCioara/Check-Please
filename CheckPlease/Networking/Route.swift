@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainSwift
 
 enum HTTPMethod: String {
     case post = "POST"
@@ -31,8 +32,13 @@ enum Route {
     
     var header: [String: String] {
         switch self {
-        default:
+        case .signUp, .login:
             return ["Content-Type": "application/json"]
+        default:
+            let keychain = KeychainSwift()
+            let token = keychain.get("userToken") ?? ""
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer \(token)"]
         }
     }
     
