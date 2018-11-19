@@ -188,7 +188,7 @@ class LoginViewController: UIViewController {
         // TODO: Add loading icon
         guard let email = emailTextField.text,
             let password = passwordTextField.text else { return }
-        CheckPleaseAPI.login(withEmail: email, password: password) { (json, err) in
+        CheckPleaseAPI.login(withEmail: email, password: password) { (json, _, err) in
             // TODO: Cache user info after successful login
             if let _ = err {
                 return

@@ -15,16 +15,27 @@ enum CheckPleaseAPIError: Error {
 class CheckPleaseAPI {
     
     typealias JSONDictionary = [String: Any]
-    typealias CompletionHandler = (JSONDictionary?, Error?) -> Void
+    typealias CompletionHandler = (JSONDictionary?, URLResponse?, Error?) -> Void
     
     static func login(withEmail email: String, password: String, completionHandler handler: @escaping CompletionHandler) {
         
-        request(withRoute: .login(email: email, password: password), completionHandler: handler)
+        request(withRoute: .login(email: email, password: password),
+                baseStringURL: coreServerStringURL,
+                completionHandler: handler)
     }
     
     static func signUp(withUserObject object: [String: String], completionHandler handler: @escaping CompletionHandler) {
         
-        request(withRoute: .signUp(userObject: object), completionHandler: handler)
+        request(withRoute: .signUp(userObject: object),
+                baseStringURL: coreServerStringURL,
+                completionHandler: handler)
+    }
+    
+    static func uploadReceiptImage(withImageInfo imageInfo: PaysplitImageInfo, userID: Int, completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withRoute: .postImage(imageInfo: imageInfo, userID: userID),
+                baseStringURL: photoHandlerServerStringURL,
+                completionHandler: handler)
     }
     
     static func sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String, completionHandler handler: @escaping CompletionHandler) {
@@ -35,9 +46,10 @@ class CheckPleaseAPI {
     // MARK: - Private
     
     // TODO: Add URL
-    private static let baseStringURL = "https://5a546e2d.ngrok.io"
+    private static let coreServerStringURL = "https://5a546e2d.ngrok.io"
+    private static let photoHandlerServerStringURL = "https://paysplit-photo-handler-api.herokuapp.com"
     
-    private static func request(withRoute route: Route, completionHandler handler: @escaping CompletionHandler) {
+    private static func request(withRoute route: Route, baseStringURL: String, completionHandler handler: @escaping CompletionHandler) {
         
         do {
             let url = try buildURL(withBaseURLString: baseStringURL, route: route)
@@ -48,20 +60,20 @@ class CheckPleaseAPI {
             
             URLSession.shared.dataTask(with: request) { data, response, error in
                 if let error = error {
-                    handler(nil, error)
+                    handler(nil, response, error)
                     return
                 }
                 guard let data = data,
                     let json = try? JSONSerialization.jsonObject(with: data, options: []),
                     let result = json as? JSONDictionary else {
-                        handler(nil, CheckPleaseAPIError.invalidJSON(route.path))
+                        handler(nil, response, CheckPleaseAPIError.invalidJSON(route.path))
                         return
                 }
-                handler(result, nil)
+                handler(result, response, nil)
                 }.resume()
             
         } catch {
-            handler(nil, error)
+            handler(nil, nil, error)
         }
     }
     

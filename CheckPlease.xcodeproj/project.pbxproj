@@ -39,6 +39,8 @@
 		860F866B2146E66A00B32022 /* CheckPleaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */; };
 		860F866D2146E69E00B32022 /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866C2146E69E00B32022 /* Route.swift */; };
 		860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860F866F214714BC00B32022 /* TakePhotoViewController.swift */; };
+		86A5950B21A2272400D62E84 /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5950A21A2272400D62E84 /* DataExtensions.swift */; };
+		86A5950D21A2283A00D62E84 /* PaysplitImageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A5950C21A2283A00D62E84 /* PaysplitImageInfo.swift */; };
 		93FE25D8A771092D2DCBD733 /* Pods_CheckPlease.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 339629119946F64974C33B85 /* Pods_CheckPlease.framework */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,8 @@
 		860F866A2146E66A00B32022 /* CheckPleaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckPleaseAPI.swift; sourceTree = "<group>"; };
 		860F866C2146E69E00B32022 /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		860F866F214714BC00B32022 /* TakePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakePhotoViewController.swift; sourceTree = "<group>"; };
+		86A5950A21A2272400D62E84 /* DataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
+		86A5950C21A2283A00D62E84 /* PaysplitImageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaysplitImageInfo.swift; sourceTree = "<group>"; };
 		B0599B7C9A8652B1BB3E13EE /* Pods-CheckPlease.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckPlease.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CheckPlease/Pods-CheckPlease.debug.xcconfig"; sourceTree = "<group>"; };
 		CF364183EA9AA83E1294AD3D /* Pods-CheckPlease.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CheckPlease.release.xcconfig"; path = "Pods/Target Support Files/Pods-CheckPlease/Pods-CheckPlease.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +112,7 @@
 			children = (
 				4840316421596703006D25DA /* StringExtensions.swift */,
 				485ED1E32176721E0047B386 /* DataSource.swift */,
+				86A5950A21A2272400D62E84 /* DataExtensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -119,6 +124,7 @@
 				489F44C6217944D9002E1ABA /* Contact.swift */,
 				485ED1E5217675950047B386 /* ReceiptItem.swift */,
 				485ED1E7217675EC0047B386 /* Receipt.swift */,
+				86A5950C21A2283A00D62E84 /* PaysplitImageInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -375,6 +381,7 @@
 				485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
+				86A5950B21A2272400D62E84 /* DataExtensions.swift in Sources */,
 				4820A27B21A23C9800C4310A /* InfoCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,
 				488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */,
@@ -393,6 +400,7 @@
 				4883F3BE2145B9AA002D13F7 /* UITextFieldExtension.swift in Sources */,
 				860F8670214714BC00B32022 /* TakePhotoViewController.swift in Sources */,
 				48C3775A213786B40029E490 /* HomeViewController.swift in Sources */,
+				86A5950D21A2283A00D62E84 /* PaysplitImageInfo.swift in Sources */,
 				485ED1EC21767FA30047B386 /* CellTapDelegate.swift in Sources */,
 				48C37757213786420029E490 /* AppColors.swift in Sources */,
 				48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */,
@@ -528,8 +536,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JDYWQEVARC;
+				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -547,8 +556,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = JDYWQEVARC;
+				DEVELOPMENT_TEAM = QFR976VMLD;
 				INFOPLIST_FILE = CheckPlease/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
