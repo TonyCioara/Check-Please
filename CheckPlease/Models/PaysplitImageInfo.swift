@@ -9,19 +9,24 @@
 import UIKit
 
 final class PaysplitImageInfo {
-    let uuid = UUID().uuidString
+    let uuid: String
     let filename: String
     let imageData: Data
     
-    init(filename: String, imageData: Data) {
-        self.filename = filename
+    init(imageData: Data) {
+        // FIXME: find better solution to replace filename
+        // - Does unsaved recently captured photo have a filename?
+        let uuid = UUID().uuidString
+        self.filename = uuid
+        self.uuid = uuid
         self.imageData = imageData
     }
     
-    convenience init?(filename: String, image: UIImage) {
+    
+    convenience init?(image: UIImage) {
         guard let imageData = UIImageJPEGRepresentation(image, 1.0) else {
             return nil
         }
-        self.init(filename: filename, imageData: imageData)
+        self.init(imageData: imageData)
     }
 }
