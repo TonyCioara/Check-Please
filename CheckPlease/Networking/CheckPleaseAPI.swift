@@ -40,7 +40,7 @@ class CheckPleaseAPI {
     
     static func sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String, completionHandler handler: @escaping CompletionHandler) {
         
-        request(withRoute: .sendRequest(userId: userId, receiptId: receiptId, receipient: receipient, amount: amount, message: message), completionHandler: handler)
+        request(withRoute: .sendRequest(userId: userId, receiptId: receiptId, receipient: receipient, amount: amount, message: message), baseStringURL: coreServerStringURL, completionHandler: handler)
     }
     
     // MARK: - Private

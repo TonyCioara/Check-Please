@@ -20,13 +20,15 @@ enum Route {
     case login(email: String, password: String)
     case signUp(userObject: [String: String])
     case sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String)
+    case getUserReceipts(userId: String)
+    case getReceiptItems(receiptId: String)
     case postImage(imageInfo: PaysplitImageInfo, userID: Int)
     
     var httpMethod: String {
         switch self {
         case .signUp, .postImage, .sendRequest:
             return HTTPMethod.post.rawValue
-        case .login:
+        case .login, .getUserReceipts, .getReceiptItems:
             return HTTPMethod.get.rawValue
         }
     }
@@ -56,6 +58,10 @@ enum Route {
             return "/receipt_photos"
         case .sendRequest:
             return "/invoice/smsconvert"
+        case let .getReceiptItems(receiptId):
+            return "/item/\(receiptId)"
+        case let .getUserReceipts(userId):
+            return "/receipts/all/\(userId)"
         }
     }
     

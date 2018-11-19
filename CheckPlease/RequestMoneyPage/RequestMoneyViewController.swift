@@ -140,7 +140,7 @@ class RequestMoneyViewController: UIViewController {
             for item in self.receiptItems {
                 totalAmount += Float(item.price) ?? 0
             }
-            CheckPleaseAPI.sendRequest(userId: userId, receiptId: self.receiptId, receipient: finalPhoneNumber, amount: String(totalAmount), message: message, completionHandler: { (dict, err) in
+            CheckPleaseAPI.sendRequest(userId: userId, receiptId: self.receiptId, receipient: finalPhoneNumber, amount: String(totalAmount), message: message, completionHandler: { (json, _, err)  in
                 self.delegate.confirmButtonPressed()
                 self.searchController.isActive = false
                 self.navigationController?.popViewController(animated: true)
