@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navController.navigationBar.barTintColor = AppColors.white
         window = UIWindow()
 //        window?.rootViewController = loginVC
-        window?.rootViewController = loginVC
+        window?.rootViewController = navController
         window?.makeKeyAndVisible()
         return true
     }

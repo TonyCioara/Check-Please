@@ -109,7 +109,7 @@ class FullReceiptCell: UITableViewCell {
         let timeInterval = Date().timeIntervalSince(date)
         
         let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day, .hour, .minute, .second]
+        formatter.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
         formatter.unitsStyle = .abbreviated
         formatter.maximumUnitCount = 1
         
