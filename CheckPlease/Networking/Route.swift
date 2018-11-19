@@ -24,7 +24,7 @@ enum Route {
     
     var httpMethod: String {
         switch self {
-        case .signUp, .postImage:
+        case .signUp, .postImage, .sendRequest:
             return HTTPMethod.post.rawValue
         case .login:
             return HTTPMethod.get.rawValue
