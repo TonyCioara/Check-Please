@@ -232,7 +232,7 @@ class SignUpViewController: UIViewController {
             // TODO: Cache user info after successful sign up
             // TODO: Hide activity indicator
             showActivityIndicator()
-            CheckPleaseAPI.signUp(withUserObject: userDict) { (json, err) in
+            CheckPleaseAPI.signUp(withUserObject: userDict) { (json, _, err) in
                 // TODO: Cache user info after successful sign up
                 
                 if let _ = err {
