@@ -29,9 +29,9 @@ class FullReceiptCell: UITableViewCell {
         
         timeLabel.text = formatTime(createdAt: receipt.createdAt)
         
-        previewLabel1.text = String(receipt.items[0].product.split(separator: " ")[0]).lowercased().capitalized
-        previewLabel2.text = String(receipt.items[1].product.split(separator: " ")[0]).lowercased().capitalized
-        previewLabel3.text = String(receipt.items[2].product.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel1.text = String(receipt.items[0].product) //.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel2.text = String(receipt.items[1].product) //.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel3.text = String(receipt.items[2].product) //.split(separator: " ")[0]).lowercased().capitalized
         
         addSubviews()
         setConstraints()
@@ -138,7 +138,7 @@ class FullReceiptCell: UITableViewCell {
         }
         
         previewLabel1.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.left.equalTo(titleLabel.snp.left)
             make.right.lessThanOrEqualTo(timeLabel.snp.left).offset(-16)
         }

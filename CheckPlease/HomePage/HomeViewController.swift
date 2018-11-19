@@ -98,7 +98,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource, CellTa
         if receipts.count == 0 {
             return self.view.frame.height - (self.navigationController?.navigationBar.frame.height ?? 0)
         }
-        return 130
+        return 140
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         navigationController?.pushViewController(TakePhotoViewController(), animated: true)

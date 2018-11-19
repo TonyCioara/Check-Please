@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4820A27B21A23C9800C4310A /* InfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4820A27A21A23C9800C4310A /* InfoCell.swift */; };
 		4840316521596703006D25DA /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4840316421596703006D25DA /* StringExtensions.swift */; };
 		485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */; };
 		485ED1E42176721E0047B386 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485ED1E32176721E0047B386 /* DataSource.swift */; };
@@ -31,7 +32,7 @@
 		48C3773F213726210029E490 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48C3773E213726210029E490 /* Assets.xcassets */; };
 		48C3774C2137279A0029E490 /* AppFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3774B2137279A0029E490 /* AppFonts.swift */; };
 		48C3775321374AA00029E490 /* ReceiptDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775221374AA00029E490 /* ReceiptDetailsViewController.swift */; };
-		48C3775521374B200029E490 /* PersonReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775421374B200029E490 /* PersonReceiptCell.swift */; };
+		48C3775521374B200029E490 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775421374B200029E490 /* ItemCell.swift */; };
 		48C37757213786420029E490 /* AppColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C37756213786420029E490 /* AppColors.swift */; };
 		48C3775A213786B40029E490 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C37759213786B40029E490 /* HomeViewController.swift */; };
 		48C3775C2137873A0029E490 /* FullReceiptCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48C3775B2137873A0029E490 /* FullReceiptCell.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		339629119946F64974C33B85 /* Pods_CheckPlease.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CheckPlease.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4820A27A21A23C9800C4310A /* InfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCell.swift; sourceTree = "<group>"; };
 		4840316421596703006D25DA /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
 		485ED1DF2175595C0047B386 /* UIButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButtonExtensions.swift; sourceTree = "<group>"; };
 		485ED1E32176721E0047B386 /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
@@ -69,7 +71,7 @@
 		48C37743213726210029E490 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48C3774B2137279A0029E490 /* AppFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFonts.swift; sourceTree = "<group>"; };
 		48C3775221374AA00029E490 /* ReceiptDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiptDetailsViewController.swift; sourceTree = "<group>"; };
-		48C3775421374B200029E490 /* PersonReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonReceiptCell.swift; sourceTree = "<group>"; };
+		48C3775421374B200029E490 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		48C37756213786420029E490 /* AppColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppColors.swift; sourceTree = "<group>"; };
 		48C37759213786B40029E490 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		48C3775B2137873A0029E490 /* FullReceiptCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullReceiptCell.swift; sourceTree = "<group>"; };
@@ -214,7 +216,8 @@
 			isa = PBXGroup;
 			children = (
 				48C3775221374AA00029E490 /* ReceiptDetailsViewController.swift */,
-				48C3775421374B200029E490 /* PersonReceiptCell.swift */,
+				4820A27A21A23C9800C4310A /* InfoCell.swift */,
+				48C3775421374B200029E490 /* ItemCell.swift */,
 			);
 			path = ReceiptDetailsPage;
 			sourceTree = "<group>";
@@ -372,10 +375,11 @@
 				485ED1E02175595C0047B386 /* UIButtonExtensions.swift in Sources */,
 				48B9B2EC2140D0D000215E73 /* RequestMoneyViewController.swift in Sources */,
 				48B9B2EE2140D7D900215E73 /* RequestTableViewCell.swift in Sources */,
+				4820A27B21A23C9800C4310A /* InfoCell.swift in Sources */,
 				48C3773A2137261F0029E490 /* LoginViewController.swift in Sources */,
 				488E41052146E26800FD0547 /* SignUpViewController.swift in Sources */,
 				4840316521596703006D25DA /* StringExtensions.swift in Sources */,
-				48C3775521374B200029E490 /* PersonReceiptCell.swift in Sources */,
+				48C3775521374B200029E490 /* ItemCell.swift in Sources */,
 				48C377382137261F0029E490 /* AppDelegate.swift in Sources */,
 				48B9B2E72140653000215E73 /* SelectItemsViewController.swift in Sources */,
 				4883F3C12145BAB3002D13F7 /* User.swift in Sources */,
