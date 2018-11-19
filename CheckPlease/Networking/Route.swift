@@ -18,10 +18,11 @@ enum HTTPMethod: String {
 enum Route {
     case login(email: String, password: String)
     case signUp(userObject: [String: String])
+    case postImage(imageInfo: PaysplitImageInfo, userID: Int)
     
     var httpMethod: String {
         switch self {
-        case .signUp:
+        case .signUp, .postImage:
             return HTTPMethod.post.rawValue
         case .login:
             return HTTPMethod.get.rawValue
@@ -29,7 +30,10 @@ enum Route {
     }
     
     var header: [String: String] {
+        // TODO: Update for secured routes
         switch self {
+        case let .postImage(imageInfo, _):
+            return ["Content-Type": "multipart/form-data; boundary=Boundary-\(imageInfo.uuid)"]
         default:
             return ["Content-Type": "application/json"]
         }
@@ -41,6 +45,8 @@ enum Route {
             return "/auth/signup"
         case .login:
             return "/auth/login"
+        case .postImage:
+            return "/receipt_photos"
         }
     }
     
@@ -67,6 +73,25 @@ enum Route {
                 "password": userObject["password"]!
                 ]
             return serialize(json)
+        case let .postImage(imageInfo, userID):
+            // Huge thanks to NewFiveFour on GitHub
+            // LINK: https://github.com/newfivefour/BlogPosts/blob/master/swift-form-data-multipart-upload-URLRequest.md
+            var body = Data()
+            let boundary = "Boundary-\(imageInfo.uuid)"
+            let boundaryPrefix = "--\(boundary)\r\n"
+            // Add userID to body
+            body.append(boundaryPrefix)
+            body.append("Content-Disposition: form-data; name=\"user_id\"\r\n\r\n")
+            body.append("\(userID)\r\n")
+            
+            // Add image data to body
+            body.append(boundaryPrefix)
+            body.append("Content-Disposition: form-data; name=\"image_file\"; filename=\"\(imageInfo.filename)\"\r\n")
+            body.append("Content-type: image/png\r\n\r\n")
+            body.append(imageInfo.imageData)
+            body.append("\r\n")
+            body.append("--\(boundary)--")
+            return body
         default:
             return nil
         }
