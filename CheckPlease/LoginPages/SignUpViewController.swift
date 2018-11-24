@@ -51,26 +51,20 @@ class SignUpViewController: UIViewController {
             if let text = userDict[dictKeyArray[step]] {
                 if text.isEmptyOrWhitespace {
                     inputTextField.text = ""
-                    disableNextButton()
+                    nextButton.disable()
                 } else {
                     inputTextField.text = text
-                    enableNextButton()
+                    nextButton.enable()
                 }
             } else {
                 inputTextField.text = ""
-                disableNextButton()
+                nextButton.disable()
             }
             // Only enable backButton after first entry is accepted
             if step > 0 {
-                backButton.backgroundColor = .clear
-                // This alpha affects the buttons title label
-                backButton.alpha = 1.0
-                backButton.isEnabled = true
+                backButton.enable()
             } else {
-                backButton.backgroundColor = AppColors.mediumBlue.withAlphaComponent(0.4)
-                // This alpha affects the buttons title label
-                backButton.alpha = 0.5
-                backButton.isEnabled = false
+                backButton.disable()
             }
         }
     }
@@ -195,28 +189,17 @@ class SignUpViewController: UIViewController {
             make.width.equalTo(backButton).multipliedBy(4)
         }
         
-        activityIndicator.snp.makeConstraints { maker in
+        activityIndicator.snp.makeConstraints { make in
             // Superview is nextButton
-            maker.center.equalToSuperview()
+            make.center.equalToSuperview()
         }
-    }
-    
-    private func enableNextButton() {
-        nextButton.backgroundColor = .clear
-        nextButton.alpha = 1.0
-        nextButton.isEnabled = true
-    }
-    
-    private func disableNextButton() {
-        nextButton.backgroundColor = AppColors.mediumBlue.withAlphaComponent(0.4)
-        nextButton.alpha = 0.5
-        nextButton.isEnabled = false
     }
     
     private func showActivityIndicator() {
         nextButton.setTitle("", for: .normal)
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
+        backButton.disable()
     }
     
     private func hideActivityIndicator() {
@@ -241,9 +224,7 @@ class SignUpViewController: UIViewController {
                 
                 guard let jsonDict = json else {return}
                 
-                let user = User(json: jsonDict)
-                
-                _ = user.cache()
+                let _ = User(json: jsonDict)
                 
                 DispatchQueue.main.async {
                     let navController = UINavigationController(rootViewController: HomeViewController())
@@ -272,9 +253,9 @@ class SignUpViewController: UIViewController {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if (textField.text?.isEmptyOrWhitespace)! {
-            disableNextButton()
+            nextButton.disable()
         } else {
-            enableNextButton()
+            nextButton.enable()
         }
     }
 }

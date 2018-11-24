@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainSwift
 
 struct User {
     
@@ -24,26 +25,16 @@ struct User {
         
         self.token = token
         self.id = id
-    }
-    
-    /// Called when the local user's chatroom partner has stopped sharing their video feed.
-    /// - Returns: Boolean value indicating if caching was successful.
-    func cache() -> Bool {
-        let fileURL = FileManager.default
-            .urls(for: .cachesDirectory, in: .allDomainsMask)
-            .first!
-            .appendingPathComponent("user.plist")
-        return dictionary.write(to: fileURL, atomically: true)
+        cache()
     }
     
     // MARK: - Private
     
-    /// NSDictionary representation of user object used to facilitate caching to
-    /// document directory.
-    private var dictionary: NSDictionary {
-        return [
-            "id": id,
-            "token": token
-        ]
+    /// Called when the local user's chatroom partner has stopped sharing their video feed.
+    /// - Returns: Boolean value indicating if caching was successful.
+    private func cache() {
+        let keychain = KeychainSwift()
+        keychain.set(id, forKey: "userId")
+        keychain.set(token, forKey: "userToken")
     }
 }

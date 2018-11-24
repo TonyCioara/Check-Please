@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Contacts
+import KeychainSwift
 
 class RequestMoneyViewController: UIViewController {
  //        TODO: Add search by name and email
@@ -26,9 +27,10 @@ class RequestMoneyViewController: UIViewController {
         }
     }
     
-    init(items: [ReceiptItem], contacts: [Contact], delegate: RequestMoneyDelegate) {
+    init(items: [ReceiptItem] , receiptId: String, contacts: [Contact], delegate: RequestMoneyDelegate) {
         
         self.receiptItems = items
+        self.receiptId = receiptId
         self.delegate = delegate
         self.contacts = contacts
         super.init(nibName: nil, bundle: nil)
@@ -49,6 +51,7 @@ class RequestMoneyViewController: UIViewController {
     private var contacts: [Contact]
     private var filteredContacts = [Contact]()
     
+    private var receiptId: String
     private var receiptItems: [ReceiptItem]
     private var selectedPath: IndexPath?
     
@@ -103,30 +106,46 @@ class RequestMoneyViewController: UIViewController {
     }
     
     private func displayAlert(contact: Contact?, phoneNumber: String?) {
-        var message = "Items: "
+        var message = "For "
         var title = ""
+        var finalPhoneNumber = ""
         for index in 0..<receiptItems.count {
             let item = receiptItems[index]
             if index == receiptItems.count - 1 {
-                message.append(item.name)
+                message.append(item.product)
             } else {
-                message.append("\(item.name), ")
+                message.append("\(item.product), ")
             }
             
         }
         if let contact = contact {
             title = "Request \(contact.firstName) \(contact.lastName)"
+            finalPhoneNumber = contact.phoneNumber
         } else if let phoneNumber = phoneNumber {
             title = "Request \(phoneNumber)"
+            finalPhoneNumber = phoneNumber
         }
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
             //            TODO: Perform networking request here
-            self.delegate.confirmButtonPressed()
-            self.searchController.isActive = false
-            self.navigationController?.popViewController(animated: true)
+            
+            let keychain = KeychainSwift()
+            guard let userId = keychain.get("userId") else {print("No user id in keychain"); return}
+            
+            let finalPhoneNumber = finalPhoneNumber.replacingOccurrences(of:"[^0-9, +]", with: "", options: .regularExpression)
+            
+            var totalAmount: Float = 0
+            for item in self.receiptItems {
+                totalAmount += Float(item.price) ?? 0
+            }
+            CheckPleaseAPI.sendRequest(userId: userId, receiptId: self.receiptId, receipient: finalPhoneNumber, amount: String(totalAmount), message: message, completionHandler: { (json, _, err)  in
+                self.delegate.confirmButtonPressed()
+                self.searchController.isActive = false
+                self.navigationController?.popViewController(animated: true)
+            })
+            
             
         }
         
@@ -206,10 +225,6 @@ extension RequestMoneyViewController: UITableViewDelegate, UITableViewDataSource
             displayAlert(contact: selectedContact, phoneNumber: nil)
             
         }
-        
-//        searchController.isActive = false
-        
-        
     }
 }
 

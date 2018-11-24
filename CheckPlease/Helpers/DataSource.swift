@@ -8,21 +8,25 @@
 
 import Foundation
 
+
 class DataSource {
+    static let receiptItem1 = ReceiptItem(id: "4737b7c0-714a-44fc-bfbe-7f6397bd1a56", receiptId: "217bafa0-e764-11e8-a7d6-292665ab97ba", invoiceId: nil, product: "BREAD 007225003712 F 2", price: "2.88", createdAt: "2018-11-13T16:49:47.993Z", updatedAt: "2018-11-13T16:49:47.993Z")
+    static let receiptItem2 = ReceiptItem(id: "4737b7c0-714a-44fc-bfbe-7f6397bd1a56", receiptId: "217bafa0-e764-11e8-a7d6-292665ab97ba", invoiceId: nil, product: "BREAD 007225003712 F 2", price: "2.88", createdAt: "2018-11-13T16:49:47.993Z", updatedAt: "2018-11-13T16:49:47.993Z")
+    static let receiptItem3 = ReceiptItem(id: "4737b7c0-714a-44fc-bfbe-7f6397bd1a56", receiptId: "217bafa0-e764-11e8-a7d6-292665ab97ba", invoiceId: nil, product: "BREAD 007225003712 F 2", price: "2.88", createdAt: "2018-11-13T16:49:47.993Z", updatedAt: "2018-11-13T16:49:47.993Z")
+    static let receiptItem4 = ReceiptItem(id: "4737b7c0-714a-44fc-bfbe-7f6397bd1a56", receiptId: "217bafa0-e764-11e8-a7d6-292665ab97ba", invoiceId: nil, product: "BREAD 007225003712 F 2", price: "2.88", createdAt: "2018-11-13T16:49:47.993Z", updatedAt: "2018-11-13T16:49:47.993Z")
+    static let receiptItem5 = ReceiptItem(id: "4737b7c0-714a-44fc-bfbe-7f6397bd1a56", receiptId: "217bafa0-e764-11e8-a7d6-292665ab97ba", invoiceId: nil, product: "BREAD 007225003712 F 2", price: "2.88", createdAt: "2018-11-13T16:49:47.993Z", updatedAt: "2018-11-13T16:49:47.993Z")
     
-//    static let user1 = User(email: "tony@mail.com", firstName: "Tony", lastName: "Cioara", phoneNumber: "9712810024")
-//    static let user2 = User(email: "erik@mail.com", firstName: "Erik", lastName: "Perez", phoneNumber: "5059728022")
-//    static let user3 = User(email: "elliot@mail.com", firstName: "Elliot", lastName: "Olivera", phoneNumber: "1234567890")
-//    static let user4 = User(email: "perry@mail.com", firstName: "Perry", lastName: "ThePlatipus", phoneNumber: "4444444444")
-//    static let user5 = User(email: "hello@mail.com", firstName: "Hello", lastName: "Hey", phoneNumber: "1111112345")
+    static let receipt = Receipt(id: "217bafa0-e764-11e8-a7d6-292665ab97ba", userId: "e9600901-f3c5-4faa-aeb6-60b087872898", merchant: "Walmart Supercenter", location: "8885 N FLORIDA AVE, TAMPA FL 33604, ST # 5221 OP # 00001061 TE # 06 TR # 05332, ", url: "http://images2.wikia.nocookie.net/__cb20111106201150/groceryreceipts/images/8/80/Grocery_receipts_001.jpg", createdAt: "2018-11-13T16:49:47.935Z", updatedAt: "2018-11-13T16:49:47.935Z")
     
-//    static let users = [user1, user2, user3, user4, user5]
     
-    static let receiptItem1 = ReceiptItem(name: "Chicken Katsu", price: "9")
-    static let receiptItem2 = ReceiptItem(name: "Beer", price: "5")
-    static let receiptItem3 = ReceiptItem(name: "Rice", price: "3.5")
-    static let receiptItem4 = ReceiptItem(name: "Coca-Cola", price: "4")
-    static let receiptItem5 = ReceiptItem(name: "California Roll", price: "7")
     
-    static let receipt = Receipt(items: [receiptItem1, receiptItem2, receiptItem3, receiptItem4, receiptItem5])
+    //"id": "217bafa0-e764-11e8-a7d6-292665ab97ba",
+    //"user_id": "e9600901-f3c5-4faa-aeb6-60b087872898",
+    //"merchant": "Walmart Supercenter",
+    //"location": "8885 N FLORIDA AVE, TAMPA FL 33604, ST # 5221 OP # 00001061 TE # 06 TR # 05332, ",
+    //"url": "http://images2.wikia.nocookie.net/__cb20111106201150/groceryreceipts/images/8/80/Grocery_receipts_001.jpg",
+    //"createdAt": "2018-11-13T16:49:47.935Z",
+    //"updatedAt": "2018-11-13T16:49:47.935Z",
+    //"deletedAt": null
+    
 }

@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
         let label = UILabel()
         label.textColor = AppColors.white
         label.font = AppFonts.bold48
-        label.text = "CHECK PLEASE"
+        label.text = "Pay-Split"
         label.numberOfLines = 2
         label.contentMode = .center
         label.textAlignment = .center
@@ -197,7 +197,6 @@ class LoginViewController: UIViewController {
             guard let jsonDict = json else {return}
             
             let user = User(json: jsonDict)
-            user.cache()
             
             DispatchQueue.main.async {
                 let navController = UINavigationController(rootViewController: HomeViewController())

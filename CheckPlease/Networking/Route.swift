@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KeychainSwift
 
 enum HTTPMethod: String {
     case post = "POST"
@@ -18,13 +19,16 @@ enum HTTPMethod: String {
 enum Route {
     case login(email: String, password: String)
     case signUp(userObject: [String: String])
+    case sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String)
+    case getUserReceipts(userId: String)
+    case getReceiptItems(receiptId: String)
     case postImage(imageInfo: PaysplitImageInfo, userID: Int)
     
     var httpMethod: String {
         switch self {
-        case .signUp, .postImage:
+        case .signUp, .postImage, .sendRequest:
             return HTTPMethod.post.rawValue
-        case .login:
+        case .login, .getUserReceipts, .getReceiptItems:
             return HTTPMethod.get.rawValue
         }
     }
@@ -34,8 +38,13 @@ enum Route {
         switch self {
         case let .postImage(imageInfo, _):
             return ["Content-Type": "multipart/form-data; boundary=Boundary-\(imageInfo.uuid)"]
-        default:
+        case .signUp, .login:
             return ["Content-Type": "application/json"]
+        default:
+            let keychain = KeychainSwift()
+            let token = keychain.get("userToken") ?? ""
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer \(token)"]
         }
     }
     
@@ -47,6 +56,12 @@ enum Route {
             return "/auth/login"
         case .postImage:
             return "/receipt_photos"
+        case .sendRequest:
+            return "/invoice/smsconvert"
+        case let .getReceiptItems(receiptId):
+            return "/item/\(receiptId)"
+        case let .getUserReceipts(userId):
+            return "/receipts/all/\(userId)"
         }
     }
     
@@ -72,6 +87,15 @@ enum Route {
                 "email": userObject["email"]!,
                 "password": userObject["password"]!
                 ]
+            return serialize(json)
+        case let .sendRequest(userId, receiptId, receipient, amount, message):
+            let json: [String: String] = [
+                "user_id": userId,
+                "receipt_id": receiptId,
+                "recipient": receipient,
+                "amount": amount,
+                "msg": message
+            ]
             return serialize(json)
         case let .postImage(imageInfo, userID):
             // Huge thanks to NewFiveFour on GitHub

@@ -106,18 +106,18 @@ class SelectItemsViewController: UIViewController {
             fetchContacts(completion: { (success) in
                 if success {
                     DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: self.allContacts, delegate: self), animated: true)
+                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, receiptId: self.receipt.id, contacts: self.allContacts, delegate: self), animated: true)
                     }
                 }  else {
                     DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: self.allContacts, delegate: self), animated: true)
+                        self.navigationController?.pushViewController(RequestMoneyViewController(items: items, receiptId: self.receipt.id, contacts: self.allContacts, delegate: self), animated: true)
                     }
                 }
                 
             })
         }
         else if allContacts.count >= 1 {
-            navigationController?.pushViewController(RequestMoneyViewController(items: items, contacts: allContacts, delegate: self), animated: true)
+            navigationController?.pushViewController(RequestMoneyViewController(items: items, receiptId: self.receipt.id, contacts: allContacts, delegate: self), animated: true)
         }
         
     }

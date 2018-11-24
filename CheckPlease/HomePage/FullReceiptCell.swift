@@ -12,34 +12,56 @@ import SnapKit
 
 class FullReceiptCell: UITableViewCell {
     
-    func setUp() {
+    func setUp(indexPath: IndexPath, delegate: CellTapDelegate, receipt: Receipt) {
         
         // Add data to views
-        titleLabel.text = "Grandma's Deli"
-        priceLabel.text = "$126"
-        timeLabel.text = "11m"
+        self.receipt = receipt
+        self.delegate = delegate
+        self.indexPath = indexPath
+        self.backgroundColor = UIColor.clear
         
-//        setUpCollectionView()
+        titleLabel.text = receipt.merchant
+        var totalPrice = Float(0)
+        for item in receipt.items {
+            totalPrice += Float(item.price) ?? 0
+        }
+        priceLabel.text = "$" + String(roundf(totalPrice * 100) / 100)
+        
+        timeLabel.text = formatTime(createdAt: receipt.createdAt)
+        
+        previewLabel1.text = String(receipt.items[0].product) //.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel2.text = String(receipt.items[1].product) //.split(separator: " ")[0]).lowercased().capitalized
+        previewLabel3.text = String(receipt.items[2].product) //.split(separator: " ")[0]).lowercased().capitalized
+        
         addSubviews()
         setConstraints()
+        setUpTapGesture()
     }
     
     //    MARK: - Private
     
-//    Replace this with the actual model when you get it
-    private let model = Array(1 ... 99)
+    private var receipt: Receipt?
     
-    private let personPortraitCellId = "personPortraitCellId"
-    private let totalPeopleCellId = "totalPeopleCellId"
-    
-    private let collectionViewLineSpacing: CGFloat = 10
-    
-    private var collectionView: UICollectionView!
+    private var delegate: CellTapDelegate?
+    private var indexPath: IndexPath?
     
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = AppFonts.semibold18
         return label
+    }()
+    
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = AppColors.white
+        view.layer.borderWidth = 1
+        view.layer.borderColor = AppColors.darkGray.withAlphaComponent(0.25).cgColor
+        
+        view.layer.shadowColor = AppColors.darkGray.cgColor
+        view.layer.shadowOpacity = 0.35
+        view.layer.shadowOffset = CGSize(width: 0, height: 0)
+        view.layer.shadowRadius = 5
+        return view
     }()
     
     private let priceLabel: UILabel = {
@@ -55,47 +77,68 @@ class FullReceiptCell: UITableViewCell {
         return label
     }()
     
-    private let bottomLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = AppColors.lightGray
-        return view
-    }()
-    
     private let previewLabel1: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "Hello"
+        label.text = ""
         return label
     }()
     
     private let previewLabel2: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "Hello"
+        label.text = ""
         return label
     }()
     
     private let previewLabel3: UILabel = {
         let label = UILabel()
         label.font = AppFonts.light12
-        label.text = "HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello"
+        label.text = ""
         return label
     }()
     
+    private func formatTime(createdAt: String) -> String {
+        let timeComponents1 = createdAt.split(separator: "T")
+        let timeComponents2 = String(timeComponents1[1]).split(separator: ".")
+        let timeString = String(timeComponents1[0]) + " " + String(timeComponents2[0])
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        guard let date = dateFormatter.date(from: timeString) else { return "" }
+        let timeInterval = Date().timeIntervalSince(date)
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.year, .month, .day, .hour, .minute, .second]
+        formatter.unitsStyle = .abbreviated
+        formatter.maximumUnitCount = 1
+        
+        guard let timeSince = formatter.string(from: timeInterval) else { return "" }
+        return timeSince
+        
+    }
+    
     private func addSubviews() {
-        [titleLabel, timeLabel, priceLabel, bottomLine, previewLabel1, previewLabel2, previewLabel3].forEach { (view) in
-            self.addSubview(view)
+        self.addSubview(containerView)
+        [titleLabel, timeLabel, priceLabel, previewLabel1, previewLabel2, previewLabel3].forEach { (view) in
+            containerView.addSubview(view)
         }
     }
     
     private func setConstraints() {
+        
+        containerView.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview().inset(8)
+            make.top.equalToSuperview().inset(16)
+            make.bottom.equalToSuperview()
+        }
         
         titleLabel.snp.makeConstraints { (make) in
             make.left.top.equalToSuperview().inset(16)
         }
         
         previewLabel1.snp.makeConstraints { (make) in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.top.equalTo(titleLabel.snp.bottom).offset(16)
             make.left.equalTo(titleLabel.snp.left)
             make.right.lessThanOrEqualTo(timeLabel.snp.left).offset(-16)
         }
@@ -122,54 +165,25 @@ class FullReceiptCell: UITableViewCell {
             make.right.equalToSuperview().offset(-16)
             make.top.equalTo(priceLabel.snp.bottom).offset(16)
         }
-        
-        bottomLine.snp.makeConstraints { (make) in
-            make.bottom.equalToSuperview()
-            make.left.right.equalToSuperview().inset(16)
-            make.height.equalTo(1)
-        }
     }
     
-    private func setUpCollectionView() {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 10
-        collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: layout)
-        collectionView.register(PersonPortraitCell.self, forCellWithReuseIdentifier: personPortraitCellId)
-        collectionView.register(TotalPeopleCell.self, forCellWithReuseIdentifier: totalPeopleCellId)
-        collectionView.backgroundColor = .white
-        collectionView.isUserInteractionEnabled = false
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.reloadData()
-    }
-}
+    private func setUpTapGesture() {
+        self.selectionStyle = .none
 
-extension FullReceiptCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if model.count < 5 {
-            return model.count
-        } else {
-            return 5
-        }
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(sender:)))
+        tap.delegate = self
+        containerView.addGestureRecognizer(tap)
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 4 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: totalPeopleCellId, for: indexPath) as! TotalPeopleCell
-            cell.setUp(count: model.count - 4)
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: personPortraitCellId, for: indexPath) as! PersonPortraitCell
-            cell.setUp(image: #imageLiteral(resourceName: "IMG_0932"))
-            return cell
-        }
-        
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
+
+    private var timer = Timer()
+
+    @objc private func handleTap(sender: UITapGestureRecognizer? = nil) {
+        // handling code
+        containerView.backgroundColor = AppColors.lightGray
+        timer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false, block: { (_) in
+            self.containerView.backgroundColor = AppColors.white
+        })
+        guard let indexPath = self.indexPath, let delegate = self.delegate else {return}
+        delegate.cellWasTapped(indexPath: indexPath)
     }
 }
