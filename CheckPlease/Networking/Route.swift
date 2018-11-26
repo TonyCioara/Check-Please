@@ -26,9 +26,9 @@ enum Route {
     
     var httpMethod: String {
         switch self {
-        case .signUp, .postImage, .sendRequest:
+        case .login, .signUp, .postImage, .sendRequest:
             return HTTPMethod.post.rawValue
-        case .login, .getUserReceipts, .getReceiptItems:
+        case .getUserReceipts, .getReceiptItems:
             return HTTPMethod.get.rawValue
         }
     }
@@ -67,8 +67,6 @@ enum Route {
     
     var parameters: [String: Any] {
         switch self {
-        case let .login(email, password):
-            return ["email": email, "password": password]
         default:
             return [:]
         }
@@ -79,6 +77,9 @@ enum Route {
             return try? JSONSerialization.data(withJSONObject: object, options: [])
         }
         switch self {
+        case let .login(email, password):
+            let json = [ "email": email, "password": password]
+            return serialize(json)
         case let .signUp(userObject):
             let json: [String: String] = [
                 "firstName": userObject["firstName"]!,
