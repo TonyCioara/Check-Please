@@ -210,32 +210,50 @@ class SignUpViewController: UIViewController {
     @objc private func nextButtonTapped(sender: UIButton) {
         guard let text = inputTextField.text else {return}
         userDict[dictKeyArray[step]] = text
-        // TODO: Add loading icon
-        if step == labelTextArray.count - 1 {
-            // TODO: Cache user info after successful sign up
-            // TODO: Hide activity indicator
-            showActivityIndicator()
-            CheckPleaseAPI.signUp(withUserObject: userDict) { (json, _, err) in
-                // TODO: Cache user info after successful sign up
-                
-                if let _ = err {
+        
+        guard step == labelTextArray.count - 1 else {
+            step += 1
+            return
+        }
+        showActivityIndicator()
+        CheckPleaseAPI.signUp(withUserObject: userDict) { (json, response, err) in
+            DispatchQueue.main.async {
+                self.hideActivityIndicator()
+            }
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                let json = json else {
+                    print("\n * signUpViewController -> nextButtonTapped(sender:) = Invalid httpURLResponse or json")
+                    self.presentDefaultErrorAlertOnMainThread()
                     return
+            }
+            
+            if httpURLResponse.statusCode == 200 {
+                guard let userData = json["data"] as? [String: String],
+                    let user = User(json: userData) else {
+                        print("\n * SignUpViewController -> loginButtonTapped(sender:) = Invalid httpURLResponse or json")
+                        self.presentDefaultErrorAlertOnMainThread()
+                        return
                 }
-                
-                guard let jsonDict = json else {return}
-                
-                let _ = User(json: jsonDict)
-                
+                user.cache()
+                print(" \n * Successful sign up for user with info:\n \(user.description)")
                 DispatchQueue.main.async {
                     let navController = UINavigationController(rootViewController: HomeViewController())
                     navController.navigationBar.prefersLargeTitles = true
                     navController.navigationBar.barTintColor = AppColors.white
-                    
                     self.present(navController, animated: true)
                 }
+                // Return prevents attempt to present alert controllers bellow.
+                return
             }
-        } else {
-            step += 1
+            
+            guard let errorData = json["messages"] as? [String],
+                let message = errorData.first else {
+                    self.presentDefaultErrorAlertOnMainThread()
+                    return
+            }
+            DispatchQueue.main.async {
+                self.presentOKAlert(withTitle: message, message: nil)
+            }
         }
     }
     
