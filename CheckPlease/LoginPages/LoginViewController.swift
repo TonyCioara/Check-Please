@@ -25,6 +25,9 @@ class LoginViewController: UIViewController {
     private let emailTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
+        textField.keyboardType = .emailAddress
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         textField.font = AppFonts.regular14
         textField.placeholder = "Email"
         textField.layer.cornerRadius = 5
@@ -37,6 +40,10 @@ class LoginViewController: UIViewController {
     private let passwordTextField: UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .white
+        textField.keyboardType = .default
+        textField.isSecureTextEntry = true
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
         textField.font = AppFonts.regular14
         textField.placeholder = "Password"
         textField.layer.cornerRadius = 5
