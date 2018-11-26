@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     }
     
     //    MARK: - Private
+    
     private let scrollView = UIScrollView()
     
     private let emailTextField: UITextField = {
@@ -148,13 +149,26 @@ class LoginViewController: UIViewController {
             // Superview is loginButton
             maker.center.equalToSuperview()
         }
-        
     }
     
     private func setUpViews() {
         navigationController?.isNavigationBarHidden = true
         addSubviews()
         setConstraints()
+    }
+    
+    private func presentOKAlert(withTitle title: String?, message: String?) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    private func presentDefaultErrorAlertOnMainThread() {
+        DispatchQueue.main.async {
+            let defaultErrorMessage = "Something went wrong on our end. Please try again later"
+            self.presentOKAlert(withTitle: "Oops", message: defaultErrorMessage)
+        }
     }
     
     private func showActivityIndicator() {
@@ -185,31 +199,55 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func loginButtonTapped(sender: UIButton) {
-        // TODO: Add loading icon
         guard let email = emailTextField.text,
             let password = passwordTextField.text else { return }
-        CheckPleaseAPI.login(withEmail: email, password: password) { (json, _, err) in
-            // TODO: Cache user info after successful login
-            if let _ = err {
-                return
+        
+        showActivityIndicator()
+        CheckPleaseAPI.login(withEmail: email, password: password) { (json, response, err) in
+            DispatchQueue.main.async {
+                self.hideActivityIndicator()
             }
             
-            guard let jsonDict = json else {return}
+            guard let httpURLResponse = response as? HTTPURLResponse,
+                let json = json else {
+                    print("\n * LoginViewController -> loginButtonTapped(sender:) = Invalid httpURLResponse or json")
+                    self.presentDefaultErrorAlertOnMainThread()
+                    return
+            }
             
-            let user = User(json: jsonDict)
-            
-            DispatchQueue.main.async {
-                let navController = UINavigationController(rootViewController: HomeViewController())
-                navController.navigationBar.prefersLargeTitles = true
-                navController.navigationBar.barTintColor = AppColors.white
-                self.present(navController, animated: true)
+            if httpURLResponse.statusCode == 200 {
+                // Successful login
+                guard let userData = json["data"] as? [String: String],
+                    let user = User(json: userData) else {
+                        print("\n * LoginViewController -> loginButtonTapped(sender:) = Invalid User data in json")
+                        self.presentDefaultErrorAlertOnMainThread()
+                        return
+                }
+                user.cache()
+                print(" \n * Successful login for user with info:\n \(user.description)")
+                DispatchQueue.main.async {
+                    let navController = UINavigationController(rootViewController: HomeViewController())
+                    navController.navigationBar.prefersLargeTitles = true
+                    navController.navigationBar.barTintColor = AppColors.white
+                    self.present(navController, animated: true)
+                }
+            } else if httpURLResponse.statusCode == 400 {
+                // Invalid credentials
+                let errorMessages = json["messages"] as? [String] ?? []
+                let invalidCredentialMessage = errorMessages.first ?? "Invalid Credentials"
                 
+                DispatchQueue.main.async {
+                    self.presentOKAlert(withTitle: invalidCredentialMessage, message: nil)
+                }
+            } else {
+                // Unexected status code
+                print("\n * LoginViewController -> LoginButtonTapped(sender:) = Unknown status")
+                self.presentDefaultErrorAlertOnMainThread()
             }
         }
     }
     
     @objc private func newUserButtonTapped(sender: UIButton) {
-        
         let signUpVC = SignUpViewController()
         self.present(signUpVC, animated: true)
     }
