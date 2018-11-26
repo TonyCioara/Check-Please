@@ -164,20 +164,6 @@ class LoginViewController: UIViewController {
         setConstraints()
     }
     
-    private func presentOKAlert(withTitle title: String?, message: String?) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    
-    private func presentDefaultErrorAlertOnMainThread() {
-        DispatchQueue.main.async {
-            let defaultErrorMessage = "Something went wrong on our end. Please try again later"
-            self.presentOKAlert(withTitle: "Oops", message: defaultErrorMessage)
-        }
-    }
-    
     private func showActivityIndicator() {
         loginButton.setTitle("", for: .normal)
         activityIndicator.isHidden = false
