@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import SwiftyJSON
 
 class HomeViewController: UIViewController {
     
@@ -28,11 +29,21 @@ class HomeViewController: UIViewController {
     private let tableView = UITableView()
     
     private func setUpData() {
-        var receipt = DataSource.receipt
-        receipt.items = [DataSource.receiptItem1, DataSource.receiptItem2, DataSource.receiptItem3, DataSource.receiptItem4, DataSource.receiptItem5]
-        
-        for _ in 1...5 {
-            receipts.append(receipt)
+//        var receipt = DataSource.receipt
+//        receipt.items = [DataSource.receiptItem1, DataSource.receiptItem2, DataSource.receiptItem3, DataSource.receiptItem4, DataSource.receiptItem5]
+//
+//        for _ in 1...5 {
+//            receipts.append(receipt)
+//        }
+//
+        guard let userId = User.getId() else {print("User Id not found"); return}
+        CheckPleaseAPI.getUserReceipts(withUserId: userId) { (dict, res, err) in
+            if let err = err {
+                print(err)
+                return
+            }
+            guard let dict = dict else {print("no JSON Found"); return}
+            print(dict["data"])
         }
     }
     

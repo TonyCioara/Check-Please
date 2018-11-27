@@ -31,6 +31,21 @@ class CheckPleaseAPI {
                 completionHandler: handler)
     }
     
+    static func getUserReceipts(withUserId id: String, completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withRoute: .getUserReceipts(userId: id),
+                baseStringURL: coreServerStringURL,
+                completionHandler: handler)
+    }
+    
+    static func getReceiptItems(withReceiptId id: String, completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withRoute: .getReceiptItems(receiptId: id),
+                baseStringURL: coreServerStringURL,
+                completionHandler: handler)
+    }
+    
+    
     static func uploadReceiptImage(withImageInfo imageInfo: PaysplitImageInfo, userID: Int, completionHandler handler: @escaping CompletionHandler) {
         
         request(withRoute: .postImage(imageInfo: imageInfo, userID: userID),

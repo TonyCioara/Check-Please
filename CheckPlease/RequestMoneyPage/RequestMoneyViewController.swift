@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 import SnapKit
 import Contacts
-import KeychainSwift
 
 class RequestMoneyViewController: UIViewController {
  //        TODO: Add search by name and email
@@ -131,8 +130,7 @@ class RequestMoneyViewController: UIViewController {
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { (action) in
             //            TODO: Perform networking request here
             
-            let keychain = KeychainSwift()
-            guard let userId = keychain.get("userId") else {print("No user id in keychain"); return}
+            guard let userId = User.getId() else {print("No user id in keychain"); return}
             
             let finalPhoneNumber = finalPhoneNumber.replacingOccurrences(of:"[^0-9, +]", with: "", options: .regularExpression)
             

@@ -31,6 +31,17 @@ struct User {
         
         self.token = token
         self.id = id
+        self.cache()
+    }
+    
+    static func getId() -> String? {
+        let keychain = KeychainSwift()
+        return keychain.get("userId")
+    }
+    
+    static func gettoken() -> String? {
+        let keychain = KeychainSwift()
+        return keychain.get("userToken")
     }
     
     /// Stores user auth token and ID in keychain and sets isLoggedIn boolean in User Defaults
