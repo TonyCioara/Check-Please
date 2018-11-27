@@ -45,8 +45,7 @@ class CheckPleaseAPI {
     
     // MARK: - Private
     
-    // TODO: Add URL
-    private static let coreServerStringURL = "https://5a546e2d.ngrok.io"
+    private static let coreServerStringURL = "https://paysplit.herokuapp.com"
     private static let photoHandlerServerStringURL = "https://paysplit-photo-handler-api.herokuapp.com"
     
     private static func request(withRoute route: Route, baseStringURL: String, completionHandler handler: @escaping CompletionHandler) {

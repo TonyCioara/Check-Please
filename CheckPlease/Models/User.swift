@@ -14,27 +14,30 @@ struct User {
     let token: String
     let id: String
     
+    var description: String {
+        return "ID: \(id),\nAuth token: \(token),\n"
+    }
+    
     init(token: String, id: String) {
         self.token = token
         self.id = id
     }
   
-    init(json: [String: Any]) {
-        let token = json["auth_token"] as! String
-        let id = json["user_id"] as! String
+    init?(json: [String: Any]) {
+        guard let token = json["auth_token"] as? String,
+            let id = json["user_id"] as? String else {
+                return nil
+        }
         
         self.token = token
         self.id = id
-        cache()
     }
     
-    // MARK: - Private
-    
-    /// Called when the local user's chatroom partner has stopped sharing their video feed.
-    /// - Returns: Boolean value indicating if caching was successful.
-    private func cache() {
+    /// Stores user auth token and ID in keychain and sets isLoggedIn boolean in User Defaults
+    func cache() {
         let keychain = KeychainSwift()
         keychain.set(id, forKey: "userId")
         keychain.set(token, forKey: "userToken")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
     }
 }
