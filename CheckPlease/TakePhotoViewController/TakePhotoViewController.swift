@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import KeychainSwift
 
 class TakePhotoViewController: UIViewController {
     
@@ -173,7 +174,35 @@ class TakePhotoViewController: UIViewController {
     
     @objc private func confirmButtonPressed() {
         print("\n* ConfirmButtonPressed")
-        // TODO: Send image to backend
+        guard let imageData = imageData else {
+            print("\n * No image data")
+            return
+        }
+        
+        let imageInfo = PaysplitImageInfo(imageData: imageData)
+        let keychain = KeychainSwift()
+        guard let userID = keychain.get("userID") else {
+            print("\n * UserId is nil")
+            return
+        }
+        
+        CheckPleaseAPI.uploadReceiptImage(withImageInfo: imageInfo, userID: userID) { (json, response, error) in
+            guard let httpURLResponse = response as? HTTPURLResponse else {
+                self.presentDefaultErrorAlertOnMainThread()
+                return
+            }
+            guard httpURLResponse.statusCode == 201 else {
+                self.presentOKAlert(withTitle: "Please try again", message: "Image upload failed")
+                return
+            }
+            guard let json = json,
+                let imageURL = json["url"] as? String else {
+                    self.presentDefaultErrorAlertOnMainThread()
+                    return
+            }
+            print("\n * Successfully uploaded image. URL: \(imageURL)")
+            
+        }
     }
 }
 
