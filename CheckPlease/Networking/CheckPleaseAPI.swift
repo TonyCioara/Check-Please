@@ -10,6 +10,9 @@ import Foundation
 
 enum CheckPleaseAPIError: Error {
     case invalidURL(String), invalidParameter(String, Any), invalidJSON(String)
+    case receiptImageConversionFailed(imageURL: String)
+    case unauthorized
+    case unexpectedError(message: String)
 }
 
 class CheckPleaseAPI {
@@ -31,7 +34,7 @@ class CheckPleaseAPI {
                 completionHandler: handler)
     }
     
-    static func uploadReceiptImage(withImageInfo imageInfo: PaysplitImageInfo, userID: Int, completionHandler handler: @escaping CompletionHandler) {
+    static func uploadReceiptImage(withImageInfo imageInfo: PaysplitImageInfo, userID: String, completionHandler handler: @escaping CompletionHandler) {
         
         request(withRoute: .postImage(imageInfo: imageInfo, userID: userID),
                 baseStringURL: photoHandlerServerStringURL,
@@ -41,6 +44,38 @@ class CheckPleaseAPI {
     static func sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String, completionHandler handler: @escaping CompletionHandler) {
         
         request(withRoute: .sendRequest(userId: userId, receiptId: receiptId, receipient: receipient, amount: amount, message: message), baseStringURL: coreServerStringURL, completionHandler: handler)
+    }
+    
+    static func convertReceiptImage(withImageURL imageURL: String, userID: String, completionHandler handler: @escaping CompletionHandler) {
+        
+        request(withRoute: .convertReceiptImage(imageURL: imageURL, userID: userID), baseStringURL: coreServerStringURL) { json, response, error in
+            
+            guard let httpURLResponse = response as? HTTPURLResponse else {
+                handler(json, response, CheckPleaseAPIError.unexpectedError(message: "Invalid HTTP url response"))
+                return
+            }
+            guard httpURLResponse.statusCode != 401 else {
+                handler(json, response, CheckPleaseAPIError.unauthorized)
+                return
+            }
+            guard httpURLResponse.statusCode == 200 else {
+                let message = "Unexpected error with status code: \(httpURLResponse.statusCode)"
+                handler(json, response, CheckPleaseAPIError.unexpectedError(message: message))
+                return
+            }
+            guard let validJSON = json,
+                let receiptData = validJSON["data"] as? [String: Any],
+                let receiptID = receiptData["receipt_id"] as? String else {
+                    handler(json, response, CheckPleaseAPIError.receiptImageConversionFailed(imageURL: imageURL))
+                    return
+            }
+            print("\n * CheckPleaseAPI->convertReceiptImage: ReceiptID= \(receiptID)")
+            CheckPleaseAPI.getReceiptAndItems(withReceiptID: receiptID, completionHandler: handler)
+        }
+    }
+    
+    static func getReceiptAndItems(withReceiptID receiptID: String, completionHandler handler: @escaping CompletionHandler) {
+        request(withRoute: .getFullReceiptInfo(receiptID: receiptID), baseStringURL: coreServerStringURL, completionHandler: handler)
     }
     
     // MARK: - Private
