@@ -159,6 +159,26 @@ class TakePhotoViewController: UIViewController {
         }
     }
     
+    private func convertReceiptImage(withImageStringURL stringURL: String, userID: String) {
+        CheckPleaseAPI.convertReceiptImage(withImageURL: stringURL, userID: userID) { (json, response, error) in
+            guard let res = response as? HTTPURLResponse else {
+                print("\n * Invalid response TPV")
+                return
+            }
+            print("\n * Status code: \(res.statusCode) TPV")
+            
+            if let error = error{
+                print("\n * Error: \(error) TPV")
+                return
+            }
+            guard let json = json else {
+                print("\n * Invalid json TPV")
+                return
+            }
+            print("\n ** JSON: \(json)")
+        }
+    }
+    
     @objc private func takePhotoButtonPressed() {
         guard let photoOutput = self.photoOutput,
             let photoSettings = self.photoSettings else {
@@ -201,7 +221,7 @@ class TakePhotoViewController: UIViewController {
                     return
             }
             print("\n * Successfully uploaded image. URL: \(imageURL)")
-            
+            self.convertReceiptImage(withImageStringURL: imageURL, userID: userID)
         }
     }
 }
