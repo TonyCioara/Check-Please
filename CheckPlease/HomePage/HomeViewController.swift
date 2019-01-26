@@ -37,14 +37,14 @@ class HomeViewController: UIViewController {
 //        }
 //
         guard let userId = User.getId() else {print("User Id not found"); return}
-        CheckPleaseAPI.getUserReceipts(withUserId: userId) { (dict, res, err) in
-            if let err = err {
-                print(err)
-                return
-            }
-            guard let dict = dict else {print("no JSON Found"); return}
-            print(dict["data"])
-        }
+//        CheckPleaseAPI.getUserReceipts(withUserId: userId) { (dict, res, err) in
+//            if let err = err {
+//                print(err)
+//                return
+//            }
+//            guard let dict = dict else {print("no JSON Found"); return}
+//            print(dict["data"])
+//        }
     }
     
     private func addSubviews() {
