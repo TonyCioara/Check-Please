@@ -21,20 +21,22 @@ enum Route {
     case signUp(userObject: [String: String])
     case sendRequest(userId: String, receiptId: String, receipient: String, amount: String, message: String)
     case getUserReceipts(userId: String)
+    case getFullReceiptInfo(receiptID: String)
+    // TODO: Discuss removal of getReceiptItems(receiptId:) route due to addition of getFullReceiptInfo(receiptID:) route
     case getReceiptItems(receiptId: String)
-    case postImage(imageInfo: PaysplitImageInfo, userID: Int)
+    case postImage(imageInfo: PaysplitImageInfo, userID: String)
+    case convertReceiptImage(imageURL: String, userID: String)
     
     var httpMethod: String {
         switch self {
-        case .login, .signUp, .postImage, .sendRequest:
+        case .login, .signUp, .postImage, .sendRequest, .convertReceiptImage:
             return HTTPMethod.post.rawValue
-        case .getUserReceipts, .getReceiptItems:
+        case .getUserReceipts, .getReceiptItems, .getFullReceiptInfo:
             return HTTPMethod.get.rawValue
         }
     }
     
     var header: [String: String] {
-        // TODO: Update for secured routes
         switch self {
         case let .postImage(imageInfo, _):
             return ["Content-Type": "multipart/form-data; boundary=Boundary-\(imageInfo.uuid)"]
@@ -50,18 +52,14 @@ enum Route {
     
     var path: String {
         switch self {
-        case .signUp:
-            return "/auth/signup"
-        case .login:
-            return "/auth/login"
-        case .postImage:
-            return "/receipt_photos"
-        case .sendRequest:
-            return "/invoice/smsconvert"
-        case let .getReceiptItems(receiptId):
-            return "/item/\(receiptId)"
-        case let .getUserReceipts(userId):
-            return "/receipts/all/\(userId)"
+        case .signUp: return "/auth/signup"
+        case .login: return "/auth/login"
+        case .postImage: return "/receipt_photos"
+        case .sendRequest: return "/invoice/smsconvert"
+        case .convertReceiptImage: return "/receipt/conversion"
+        case let .getReceiptItems(receiptId): return "/item/\(receiptId)"
+        case let .getFullReceiptInfo(receiptID): return "/receipts/\(receiptID)"
+        case let .getUserReceipts(userId): return "/receipts/all/\(userId)"
         }
     }
     
@@ -117,6 +115,9 @@ enum Route {
             body.append("\r\n")
             body.append("--\(boundary)--")
             return body
+        case let .convertReceiptImage(imageURL, userID):
+            let body = ["url": imageURL, "user_id": userID]
+            return serialize(body)
         default:
             return nil
         }

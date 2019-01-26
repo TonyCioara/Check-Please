@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import KeychainSwift
 
 class TakePhotoViewController: UIViewController {
     
@@ -158,6 +159,26 @@ class TakePhotoViewController: UIViewController {
         }
     }
     
+    private func convertReceiptImage(withImageStringURL stringURL: String, userID: String) {
+        CheckPleaseAPI.convertReceiptImage(withImageURL: stringURL, userID: userID) { (json, response, error) in
+            guard let res = response as? HTTPURLResponse else {
+                print("\n * Invalid response TPV")
+                return
+            }
+            print("\n * Status code: \(res.statusCode) TPV")
+            
+            if let error = error{
+                print("\n * Error: \(error) TPV")
+                return
+            }
+            guard let json = json else {
+                print("\n * Invalid json TPV")
+                return
+            }
+            print("\n ** JSON: \(json)")
+        }
+    }
+    
     @objc private func takePhotoButtonPressed() {
         guard let photoOutput = self.photoOutput,
             let photoSettings = self.photoSettings else {
@@ -173,7 +194,35 @@ class TakePhotoViewController: UIViewController {
     
     @objc private func confirmButtonPressed() {
         print("\n* ConfirmButtonPressed")
-        // TODO: Send image to backend
+        guard let imageData = imageData else {
+            print("\n * No image data")
+            return
+        }
+        
+        let imageInfo = PaysplitImageInfo(imageData: imageData)
+        let keychain = KeychainSwift()
+        guard let userID = keychain.get("userID") else {
+            print("\n * UserId is nil")
+            return
+        }
+        
+        CheckPleaseAPI.uploadReceiptImage(withImageInfo: imageInfo, userID: userID) { (json, response, error) in
+            guard let httpURLResponse = response as? HTTPURLResponse else {
+                self.presentDefaultErrorAlertOnMainThread()
+                return
+            }
+            guard httpURLResponse.statusCode == 201 else {
+                self.presentOKAlert(withTitle: "Please try again", message: "Image upload failed")
+                return
+            }
+            guard let json = json,
+                let imageURL = json["url"] as? String else {
+                    self.presentDefaultErrorAlertOnMainThread()
+                    return
+            }
+            print("\n * Successfully uploaded image. URL: \(imageURL)")
+            self.convertReceiptImage(withImageStringURL: imageURL, userID: userID)
+        }
     }
 }
 

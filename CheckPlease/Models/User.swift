@@ -47,7 +47,7 @@ struct User {
     /// Stores user auth token and ID in keychain and sets isLoggedIn boolean in User Defaults
     func cache() {
         let keychain = KeychainSwift()
-        keychain.set(id, forKey: "userId")
+        keychain.set(id, forKey: "userID")
         keychain.set(token, forKey: "userToken")
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
     }

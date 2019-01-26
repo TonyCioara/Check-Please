@@ -17,7 +17,7 @@ final class PaysplitImageInfo {
         // FIXME: find better solution to replace filename
         // - Does unsaved recently captured photo have a filename?
         let uuid = UUID().uuidString
-        self.filename = uuid
+        self.filename = uuid + ".jpeg"
         self.uuid = uuid
         self.imageData = imageData
     }
