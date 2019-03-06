@@ -7,21 +7,37 @@
 //
 
 import Foundation
+import KeychainSwift
 
 struct User {
     
-    var email: String
-    var username: String
-    var firstName: String
-    var lastName: String
-    var phoneNumber: String
+    let token: String
+    let id: String
     
-    init(email: String, username: String, firstName: String, lastName: String, phoneNumber: String) {
-        self.email = email
-        self.username = username
-        self.firstName = firstName
-        self.lastName = lastName
-        self.phoneNumber = phoneNumber
+    var description: String {
+        return "ID: \(id),\nAuth token: \(token),\n"
     }
     
+    init(token: String, id: String) {
+        self.token = token
+        self.id = id
+    }
+  
+    init?(json: [String: Any]) {
+        guard let token = json["auth_token"] as? String,
+            let id = json["user_id"] as? String else {
+                return nil
+        }
+        
+        self.token = token
+        self.id = id
+    }
+    
+    /// Stores user auth token and ID in keychain and sets isLoggedIn boolean in User Defaults
+    func cache() {
+        let keychain = KeychainSwift()
+        keychain.set(id, forKey: "userId")
+        keychain.set(token, forKey: "userToken")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+    }
 }
